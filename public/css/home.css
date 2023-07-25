@@ -1,0 +1,20 @@
+table thead tr th {
+    font-weight: bold;
+}
+
+.row {
+    color: black;
+}
+
+label {
+    color: red;
+}
+
+
+.col-form-label {
+    color: red !important;
+}
+
+legend {
+    color: red !important;
+}

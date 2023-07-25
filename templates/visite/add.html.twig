@@ -1,0 +1,39 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello Employes
+{% endblock title  %}
+
+{% block body %}
+	<div class="container">
+		<h1>Nouvelle visite</h1>
+		{{ form_start(VisiteForm) }}
+		<div class="row">
+			<label>Date de visite</label>
+			{{ form_widget(VisiteForm.DateVisite)}}
+		</div>
+		<div class="row">
+			<label>Heure de début</label>
+			{{ form_widget(VisiteForm.HeureDeb)}}
+		</div>
+		<div class="row">
+			<label>Heure de fin</label>
+
+			{{ form_widget(VisiteForm.HeureFin)}}
+		</div>
+		<div class="row">
+			<label>Motif</label>
+			{{form_widget(VisiteForm.motif)}}
+		</div>
+		{{ form_row(VisiteForm.visiteurExterne) }}
+
+		<div class="row"></div>
+		<div class="row">
+			{{ form_row(VisiteForm.EtatVisite)}}
+		</div>
+		<div class="row">
+			{{ form_row(VisiteForm.EmployeVisite) }}
+		</div>
+		{{ form_end(VisiteForm) }}
+	</div>
+
+{% endblock body %}

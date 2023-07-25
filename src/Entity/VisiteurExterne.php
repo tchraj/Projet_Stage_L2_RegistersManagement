@@ -10,22 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: VisiteurExterneRepository::class)]
 class VisiteurExterne extends Personne
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\OneToMany(mappedBy: 'visiteurExterne', targetEntity: Visite::class)]
     private Collection $visites;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $sexe = null;
+
+
     public function __construct()
     {
         $this->visites = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**
@@ -54,6 +49,23 @@ class VisiteurExterne extends Personne
                 $visite->setVisiteurExterne(null);
             }
         }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom() . " " . $this->getPrenoms();
+    }
+
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(?string $sexe): static
+    {
+        $this->sexe = $sexe;
 
         return $this;
     }

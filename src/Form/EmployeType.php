@@ -1,0 +1,74 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Profil;
+use App\Entity\Direction;
+use App\Entity\CompteUtilisateur;
+use App\Entity\Employe;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class EmployeType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add(
+                'nom',
+                TextType::class
+            )
+            ->add(
+                'prenoms',
+                null,
+            )
+            ->add(
+                'email',
+                EmailType::class,
+            )
+            ->add(
+                'tel',
+                null,
+            )
+            ->add(
+                'poste',
+                null,
+            )
+            ->add(
+                'profil',
+                EntityType::class,
+                [
+                    'class' => Profil::class
+                ],
+            )
+            ->add(
+                'direction',
+                EntityType::class,
+                [
+                    'class' => Direction::class
+                ],
+                 )
+            ->add(
+                'compteUtilisateur',
+                EntityType::class,
+                [
+                    'class' => CompteUtilisateur::class
+                ]
+            )
+            ->add(
+                'Envoyer',
+                SubmitType::class
+            );
+    }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Employe::class,
+        ]);
+    }
+}

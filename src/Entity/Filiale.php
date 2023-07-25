@@ -72,4 +72,8 @@ class Filiale
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->NomFiliale;
+    }
 }

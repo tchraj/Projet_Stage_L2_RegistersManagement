@@ -1,0 +1,30 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello Employes
+{% endblock title  %}
+
+{% block body %}
+		{{ form_start(EmployeForm) }}
+		<label>Nom</label>
+		{{ form_widget(EmployeForm.nom)}}
+		<label>Prenoms</label>
+
+		{{ form_widget(EmployeForm.prenoms)}}
+		<label>Adresse mail</label>
+
+		{{ form_widget(EmployeForm.email)}}
+		<label>Télephone</label>
+
+		{{ form_widget(EmployeForm.tel)}}
+		<label>Poste occupé</label>
+
+		{{ form_widget(EmployeForm.poste) }}
+		<label>Direction</label>
+
+		{{ form_widget(EmployeForm.direction) }}
+		<label>Compte Utilisateur</label>
+
+		{{ form_widget(EmployeForm.compteUtilisateur) }}
+		{{ form_end(EmployeForm) }}
+
+{% endblock body %}

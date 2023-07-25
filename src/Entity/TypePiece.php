@@ -19,8 +19,12 @@ class TypePiece
     #[ORM\Column(length: 60, nullable: true)]
     private ?string $NomPiece = null;
 
-    #[ORM\ManyToOne(inversedBy: 'piece')]
-    private ?Personne $proprietaire = null;
+    #[ORM\ManyToOne()]
+    private ?VisiteurExterne $visiteurExterne;
+
+    #[ORM\ManyToOne()]
+    private ?Employe $employe;
+
 
     public function getId(): ?int
     {
@@ -51,14 +55,26 @@ class TypePiece
         return $this;
     }
 
-    public function getProprietaire(): ?Personne
+    public function getVisiteurExterne(): ?VisiteurExterne
     {
-        return $this->proprietaire;
+        return $this->visiteurExterne;
     }
 
-    public function setProprietaire(?Personne $proprietaire): static
+    public function setVisiteurExterne(?VisiteurExterne $visiteurExterne): static
     {
-        $this->proprietaire = $proprietaire;
+        $this->visiteurExterne = $visiteurExterne;
+
+        return $this;
+    }
+
+    public function getEmploye(): ?Employe
+    {
+        return $this->employe;
+    }
+
+    public function setEmploye(?Employe $employe): static
+    {
+        $this->employe = $employe;
 
         return $this;
     }

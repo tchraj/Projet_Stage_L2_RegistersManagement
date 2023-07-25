@@ -1,0 +1,37 @@
+{% block title %}{% endblock %}
+
+{% block body %}
+
+	<form method="post">
+		<div class="form-body">
+
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
+
+			{% if app.user %}
+				<div class="mb-3">
+					You are logged in as
+					{{ app.user.userIdentifier }},
+					<a href="{{ path('app_logout') }}">Logout</a>
+				</div>
+			{% endif %}
+
+			<h1 class="titre">Connexion</h1>
+			<label for="inputEmail">Email</label>
+			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>
+			<i class="fa-regular fa-envelope"></i>
+			<label for="inputPassword">Password</label>
+			<input type="password" name="password" id="inputPassword" autocomplete="current-password" required>
+
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+			<button class="btn" type="submit">
+				Se connecter
+			</button>
+		</div>
+		<span>
+			<a href="{{ path('forgot_pass') }}">Mot de pass oublié ?</a>
+		</span>
+	</form>
+{% endblock %}

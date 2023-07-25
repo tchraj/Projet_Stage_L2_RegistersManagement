@@ -5,17 +5,13 @@ namespace App\Entity;
 use App\Repository\EmployeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+//#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class Employe extends Personne
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'employe')]
     private ?Profil $profil = null;
@@ -23,7 +19,7 @@ class Employe extends Personne
     #[ORM\ManyToOne(inversedBy: 'employes')]
     private ?Direction $direction = null;
 
-    #[ORM\ManyToOne(inversedBy: 'employe')]
+    #[ORM\OneToOne()]
     private ?CompteUtilisateur $compteUtilisateur = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'directeur')]
@@ -40,6 +36,9 @@ class Employe extends Personne
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $poste = null;
 
     public function __construct()
     {
@@ -201,5 +200,27 @@ class Employe extends Personne
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+    public function getPoste(): ?string
+    {
+        return $this->poste;
+    }
+
+    public function setPoste(?string $poste): static
+    {
+        $this->poste = $poste;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom() . " " . $this->getPrenoms();;
+    }
+
+    public function isIsVerified(): ?bool
+    {
+        return $this->isVerified;
     }
 }

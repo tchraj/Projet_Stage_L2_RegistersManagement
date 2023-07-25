@@ -6,33 +6,38 @@ use App\Repository\PersonneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\MappedSuperclass;
+use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: PersonneRepository::class)]
+// #[ORM\Entity(repositoryClass: PersonneRepository::class)]
+#[MappedSuperclass()]
 class Personne
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    protected ?int $id;
 
     #[ORM\Column(length: 30)]
-    private ?string $nom = null;
+    protected ?string $nom = null;
 
     #[ORM\Column(length: 60)]
-    private ?string $prenoms = null;
+    protected ?string $prenoms = null;
 
     #[ORM\Column(length: 60)]
-    private ?string $email = null;
+    //#[Assert\NotBlank(message: 'Veuillez entrer l\'adresse mail')]
+    //#[Assert\Email(message: 'L\'adresse {{ value }} n\'est pas une adresse mail valide')]
+    protected ?string $email = null;
 
     #[ORM\Column(length: 15)]
-    private ?string $tel = null;
+    protected ?string $tel = null;
 
-    #[ORM\OneToMany(mappedBy: 'proprietaire', targetEntity: TypePiece::class)]
-    private Collection $piece;
+    // #[ORM\OneToMany(mappedBy: 'proprietaire', targetEntity: TypePiece::class)]
+    // protected Collection $piece;
 
     public function __construct()
     {
-        $this->piece = new ArrayCollection();
+        //$this->piece = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,36 +89,6 @@ class Personne
     public function setTel(string $tel): static
     {
         $this->tel = $tel;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, TypePiece>
-     */
-    public function getPiece(): Collection
-    {
-        return $this->piece;
-    }
-
-    public function addPiece(TypePiece $piece): static
-    {
-        if (!$this->piece->contains($piece)) {
-            $this->piece->add($piece);
-            $piece->setProprietaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removePiece(TypePiece $piece): static
-    {
-        if ($this->piece->removeElement($piece)) {
-            // set the owning side to null (unless already changed)
-            if ($piece->getProprietaire() === $this) {
-                $piece->setProprietaire(null);
-            }
-        }
 
         return $this;
     }

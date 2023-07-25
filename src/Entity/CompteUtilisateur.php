@@ -3,51 +3,90 @@
 namespace App\Entity;
 
 use App\Repository\CompteUtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: CompteUtilisateurRepository::class)]
-class CompteUtilisateur
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 60)]
-    private ?string $NomUtilisateur = null;
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
 
-    #[ORM\Column(length: 15)]
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'compteUtilisateur', targetEntity: Employe::class)]
-    private Collection $employe;
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
-    public function __construct()
-    {
-        $this->employe = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'string', length: 100)]
+    private $resetToken;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNomUtilisateur(): ?string
+    public function getEmail(): ?string
     {
-        return $this->NomUtilisateur;
+        return $this->email;
     }
 
-    public function setNomUtilisateur(string $NomUtilisateur): static
+    public function setEmail(string $email): static
     {
-        $this->NomUtilisateur = $NomUtilisateur;
+        $this->email = $email;
 
         return $this;
     }
-    public function getPassword(): ?string
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->NomUtilisateur;
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 
     public function setPassword(string $password): static
@@ -57,39 +96,44 @@ class CompteUtilisateur
         return $this;
     }
 
-
     /**
-     * @return Collection<int, Employe>
+     * @see UserInterface
      */
-    public function getEmploye(): Collection
+    public function eraseCredentials(): void
     {
-        return $this->employe;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
-    public function addEmploye(Employe $employe): static
+    public function isVerified(): bool
     {
-        if (!$this->employe->contains($employe)) {
-            $this->employe->add($employe);
-            $employe->setCompteUtilisateur($this);
-        }
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
 
-    public function removeEmploye(Employe $employe): static
+    public function getResetToken(): ?string
     {
-        if ($this->employe->removeElement($employe)) {
-            // set the owning side to null (unless already changed)
-            if ($employe->getCompteUtilisateur() === $this) {
-                $employe->setCompteUtilisateur(null);
-            }
-        }
+        return $this->resetToken;
+    }
 
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
         return $this;
     }
-    /*
     public function __toString()
     {
-        return $this->password;
-    }*/
+        return $this->email;
+    }
+
+    public function isIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
 }

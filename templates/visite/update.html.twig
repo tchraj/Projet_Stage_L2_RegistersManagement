@@ -1,0 +1,49 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Modifier un employe
+{% endblock title %}
+
+{% block body %}
+	<div class="form-control">
+		<div class="row">
+			{{ form_start(VisiteForm) }}
+		</div>
+	</div>
+	<div class="form-control">
+		<div class="row">
+			{{form_row(VisiteForm.DateVisite)}}
+		</div>
+	</div>
+	<div class="form-control">
+		<div class="row">
+			{{form_row(VisiteForm.HeureDeb)}}
+		</div>
+	</div>
+	<div class="form-control">
+		<div class="row">
+			{{form_row(VisiteForm.HeureFin)}}
+		</div>
+	</div>
+	<div class="form-control">
+		<div class="row">
+			{{form_row(VisiteForm.motif)}}
+		</div>
+	</div>
+	<div class="form-control">
+		<div class="row">
+			{{form_row(VisiteForm.visiteurExterne)}}
+		</div>
+	</div>
+	<div class="form-control">
+		<div class="row">
+			{{ form_row(VisiteForm.EmployeVisite) }}
+		</div>
+	</div>
+	<div class="form-control">
+		<div class="row">
+			{{ form_row(VisiteForm.EtatVisite) }}
+		</div>
+	</div>
+	{{ form_end(VisiteForm) }}
+
+{% endblock body %}

@@ -1,0 +1,13 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello FilialeController!
+{% endblock %}
+
+{% block body %}
+<h1>Nouvelle filiale</h1>
+
+	{{form_start(FilialeForm)}}
+		{{form_row(FilialeForm.NomFiliale)}}
+		
+	{{form_end(FilialeForm)}}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello DirectionController!
+{% endblock %}
+
+{% block body %}
+<h1>Nouvelle piece</h1>
+
+	{{ form_start(DirectionForm) }}
+	<label>Nom de la piece</label>
+	{{ form_widget(DirectionForm.NomPiece)}}
+	<label>Numéro de la piece</label>
+	{{ form_widget(DirectionForm.NumPiece)}}
+	{{ form_end(DirectionForm) }}
+{% endblock %}

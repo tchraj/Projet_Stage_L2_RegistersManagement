@@ -1,0 +1,7 @@
+<i class="fa-solid fa-house"></i>
+<i class="fa-solid fa-user"></i>
+<i class="fa-regular fa-paperclip"></i>
+<i class="fa-light fa-right-from-bracket"></i>
+<i class="fa-solid fa-bells"></i>
+<i class="fa-sharp fa-solid fa-bars"></i>
+<i class="fa-light fa-chart-line"></i>
