@@ -1,20 +1,31 @@
-{% extends 'base.html.twig' %}
+{% extends 'template.html.twig' %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}Hello ProfileController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/GestionDesRegsitres/src/Controller/ProfileController.php'|file_link(0) }}">src/Controller/ProfileController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/GestionDesRegsitres/templates/profile/index.html.twig'|file_link(0) }}">templates/profile/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<div class="row">
+		<div>Bienvenue
+			{{ app.user.Email}}</div>
+	</div>
+	<div class="btn">
+	<a href="{{ path('app_edit_profile',{'id': app.user.id }) }}">
+		<button class="btn shadow-1 rounded-1 btn-outline btn-opening text-blue">
+			<span class="btn-outline-text">Changer votre profil</span>
+		</button>
+		</a>
+	</div>
+	<div class="btn">
+		<button class="btn shadow-1 rounded-1 btn-outline btn-opening green dark-4">
+			<span class="btn-outline-text">Changer le mot de passe</span>
+		</button>
+	</div>
+	<h2>Motifs des visites de
+		{{ app.user.Email}}</h2>
+	{# {% for visite_recue in app.employe.VisiteRecue %}
+					<div class="col">Motif:</div>
+					<div>{{ visite_recue.motif }}</div>
+				{% endfor %} #}
 {% endblock %}
+{#{{ render(controller('App\\Controller\\ProfileController::index2')) }}
+#}

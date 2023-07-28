@@ -8,7 +8,7 @@
 	<div class="px-4 md:px-10 py-4 md:py-7 bg-gray-100 dark:bg-gray-700 rounded-tl-lg rounded-tr-lg">
 		<div class="sm:flex items-end justify-between">
 			<div>
-				<button style="background-color:yellow;" class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 inline-flex sm:ml-3 mt-4 sm:mt-0 items-end justify-start px-4 py-3 bg-Yellow-400 hover:bg-yellow focus:outline-none rounded">
+				<button style="background-color:#F8D210;" class="btn-nv">
 					<a href=" {{ path('app_add_visiteur') }} ">
 						<p class="text-sm font-medium leading-none text-dark" style="font-weight:bold;">Nouveau visiteur</p>
 					</a>
@@ -50,7 +50,7 @@
 							<p class="font-medium">{{vis.tel}}</p>
 						</td>
 						<td class="pl-20">
-							<button class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 inline-flex sm:ml-3 mt-4 sm:mt-0 items-end justify-start px-2 py-2 bg-green-700 hover:bg-indigo-600 focus:outline-none rounded text-white">
+							<button class = "btn btn-success">
 								<a href="{{ path('app_update_visiteur',{'id': vis.id }) }}">
 									<p style="font-weight:bold;" class="font-medium mb-1">Modifier</p>
 								</a>

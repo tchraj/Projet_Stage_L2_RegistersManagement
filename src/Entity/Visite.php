@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\TypeVisiteur;
 use App\Repository\VisiteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -42,6 +43,15 @@ class Visite
     {
         return $this->id;
     }
+
+    #[ORM\Column]
+    private ?string $typeVisiteur = null;
+
+    public function getTypeVisiteur()
+    {
+        return $this->typeVisiteur;
+    }
+
 
     public function getDateVisite(): ?\DateTimeInterface
     {
@@ -90,7 +100,10 @@ class Visite
 
         return $this;
     }
-
+    /*  public function getTypeVisiteur(): bool
+    {
+        return $this->TypeVisiteur;
+    } */
     public function isEtatVisite(): ?bool
     {
         return $this->EtatVisite;

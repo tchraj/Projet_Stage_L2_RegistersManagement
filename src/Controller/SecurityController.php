@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Form\ResetPasswordRequestFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,10 +12,9 @@ class SecurityController extends AbstractController
     #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
@@ -29,13 +27,5 @@ class SecurityController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-    }
-    #[Route(path: '/oubli-pass', name: 'forgot_pass')]
-    public function forgotPass(): Response
-    {
-        $form= $this->createForm(ResetPasswordRequestFormType::class);
-        return $this->render('security/reset_password_request.html.twig',[
-            'requestPass' => $form->createView()
-        ]);
     }
 }

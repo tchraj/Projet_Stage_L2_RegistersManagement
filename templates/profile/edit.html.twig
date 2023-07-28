@@ -1,0 +1,18 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello ProfileController!
+{% endblock %}
+{% block body %}
+	<div class="container">
+		<h1>
+			{{app.user.Email}}
+			Modifiez votre profil</h1>
+
+		{% for message in app.flashes('warning') %}
+			<div class="alert alert-warning mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{{ form(ProfileForm) }}
+		</div>
+	{% endblock %}

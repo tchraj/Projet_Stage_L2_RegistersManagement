@@ -6,6 +6,8 @@ use App\Entity\CompteUtilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -26,7 +28,43 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'label' => 'Mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label mt-4'
+                    ]
+                ],
+                'second_options' => [
+                    'attr' => [
+                        'class' => 'form-control'
+
+                    ],
+                    'label' => 'Confirmer le mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label mt-4'
+                    ]
+                ],
+                'invalid_message' => 'Les mots de passent ne se corespondent pas!'
+            ])
+            ->add('Submit',SubmitType::class,[
+                'label' =>'Valider'
+            ]);
+            /* ->add('newPassword', PasswordType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'label' => 'Nouveau mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label mt-4'
+                    ],
+                    //'constraints' =>[new NotBlank("please enter the new password")]
+                ]
+            ]) */
+        /* ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
@@ -43,7 +81,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'label' =>'ConfirmPass',
@@ -61,7 +99,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ;
+            ; */
     }
 
     public function configureOptions(OptionsResolver $resolver): void

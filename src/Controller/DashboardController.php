@@ -2,20 +2,15 @@
 
 namespace App\Controller;
 
-
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-class TemplateController extends AbstractController
+class DashboardController extends AbstractController
 {
-
-    #[Route('/template', name: 'app_template')]
+    #[Route('/dashboard', name: 'app_dashboard')]
     public function index(): Response
     {
-        return $this->render('template.html.twig');
+        return $this->render('dashboard/index.html.twig');
     }
 }

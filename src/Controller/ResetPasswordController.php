@@ -112,7 +112,7 @@ class ResetPasswordController extends AbstractController
             // Encode(hash) the plain password, and set it.
             $encodedPassword = $passwordHasher->hashPassword(
                 $user,
-                $form->get('plainPassword')->getData()
+                $form->get('password')->getData()
             );
 
             $user->setPassword($encodedPassword);
@@ -139,7 +139,6 @@ class ResetPasswordController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('app_check_email');
         }
-
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
@@ -163,8 +162,7 @@ class ResetPasswordController extends AbstractController
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
-            ])
-        ;
+            ]);
 
         $mailer->send($email);
 

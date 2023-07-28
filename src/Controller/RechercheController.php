@@ -2,20 +2,17 @@
 
 namespace App\Controller;
 
-
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-class TemplateController extends AbstractController
+class RechercheController extends AbstractController
 {
-
-    #[Route('/template', name: 'app_template')]
+    #[Route('/recherche', name: 'app_recherche')]
     public function index(): Response
     {
-        return $this->render('template.html.twig');
+        return $this->render('recherche/index.html.twig', [
+            'controller_name' => 'RechercheController',
+        ]);
     }
 }

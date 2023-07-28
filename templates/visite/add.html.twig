@@ -5,35 +5,37 @@
 
 {% block body %}
 	<div class="container">
-		<h1>Nouvelle visite</h1>
 		{{ form_start(VisiteForm) }}
-		<div class="row">
-			<label>Date de visite</label>
-			{{ form_widget(VisiteForm.DateVisite)}}
-		</div>
-		<div class="row">
-			<label>Heure de début</label>
-			{{ form_widget(VisiteForm.HeureDeb)}}
-		</div>
-		<div class="row">
-			<label>Heure de fin</label>
+		<h1>
+			Nouvelle visite</h1>
 
-			{{ form_widget(VisiteForm.HeureFin)}}
-		</div>
-		<div class="row">
-			<label>Motif</label>
-			{{form_widget(VisiteForm.motif)}}
-		</div>
-		{{ form_row(VisiteForm.visiteurExterne) }}
+		<label>
+			Date de visite</label>
+		{{ form_widget(VisiteForm.DateVisite)}}
 
-		<div class="row"></div>
-		<div class="row">
-			{{ form_row(VisiteForm.EtatVisite)}}
-		</div>
-		<div class="row">
-			{{ form_row(VisiteForm.EmployeVisite) }}
-		</div>
+
+		<label>
+			Heure de début</label>
+		{{ form_widget(VisiteForm.HeureDeb)}}
+
+		<label>
+			Heure de fin</label>
+
+		{{ form_widget(VisiteForm.HeureFin)}}
+
+		<label>
+			Motif</label>
+		{{form_widget(VisiteForm.motif)}}
+
+		{{ form_row(VisiteForm.EtatVisite)}}
+
+
+		{# {{ form_row(VisiteForm.visiteurExterne) }} #}
+
+
+		{{ form_row(VisiteForm.EmployeVisite) }}
+
 		{{ form_end(VisiteForm) }}
-	</div>
 
+	</div>
 {% endblock body %}
