@@ -36,6 +36,14 @@ class VisiteRepository extends ServiceEntityRepository
     //        ;
     //    }
     // 
+    public function findOneByTypeVisiteur($typeVisiteur): ?Visite
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.typeVisiteur = :val')
+            ->setParameter('val', $typeVisiteur)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
     public function findOneById($id): ?Visite
     {
         return $this->createQueryBuilder('v')

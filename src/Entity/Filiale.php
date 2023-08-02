@@ -13,7 +13,7 @@ class Filiale
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $NomFiliale = null;
@@ -65,8 +65,8 @@ class Filiale
     {
         if ($this->directions->removeElement($direction)) {
             // set the owning side to null (unless already changed)
-            if ($direction->getFiliale() === $this) {
-                $direction->setFiliale(null);
+             if ($direction->getFiliale() === $this) {
+                //$direction->setFiliale(null);
             }
         }
 

@@ -16,7 +16,7 @@ class Employe extends Personne
     #[ORM\ManyToOne(inversedBy: 'employe')]
     private ?Profil $profil = null;
 
-    #[ORM\ManyToOne(inversedBy: 'employes')]
+    #[ORM\ManyToOne()]
     private ?Direction $direction = null;
 
     #[ORM\OneToOne()]
@@ -153,7 +153,7 @@ class Employe extends Personne
         if ($this->Visiteeffectuee->removeElement($visiteeffectuee)) {
             // set the owning side to null (unless already changed)
             if ($visiteeffectuee->getEmployeVisiteur() === $this) {
-                $visiteeffectuee->setEmployeVisiteur(null);
+                //$visiteeffectuee->setEmployeVisiteur(null);
             }
         }
 

@@ -18,7 +18,6 @@ class ProfileController extends AbstractController
     {
         return $this->render('profile/index.html.twig');
     }
-
     #[Route('/edit_profile/{id}', name: 'app_edit_profile', methods: ['GET', 'POST'])]
     public function editProfil(ManagerRegistry $managerRegistry, Request $request, CompteUtilisateur $user, UserPasswordHasherInterface $hasher): Response
     {
@@ -26,7 +25,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         if ($this->getUser() !== $user) {
-            $this->addFlash("warning", "Vous n'etes pas connecté avec ce compte");
+            $this->addFlash("error", "Vous n'etes pas connecté avec ce compte");
         }
         $form = $this->createForm(EditProfilType::class, $user);
         $form->handleRequest($request);
@@ -39,7 +38,7 @@ class ProfileController extends AbstractController
                 $this->addFlash('succes', 'Votre profil a ete modifié avec succes');
                 $this->redirectToRoute('app_profile');
             } else {
-                $this->addFlash('warning', 'Votre mot de passe est incorrect!');
+                $this->addFlash('error', 'Votre mot de passe est incorrect!');
             }
             return $this->redirectToRoute('app_profile');
         }

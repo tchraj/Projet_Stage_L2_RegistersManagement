@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html
+	lang="en">
+	{# import swal from 'sweetalert'; #}
 	<head>
-		<meta charset="utf-8"/>
+
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
 		<title>Gestion des registres ||
 			{% block title %}{% endblock %}
-			<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/apple-touch-icon.png') }}">
-			<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon-32x32.png') }}">
-			<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon-16x16.png') }}">
-			<link rel="manifest" href="{{ asset('assets/site.webmanifest') }}">
-			<link rel="mask-icon" href="{{ asset('assets/safari-pinned-tab.svg') }}" color="#5bbad5">
-			<meta name="msapplication-TileColor" content="#da532c">
-			<meta name="theme-color" content="#ffffff">
 		</title>
 		{% block stylesheets %}
+			<link href="css/styles.css" rel="stylesheet"/>
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 			<link href="{{ asset('css/styles.css') }}" rel="stylesheet"/>
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@2.4.0/dist/axentix.min.css">
+			<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+			<link href="{{ asset('css/styles.css') }}" rel="stylesheet"/>
+			<link href="css/styles.css" rel="stylesheet"/>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 			<style>
 				label {
 					color: black;
@@ -37,30 +40,37 @@
 					text-decoration: none;
 					color: black;
 				}
+
 				* {
 					font-weight: bold;
 				}
-			</style>
-			<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-			<link href="{{ asset('css/styles.css') }}" rel="stylesheet"/>
+				.sb-topnav {
+					background-color: green;
+				}
+				.navbar-brand {
+					color: White;
+					font-family: arial;
 
+				}
+			</style>
 		{% endblock %}
 		{% block javascripts %}
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+			<script src="js/scripts.js"></script>
+			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 			<script src="https://kit.fontawesome.com/ff92ade73a.js" crossorigin="anonymous"></script>
 			<script src="{{ asset('js/tail.js') }}"></script>
-			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-			<script src="{{ asset('js/visite.js') }}"></script>
 			<script src="https://cdn.jsdelivr.net/npm/axentix@2.4.0/dist/axentix.min.js"></script>
-			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 		{% endblock %}
 	</head>
 	<body>
 		<nav
-			class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+			class="sb-topnav navbar navbar-expand" style="background-color: black;">
 			<!-- Navbar Brand-->
-			<a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+			<a class="navbar-brand ps-3" href="{{ path('app_template') }}" style="font-size:35px;color:white">ORAGUEST</a>
 			<!-- Sidebar Toggle-->
 			<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
 				<i class="fas fa-bars"></i>
@@ -68,8 +78,8 @@
 			<!-- Navbar Search-->
 			<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 				<div class="input-group">
-					<input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch"/>
-					<button class="btn btn-primary" id="btnNavbarSearch" type="button">
+					<input class="form-control" type="text" placeholder="Rechercher..." aria-label="Rechercher..." aria-describedby="btnNavbarSearch"/>
+					<button class="btn btn-success" id="btnNavbarSearch" type="button">
 						<i class="fas fa-search"></i>
 					</button>
 				</div>
@@ -77,19 +87,22 @@
 			<!-- Navbar-->
 			<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<a class="nav-link dropdown-toggle" style="color:white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						<i class="fas fa-user fa-fw"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 						<li>
-							<a class="dropdown-item" href="#!">Settings</a>
+							<a class="dropdown-item" href="#">User</a>
+							{# 							{{ path('app_edit_profile',{'id': app.user.id }) }}
+														 #}
 						</li>
 						<li>
-							<a class="dropdown-item" href="#!">Activity Log</a>
+							<a class="dropdown-item" href="#!">Changer mon mot de passe</a>
 						</li>
 						<li><hr class="dropdown-divider"/></li>
 						<li>
-							<a class="dropdown-item" href="#!">Logout</a>
+							<a class="dropdown-item" href="{{ path('app_logout')}}">
+								<i class="fa-solid fa-arrow-right-from-bracket"></i>Me deconnecter</a>
 						</li>
 					</ul>
 				</li>
@@ -97,16 +110,32 @@
 		</nav>
 		<div id="layoutSidenav">
 			<div id="layoutSidenav_nav">
-				<nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
-					<div class="sb-sidenav-menu" style="background-color:green;">
+				<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+					<div class="sb-sidenav-menu" style="background-color:black">
 						<div class="nav">
-							<a class="nav-link mt-4" href="/" style="color:white">
+							<div class="sb-sidenav-menu-heading">Core</div>
+							<a class="nav-link" href="{{ path('app_template') }}">
 								<div class="sb-nav-link-icon">
-									<i class="fa-solid fa-house"></i>
+									<i class="fas fa-tachometer-alt"></i>
 								</div>
 								Acceuil
 							</a>
-							<a class="nav-link collapsed" href="#" style="color:white" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+							{# <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+																																																																																																																																																																		<div class="sb-nav-link-icon">
+																																																																																																																																																																			<i class="fas fa-columns"></i>
+																																																																																																																																																																		</div>
+																																																																																																																																																																		Layouts
+																																																																																																																																																																		<div class="sb-sidenav-collapse-arrow">
+																																																																																																																																																																			<i class="fas fa-angle-down"></i>
+																																																																																																																																																																		</div>
+																																																																																																																																																																	</a>
+																																																																																																																																																																	<div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+																																																																																																																																																																		<nav class="sb-sidenav-menu-nested nav">
+																																																																																																																																																																			<a class="nav-link" href="layout-static.html">Static Navigation</a>
+																																																																																																																																																																			<a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+																																																																																																																																																																		</nav>
+																																																																																																																																																																	</div> #}
+							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
 								<div class="sb-nav-link-icon">
 									<i class="fas fa-book-open"></i>
 								</div>
@@ -117,7 +146,7 @@
 							</a>
 							<div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
 								<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-									<a class="nav-link collapsed" style="color:white" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+									<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
 										Authentication
 										<div class="sb-sidenav-collapse-arrow">
 											<i class="fas fa-angle-down"></i>
@@ -125,100 +154,153 @@
 									</a>
 									<div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
 										<nav class="sb-sidenav-menu-nested nav">
-											<a class="nav-link" style="color:white" href="{{ path('app_login') }}">Login</a>
-											<a class="nav-link" style="color:white" href="{{ path('app_register') }}">Register</a>
-											<a class="nav-link" style="color:white" href="{{ path('app_reset_password') }}">Forgot Password</a>
+											<a class="nav-link" href="{{ path('app_login') }}">Login</a>
+											<a class="nav-link" href="{{ path('app_register') }}">Register</a>
 										</nav>
 									</div>
-									<a class="nav-link collapsed" style="color:white" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-										Directions
-										<div class="sb-sidenav-collapse-arrow">
-											<i class="fas fa-angle-down"></i>
-										</div>
-									</a>
-									<div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-										<nav class="sb-sidenav-menu-nested nav">
-											<a class="nav-link" style="color:white" href="{{ path('app_direction') }}">Liste des directions</a>
-											<a class="nav-link" style="color:white" href="{{ path('app_add_direction') }}">Ajouter une direction</a>
-										</nav>
-									</div>
-									<a class="nav-link collapsed" style="color:white" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-										Filiales
-										<div class="sb-sidenav-collapse-arrow">
-											<i class="fas fa-angle-down"></i>
-										</div>
-									</a>
-									<div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-										<nav class="sb-sidenav-menu-nested nav">
-											<a class="nav-link" style="color:white" href="{{ path('app_filiale') }}">Liste des filiales</a>
-											<a class="nav-link" style="color:white" href="{{ path('app_add_filiale') }}">Ajouter une filiale</a>
-										</nav>
-									</div>
-									<a class="nav-link collapsed" style="color:white" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+									<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
 										Employes
-										<div class="sb-sidenav-collapse-arrow">
-											<i class="fas fa-angle-down"></i>
-										</div>
-									</a>
-									<div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-										<nav class="sb-sidenav-menu-nested nav">
-											<a class="nav-link" style="color:white" href="{{ path('app_employe') }}">Liste des employes</a>
-											<a class="nav-link" style="color:white" href="{{ path('app_add_employe') }}">Ajout</a>
-										</nav>
-									</div>
-									<a class="nav-link collapsed" style="color:white" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-										Visiteurs
-										<div class="sb-sidenav-collapse-arrow">
-											<i class="fas fa-angle-down"></i>
-										</div>
-									</a>
-									<div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-										<nav class="sb-sidenav-menu-nested nav">
-											<a class="nav-link" style="color:white" href="{{ path('app_visiteur_externe') }}">Liste des visiteurs</a>
-											<a class="nav-link" style="color:white" href="{{ path('app_add_visiteur') }}">Ajouter un visiteur</a>
-										</nav>
-									</div>
-									<a class="nav-link collapsed" style="color:white" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-										Visites
-										<div class="sb-sidenav-collapse-arrow">
-											<i class="fas fa-angle-down"></i>
-										</div>
-									</a>
-									<div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-										<nav class="sb-sidenav-menu-nested nav">
-											<a class="nav-link" style="color:white" href="{{ path('app_visite') }}">Liste des visites</a>
-											<a class="nav-link" style="color:white" href="{{ path('app_add_visite') }}">Ajout</a>
-										</nav>
-									</div>
-									<a class="nav-link collapsed" style="color:white" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-										Error
 										<div class="sb-sidenav-collapse-arrow">
 											<i class="fas fa-angle-down"></i>
 										</div>
 									</a>
 									<div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
 										<nav class="sb-sidenav-menu-nested nav">
-											<a class="nav-link" href="401.html" style="color:white">401 Page</a>
-											<a class="nav-link" href="404.html" style="color:white">404 Page</a>
-											<a class="nav-link" href="500.html" style="color:white">500 Page</a>
+											<a class="nav-link" href="{{path('app_employe')}}">Liste des employes</a>
+											<a class="nav-link" href="{{path('app_add_employe')}}">Ajouter un employe</a>
 										</nav>
 									</div>
+									<a data-toggle="collapse" href="#collapse6" class="nav-link collapsed">
+
+										Directions
+										<div class="sb-sidenav-collapse-arrow">
+											<i class="fas fa-angle-down"></i>
+										</div>
+									</a>
+									<div id="collapse6" class="collapse">
+										<nav class="sb-sidenav-menu-nested nav">
+
+											<a href="{{ path('app_direction') }}" class="nav-link">
+												<div>
+													Liste des directions</div>
+											</a>
+											<a href="{{ path('app_add_direction') }}" class="nav-link">
+												<div>Creer une direction</div>
+											</a>
+										</nav>
+									</div>
+									<a data-toggle="collapse" href="#collapse1" class="nav-link collapsed">
+
+										Visites
+										<div class="sb-sidenav-collapse-arrow">
+											<i class="fas fa-angle-down"></i>
+										</div>
+									</a>
+									<div id="collapse1" class="collapse">
+										<nav class="sb-sidenav-menu-nested nav">
+											<a href="{{ path('app_visite') }}" class="nav-link">
+												<div>
+													Liste des visites</div>
+											</a>
+											<a href="{{ path('app_add_visite') }}" class="nav-link">
+												<div>Creer une visite</div>
+											</a>
+										</nav>
+									</div>
+									<a data-toggle="collapse" href="#collapse2" class="nav-link collapsed">
+
+										Visiteurs externes
+										<div class="sb-sidenav-collapse-arrow">
+											<i class="fas fa-angle-down"></i>
+										</div>
+									</a>
+									<div id="collapse2" class="collapse">
+										<nav class="sb-sidenav-menu-nested nav">
+
+											<a href="{{ path('app_visiteur_externe') }}" class="nav-link">
+												<div>
+													Liste des visiteurs</div>
+											</a>
+											<a href="{{ path('app_add_visiteur') }}" class="nav-link">
+												<div>Creer un visiteur</div>
+											</a>
+										</nav>
+									</div>
+									<a data-toggle="collapse" href="#collapse3" class="nav-link collapsed">
+
+										Types de piece
+										<div class="sb-sidenav-collapse-arrow">
+											<i class="fas fa-angle-down"></i>
+										</div>
+									</a>
+									<div id="collapse3" class="collapse">
+										<nav class="sb-sidenav-menu-nested nav">
+
+											<a href="{{ path('app_type_piece') }}" class="nav-link">
+												<div>
+													Liste des pieces</div>
+											</a>
+											<a href="{{ path('app_add_piece') }}" class="nav-link">
+												<div>Creer une piece</div>
+											</a>
+										</nav>
+									</div>
+									<a data-toggle="collapse" href="#collapse4" class="nav-link collapsed">
+
+										Filiales
+										<div class="sb-sidenav-collapse-arrow">
+											<i class="fas fa-angle-down"></i>
+										</div>
+									</a>
+									<div id="collapse4" class="collapse">
+										<a href="{{ path('app_filiale') }}" class="nav-link">
+											<div>
+												Liste des filiales</div>
+										</a>
+										<a href="{{ path('app_add_filiale') }}" class="nav-link">
+											<div>Creer une filiale</div>
+										</a>
+									</div>
+									<a data-toggle="collapse" href="#collapse5" class="nav-link collapsed">
+
+										Profils
+										<div class="sb-sidenav-collapse-arrow">
+											<i class="fas fa-angle-down"></i>
+										</div>
+									</a>
+									<div id="collapse5" class="collapse">
+										<a href="{{ path('app_template') }}" class="nav-link">
+											<div>
+												Liste des profils</div>
+										</a>
+										<a href="{{ path('app_template') }}" class="nav-link">
+											<div>Creer un profil</div>
+										</a>
+									</div>
+
+									{# <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseDirections" aria-expanded="false" aria-controls="pagesCollapseDirections">
+									Directions
+									<div class="sb-sidenav-collapse-arrow">
+																																																																																																															<i class="fas fa-angle-down"></i>
+																																																																																																																																																																																																																	</div>
+																																																																																																																																																																																																																</a>
+																																																																																																																																																																																																																<div class="collapse" id="pagesCollapseDirectionsr" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+																																																																																																																																																																																																																	<nav class="sb-sidenav-menu-nested nav">
+																																																																																																																																																																																																																		<a class="nav-link" href="401.html">401 Page</a>
+																																																																																																																																																																																																																		<a class="nav-link" href="404.html">404 Page</a>
+																																																																																																																																																																																																																		<a class="nav-link" href="500.html">500 Page</a>
+																																																																																																																																																																																																																	</nav>
+																																																																																																																																																																																																																</div> #}
 								</nav>
 							</div>
-							<div class="sb-sidenav-menu-heading" style="color:white">Statistiques</div>
-							<a class="nav-link" href="/" style="color:white">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div>
-								Tableau de bord
-							</a>
-							<a class="nav-link" href="charts.html" style="color:white">
+							<div class="sb-sidenav-menu-heading">Addons</div>
+							<a class="nav-link" href="charts.html">
 								<div class="sb-nav-link-icon">
 									<i class="fas fa-chart-area"></i>
 								</div>
 								Charts
 							</a>
-							<a class="nav-link" href="tables.html" style="color:white">
+							<a class="nav-link" href="tables.html">
 								<div class="sb-nav-link-icon">
 									<i class="fas fa-table"></i>
 								</div>
@@ -226,40 +308,41 @@
 							</a>
 						</div>
 					</div>
-					<div class="sb-sidenav-footer" style="background-color:#F8D210">
-						<div class="small">Logged in as:{{ render(controller('App\\Controller\\ProfileController::index2')) }}</h1>
+					<div class="sb-sidenav-footer" style="background-color: gray">
+						<div class="small">Logged in as:</div>
+						{#{{ app.user.Email}}#}
 					</div>
-				</div>
-			</nav>
-		</div>
-		<div id="layoutSidenav_content">
-			<main>
-				<div class="container-fluid px-4">
-					{% block body %}
-						{% if app.user %}
-							<div>
-								<button onclick="window.location = '{{ path('app_logout') }}' ">Logout</button>
+				</nav>
+			</div>
+			<div id="layoutSidenav_content">
+				<main>
+					<div class="container-fluid px-4"> {% block body %}{% endblock body %}
+						</div>
+					</main>
+					<footer class="py-4 bg-light mt-auto">
+						<div class="container-fluid px-4">
+							<div class="d-flex align-items-center justify-content-between small">
+								<div class="text-muted">Copyright Stage || TCHANI Rajaa 2023</div>
+								<div>
+									<a href="#">Privacy Policy</a>
+									&middot;
+									<a href="#">Terms &amp; Conditions</a>
+								</div>
 							</div>
-						{% endif %}
-
-					{% endblock body %}
-					{# <div class="card mb-4">
-																																																								<div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div>
-																																																							</div> #}
+						</div>
+					</footer>
 				</div>
-			</main>
-			{# <footer class="py-4 bg-light mt-auto">
-																																																																																																																																																																																																																																									<div class="container-fluid px-4">
-																																																																																																																																																																																																																																										<div class="d-flex align-items-center justify-content-between small">
-																																																																																																																																																																																																																																											<div class="text-muted">Copyright &copy; Your Website 2023</div>
-																																																																																																																																																																																																																																											<div>
-																																																																																																																																																																																																																																												<a href="#">Privacy Policy</a>
-																																																																																																																																																																																																																																												&middot;
-																																																																																																																																																																																																																																												<a href="#">Terms &amp; Conditions</a>
-																																																																																																																																																																																																																																											</div>
-																																																																																																																																																																																																																																										</div>
-																																																																																																																																																																																																																																									</div>
-																																																																																																																																																																																																																																								</footer> #}
-		</div>
-	</body>
-</html></div><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script><script src="{{ asset('js/scripts.js') }}"></script></body></html>
+			</div>
+			<script>
+				$(document).ready(function () { // Add click event handler to the collapse links
+$('[data-toggle="collapse"]').click(function () { // Get the target collapse element from the 'href' attribute of the link
+var target = $(this).attr('href');
+
+// Toggle the collapse state of the target element
+$(target).collapse('toggle');
+});
+});
+			</script>
+		</body>
+	</html>
+</body></html>

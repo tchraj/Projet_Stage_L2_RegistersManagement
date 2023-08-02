@@ -18,18 +18,18 @@ class Personne
     #[ORM\Column]
     protected ?int $id;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, nullable: true)]
     protected ?string $nom = null;
 
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(length: 60, nullable: true)]
     protected ?string $prenoms = null;
 
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(length: 60, nullable: true)]
     //#[Assert\NotBlank(message: 'Veuillez entrer l\'adresse mail')]
     //#[Assert\Email(message: 'L\'adresse {{ value }} n\'est pas une adresse mail valide')]
     protected ?string $email = null;
 
-    #[ORM\Column(length: 15)]
+    #[ORM\Column(length: 15, nullable: true)]
     protected ?string $tel = null;
 
     // #[ORM\OneToMany(mappedBy: 'proprietaire', targetEntity: TypePiece::class)]

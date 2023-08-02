@@ -3,22 +3,16 @@
 namespace App\Form;
 
 use App\Entity\Employe;
-use App\Entity\TypeVisiteur;
 use App\Entity\Visite;
-use App\Entity\VisiteurExterne;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EnumType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface as FormFormInterface;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VisiteType extends AbstractType
@@ -27,15 +21,15 @@ class VisiteType extends AbstractType
     {
         $builder
             ->add('DateVisite', DateType::class, [
-                'input'  => 'datetime',
-                'widget' => 'single_text',
+                'input'  => 'string',
+                'widget' => 'text'
             ])
             ->add('HeureDeb', TimeType::class, [
-                'input'  => 'datetime',
-                'widget' => 'single_text',
+                'input' => 'string',
+                'widget' => 'single_text'
             ])
             ->add('HeureFin', TimeType::class, [
-                'input'  => 'datetime',
+                'input'  => 'string',
                 'widget' => 'single_text',
             ])
             ->add('motif', TextType::class, [
@@ -43,31 +37,33 @@ class VisiteType extends AbstractType
                     'color' => 'black'
                 ]
             ])
-
-            ->add(
-                'EtatVisite',
-                ChoiceType::class,
-                [
-                    'choices'  => [
-                        'Accepté' => true,
-                        'Refusé' => false,
-                    ]
-                ]
-            )
             ->add('EmployeVisite', EntityType::class, ['class' => Employe::class])
             ->add(
                 'typeVisiteur',
                 ChoiceType::class,
                 [
-                    'label' => 'Vous etes',
-                    'required' => true,
+                    'label' => 'Type de visiteur',
                     'choices' => [
-                        'Visiteur externe' => false,
-                        'Employe visiteur' => true,
+                        'Visiteur externe' => "Visiteur externe",
+                        'Employe visiteur' => "Employe visiteur",
                     ]
                 ]
-            );
-        $typeVisiteur = $builder->get("typeVisiteur");
+            )
+            ->add('nomVisiteur', TextType::class)
+            ->add(
+                'EtatVisite',
+                ChoiceType::class,
+                [
+                    'choices'  => [
+                        'Accepté' => "Accepté",
+                        'Refusé' => "Refusé"
+                    ]
+                ]
+                    );
+
+        //$nom = $builder->get("nomVisiteur");
+
+        /* $typeVisiteur = $builder->get("typeVisiteur");
         if ($typeVisiteur == 'Visiteur externe') {
             $builder->add('visiteurExterne', EntityType::class, ['class' => VisiteurExterne::class]);
         } elseif ($typeVisiteur == 'Employe visiteur') {
@@ -76,8 +72,7 @@ class VisiteType extends AbstractType
         /*  ->add('visiteurExterne', EntityType::class, [
                 'class' => VisiteurExterne::class,
             ]) */
-        $builder
-            ->add('Envoyer', SubmitType::class);
+        $builder->add('Envoyer', SubmitType::class);
 
 
         /* $formMofifier = function(FormFormInterface $form ,$TypeVisiteur){

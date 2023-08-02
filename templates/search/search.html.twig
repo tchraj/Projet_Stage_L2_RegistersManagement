@@ -1,0 +1,10 @@
+{{ form_start(SearchForm) }}
+<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+	<div class="input-group">
+		{{form_widget(SearchForm.q) }}
+		<button class="btn btn-success" id="btnNavbarSearch" type="button submit">
+			<i class="fas fa-search"></i>
+		</button>
+	</div>
+</form>
+{{ form_end(SearchForm) }}

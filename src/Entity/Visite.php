@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\TypeVisiteur;
+use App\Entity\VisiteurExterne;
 use App\Repository\VisiteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,25 +15,28 @@ class Visite
     #[ORM\Column]
     private ?int $id;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $DateVisite = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $DateVisite;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $HeureDeb = null;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $HeureDeb = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $HeureFin = null;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $HeureFin = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $motif = null;
 
     #[ORM\Column]
-    private ?bool $EtatVisite = null;
+    private ?string $EtatVisite;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $nomVisiteur;
 
     #[ORM\ManyToOne(inversedBy: 'visites')]
     private ?VisiteurExterne $visiteurExterne = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Visiteeffectuee')]
+    #[ORM\ManyToOne(inversedBy: 'Visiteeffectuee', cascade: ["persist"])]
     private ?Employe $EmployeVisiteur = null;
 
     #[ORM\ManyToOne(inversedBy: 'VisiteRecue')]
@@ -45,44 +48,57 @@ class Visite
     }
 
     #[ORM\Column]
-    private ?string $typeVisiteur = null;
+    private ?string $typeVisiteur;
 
-    public function getTypeVisiteur()
+    public function getTypeVisiteur(): ?string
     {
         return $this->typeVisiteur;
     }
-
-
-    public function getDateVisite(): ?\DateTimeInterface
+    public function getNomVisiteur()
     {
-        return $this->DateVisite;
+        return $this->nomVisiteur;
     }
-
-    public function setDateVisite(\DateTimeInterface $DateVisite): static
+    public function setNomVisiteur(?string $nomVisiteur): static
     {
-        $this->DateVisite = $DateVisite;
+        $this->nomVisiteur = $nomVisiteur;
+        return $this;
+    }
+    public function setTypeVisiteur(string $typeVisiteur): static
+    {
+        $this->typeVisiteur = $typeVisiteur;
 
         return $this;
     }
 
-    public function getHeureDeb(): ?\DateTimeInterface
+    public function getDateVisite(): ?string
+    {
+        return $this->DateVisite;
+    }
+
+    public function setDateVisite(string $DateVisite): static
+    {
+        $this->DateVisite = $DateVisite;
+        return $this;
+    }
+
+    public function getHeureDeb(): ?string
     {
         return $this->HeureDeb;
     }
 
-    public function setHeureDeb(\DateTimeInterface $HeureDeb): static
+    public function setHeureDeb(string $HeureDeb): static
     {
         $this->HeureDeb = $HeureDeb;
 
         return $this;
     }
 
-    public function getHeureFin(): ?\DateTimeInterface
+    public function getHeureFin(): ?string
     {
         return $this->HeureFin;
     }
 
-    public function setHeureFin(\DateTimeInterface $HeureFin): static
+    public function setHeureFin(string $HeureFin): static
     {
         $this->HeureFin = $HeureFin;
 
@@ -100,16 +116,13 @@ class Visite
 
         return $this;
     }
-    /*  public function getTypeVisiteur(): bool
-    {
-        return $this->TypeVisiteur;
-    } */
-    public function isEtatVisite(): ?bool
+
+    public function getEtatVisite(): ?string
     {
         return $this->EtatVisite;
     }
 
-    public function setEtatVisite(bool $EtatVisite): static
+    public function setEtatVisite(string $EtatVisite): static
     {
         $this->EtatVisite = $EtatVisite;
 
@@ -124,7 +137,6 @@ class Visite
     public function setVisiteurExterne(?VisiteurExterne $visiteurExterne): static
     {
         $this->visiteurExterne = $visiteurExterne;
-
         return $this;
     }
 
@@ -133,9 +145,9 @@ class Visite
         return $this->EmployeVisiteur;
     }
 
-    public function setEmployeVisiteur(?Employe $EmployeVisiteur): static
+    public function setEmployeVisiteur(?Employe $employe): static
     {
-        $this->EmployeVisiteur = $EmployeVisiteur;
+        $this->EmployeVisiteur = $employe;
 
         return $this;
     }

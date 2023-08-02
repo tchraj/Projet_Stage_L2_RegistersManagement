@@ -25,7 +25,7 @@ class EmployeType extends AbstractType
             )
             ->add(
                 'prenoms',
-                null,
+                TextType::class,
             )
             ->add(
                 'email',
@@ -33,11 +33,11 @@ class EmployeType extends AbstractType
             )
             ->add(
                 'tel',
-                null,
+                TextType::class,
             )
             ->add(
                 'poste',
-                null,
+                TextType::class,
             )
             ->add(
                 'profil',
@@ -52,7 +52,7 @@ class EmployeType extends AbstractType
                 [
                     'class' => Direction::class
                 ],
-                 )
+            )
             ->add(
                 'compteUtilisateur',
                 EntityType::class,

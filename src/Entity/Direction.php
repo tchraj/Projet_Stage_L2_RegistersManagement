@@ -21,9 +21,10 @@ class Direction
     #[ORM\OneToMany(mappedBy: 'direction', targetEntity: Employe::class)]
     private Collection $employes;
 
-    #[ORM\ManyToOne(inversedBy: 'directions')]
+    #[ORM\ManyToOne(inversedBy: 'directions', targetEntity: Filiale::class)]
     private ?Filiale $filiale = null;
-
+    /* #[ORM\ManyToOne(inversedBy: 'directions', targetEntity: Filiale::class)]
+    private ?string $filiale = null; */
     public function __construct()
     {
         $this->employes = new ArrayCollection();
@@ -45,7 +46,7 @@ class Direction
 
         return $this;
     }
-
+    /*
     /**
      * @return Collection<int, Employe>
      */

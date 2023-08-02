@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --bleu: #0E1CF3;
     --vert: rgb(13, 184, 19);
     --blanc: white;
@@ -72,4 +72,74 @@ input {
     .form {
         margin: 0
     }
+} */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    /* Couleur de fond gris clair */
+    margin: 0;
+    padding: 0;
+}
+
+.image {
+    width: 180px;
+    position: absolute;
+    top: 40px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-form {
+    background-color: #ffffff;
+    /* Couleur de fond blanc */
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+    color: #00b300;
+    /* Couleur verte */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #00b300;
+    /* Couleur verte */
+    color: #ffffff;
+    /* Couleur de texte blanc */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #00b300;
+    /* Couleur verte légèrement plus foncée au survol */
 }
