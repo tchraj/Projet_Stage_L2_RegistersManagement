@@ -15,23 +15,23 @@ class Visite
     #[ORM\Column]
     private ?int $id;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: false)]
+    private ?\DateTimeInterface $DateVisite;
+
+    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    private ?string $HeureDeb;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $DateVisite;
+    private ?string $HeureFin;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $HeureDeb = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $HeureFin = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $motif = null;
+    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    private ?string $motif;
 
     #[ORM\Column]
     private ?string $EtatVisite;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $nomVisiteur;
+    // #[ORM\Column(type: Types::TEXT)]
+    // private ?string $nomVisiteur;
 
     #[ORM\ManyToOne(inversedBy: 'visites')]
     private ?VisiteurExterne $visiteurExterne = null;
@@ -47,22 +47,22 @@ class Visite
         return $this->id;
     }
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::TEXT, nullable: false)]
     private ?string $typeVisiteur;
 
     public function getTypeVisiteur(): ?string
     {
         return $this->typeVisiteur;
     }
-    public function getNomVisiteur()
-    {
-        return $this->nomVisiteur;
-    }
-    public function setNomVisiteur(?string $nomVisiteur): static
-    {
-        $this->nomVisiteur = $nomVisiteur;
-        return $this;
-    }
+    // public function getNomVisiteur()
+    // {
+    //     return $this->nomVisiteur;
+    // }
+    // public function setNomVisiteur(?string $nomVisiteur): static
+    // {
+    //     $this->nomVisiteur = $nomVisiteur;
+    //     return $this;
+    // }
     public function setTypeVisiteur(string $typeVisiteur): static
     {
         $this->typeVisiteur = $typeVisiteur;
@@ -70,16 +70,18 @@ class Visite
         return $this;
     }
 
-    public function getDateVisite(): ?string
+    public function getDateVisite(): ?\DateTimeInterface
     {
         return $this->DateVisite;
     }
 
-    public function setDateVisite(string $DateVisite): static
+    public function setDateVisite(\DateTimeInterface $DateVisite): static
     {
         $this->DateVisite = $DateVisite;
+
         return $this;
     }
+
 
     public function getHeureDeb(): ?string
     {

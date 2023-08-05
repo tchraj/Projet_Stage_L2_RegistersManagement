@@ -6,3 +6,6 @@ controllers:
 app_logout:
     path: /logout
     methods: GET
+search:
+    path: /admin
+    controller: App\Controller\TemplateController::search

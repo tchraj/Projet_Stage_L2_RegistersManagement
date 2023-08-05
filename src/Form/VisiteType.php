@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
+use App\Entity\VisiteurExterne;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,9 +21,13 @@ class VisiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('DateVisite', DateType::class, [
-                'input'  => 'string',
-                'widget' => 'text'
+            ->add('DateVisite', null, [
+                'widget' => 'single_text',
+                'label_attr' => ['class' => 'label'],
+                'row_attr' => ['class' => 'form-group'],
+                'attr' => [
+                    'class' => 'form-group',
+                ]
             ])
             ->add('HeureDeb', TimeType::class, [
                 'input' => 'string',
@@ -44,12 +49,20 @@ class VisiteType extends AbstractType
                 [
                     'label' => 'Type de visiteur',
                     'choices' => [
-                        'Visiteur externe' => "Visiteur externe",
-                        'Employe visiteur' => "Employe visiteur",
-                    ]
+                        'Visiteur externe' => 'Visiteur externe',
+                        'Employe visiteur' => 'Employe visiteur',
+                    ],
+                    'mapped' => false,
                 ]
             )
-            ->add('nomVisiteur', TextType::class)
+            ->add('visiteurExterne', EntityType::class, [
+                'class' => VisiteurExterne::class,
+                'required' => false, // Vous pouvez ajuster cette option en fonction de vos besoins
+            ])
+            ->add('employeVisiteur', EntityType::class, [
+                'class' => Employe::class,
+                'required' => false, // Vous pouvez ajuster cette option en fonction de vos besoins
+            ])
             ->add(
                 'EtatVisite',
                 ChoiceType::class,
@@ -59,9 +72,17 @@ class VisiteType extends AbstractType
                         'Refusé' => "Refusé"
                     ]
                 ]
-                    );
-
-        //$nom = $builder->get("nomVisiteur");
+            );
+            //->add('Envoyer', SubmitType::class)
+    }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Visite::class,
+        ]);
+    }
+}
+//$nom = $builder->get("nomVisiteur");
 
         /* $typeVisiteur = $builder->get("typeVisiteur");
         if ($typeVisiteur == 'Visiteur externe') {
@@ -72,9 +93,6 @@ class VisiteType extends AbstractType
         /*  ->add('visiteurExterne', EntityType::class, [
                 'class' => VisiteurExterne::class,
             ]) */
-        $builder->add('Envoyer', SubmitType::class);
-
-
         /* $formMofifier = function(FormFormInterface $form ,$TypeVisiteur){
                 if ($TypeVisiteur == true) {
                     $form->add('EmployeVisiteur', EntityType::class, ['class' => Employe::class]);
@@ -89,12 +107,3 @@ class VisiteType extends AbstractType
                     $formMofifier($event->getForm()->getParent(),$TypeVisiteur);
                 }
             ); */
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Visite::class,
-        ]);
-    }
-}

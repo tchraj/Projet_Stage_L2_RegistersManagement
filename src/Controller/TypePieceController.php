@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\TypePiece;
 use App\Form\TypePieceType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,7 +33,7 @@ class TypePieceController extends AbstractController
         //sinon
         //afficher le formulaire
         //message d'erreur
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager = $managerRegistry->getManager();
             $manager->persist($piece);
             $manager->flush();

@@ -16,7 +16,7 @@
 		transition: background-color 0.3s ease;
 	}
 	.button-section button.login-btn {
-		background-color: #ff9900;
+		background-color: #333;
 	}
 
 	.button-section button.signup-btn {
@@ -26,33 +26,6 @@
 	.button-section button:hover {
 		background-color: #333;
 	}
-	.button-section {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .button-section button {
-            padding: 12px 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 10px;
-            color: #fff;
-            transition: background-color 0.3s ease, transform 0.3s ease; /* Ajout de la transition de transformation */
-        }
-		.button-section button.login-btn {
-            background-color: #00b300;
-        }
-
-        .button-section button.signup-btn {
-            background-color: #ff9900;
-        }
-
-        .button-section button:hover {
-            background-color: #333;
-            transform: translateX(10px); /* Déplacement de 10 pixels vers la droite */
-        }
 	body-home {
 		font-family: Arial, sans-serif;
 		background-color: #f2f2f2;
@@ -113,6 +86,7 @@
 	<header>
 		<h1>Application de Gestion des Visiteurs</h1>
 	</header>
+
 	<div class="main-content">
 		<div class="image-section">
 			<img src="{{ asset('assets/img/acceuil.jpg')}}" alt="Image Convaincante 1" class="animated-image">
@@ -121,7 +95,7 @@
 			<p>Gérez efficacement les visiteurs de votre entreprise bancaire grâce à notre solution moderne et conviviale.</p>
 			<div class="button-section">
 			<a href="{{ path('app_login') }}">
-            <button class="login-btn" onclick="window.location.href='#'">Se connecter</button>
+				<button class="login-btn" onclick="window.location.href='#'">Se connecter</button>
 			</a>
 			{# 			<button class=" signup-btn" onclick=" window.location.href='#'">S'inscrire</button>#}
 		</div>
