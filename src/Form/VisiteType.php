@@ -7,13 +7,10 @@ use App\Entity\Visite;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use App\Entity\VisiteurExterne;
-
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VisiteType extends AbstractType
@@ -30,11 +27,11 @@ class VisiteType extends AbstractType
                 ]
             ])
             ->add('HeureDeb', TimeType::class, [
-                'input' => 'string',
+                'input' => 'datetime',
                 'widget' => 'single_text'
             ])
             ->add('HeureFin', TimeType::class, [
-                'input'  => 'string',
+                'input'  => 'datetime',
                 'widget' => 'single_text',
             ])
             ->add('motif', TextType::class, [
@@ -73,7 +70,7 @@ class VisiteType extends AbstractType
                     ]
                 ]
             );
-            //->add('Envoyer', SubmitType::class)
+        //->add('Envoyer', SubmitType::class)
     }
     public function configureOptions(OptionsResolver $resolver): void
     {

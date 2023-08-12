@@ -1,0 +1,66 @@
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Formulaire de Connexion</title>
+	<link rel="stylesheet" href="{{ asset('css/login.css')}}">
+</head>
+<div class="container">
+	{# <img src="{{ asset('assets/img/logo.jpg') }}" alt="" class="image" style="width:150px;position:center"> #}
+	<form method="post" class="login-form">
+		<div class="form-body">
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
+			{% if app.user %}
+				<div class="mb-3">
+					You are logged in as
+					{{ app.user.userIdentifier }},
+					<a href="{{ path('app_logout') }}">Logout</a>
+				</div>
+			{% endif %}
+			<h1 class="titre">Connexion</h1>
+			<label for="inputUsername">Nom d'utilisateur</label>
+			<input type="text" value="{{ last_username }}" name="username" id="inputUsername" autocomplete="inputUsername" required autofocus>
+			<label for="inputPassword">Mot de passe</label>
+			<input type="password" name="password" id="inputPassword" autocomplete="current-password" required>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<a href="{{ path('app_template') }}">
+				<button class="btn" type="submit">
+					Se connecter
+				</button>
+			</a>
+			<label>
+				<input type="checkbox" name="_remember_me" checked/>
+				Me garder connecté(e)
+			</label>
+		</div>
+	</form>
+</div>
+{#<!DOCTYPE html>
+		<html lang="en">
+		<body>
+			<form class="login-form" method="post">
+				{% if error %}
+					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+				{% if app.user %}
+					<div class="mb-3">
+						You are logged in as
+						{{ app.user.userIdentifier }},
+						<a href="{{ path('app_logout') }}">Logout</a>
+					</div>
+				{% endif %}
+					<h2>Connexion</h2>
+					<label for="inputEmail">Votre Email:</label>
+					<input type="email" value="{{ last_username }}" id="inputEmail" name="username" required name="email">
+					<label for="inputPassword">Votre mot de passe:</label>
+					<input  id="inputPassword" type="password" name="password" required autocomplete="current-password">
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<a href="{{ path('app_template') }}">
+						<button type="submit">Se connecter</button>
+					</a>
+				</form>
+			</div>
+		</body>
+		</html>
+		#}

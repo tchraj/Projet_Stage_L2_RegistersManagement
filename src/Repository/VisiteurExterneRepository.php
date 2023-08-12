@@ -20,7 +20,12 @@ class VisiteurExterneRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, VisiteurExterne::class);
     }
-
+    /*
+    public function findForPagination(){
+        $qb = $this->createQueryBuilder('v')
+        ->orderBy('v.nom','DESC')
+        ;
+    }*/
 //    /**
 //     * @return VisiteurExterne[] Returns an array of VisiteurExterne objects
 //     */

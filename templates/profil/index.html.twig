@@ -1,0 +1,13 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello ProfilController!
+{% endblock %}
+
+{% block body %}
+	{% for profil in profils %}
+		<div>{{profil.nomProfil}}</div>
+		{% for role in profil.roles %}
+			<li>{{role.NomRole}}</li>
+		{% endfor %}
+	{% endfor %}
+{% endblock %}

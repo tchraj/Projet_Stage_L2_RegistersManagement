@@ -5,7 +5,7 @@
 {% block body %}
 	<div class="container">
 		<h1>
-			{{app.user.Email}}
+			{{app.user.username}}
 			Modifiez votre profil</h1>
 
 		{% for message in app.flashes('error') %}

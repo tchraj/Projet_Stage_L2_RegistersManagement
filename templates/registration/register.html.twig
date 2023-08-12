@@ -1,5 +1,4 @@
 {% block title %}{% endblock %}
-
 {% block body %}
 	{% for flash_error in app.flashes('verify_email_error') %}
 		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
@@ -21,7 +20,7 @@
 										<form method="post">
 											{{ form_start(registrationForm) }}
 											<div class="form-floating mb-3">
-												{{ form_widget(registrationForm.email) }}
+												{{ form_widget(registrationForm.username) }}
 											</div>
 											<div class="form-floating mb-3 mb-md-0">
 												{{ form_widget(registrationForm.password) }}

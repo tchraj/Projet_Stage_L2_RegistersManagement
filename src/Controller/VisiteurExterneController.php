@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\VisiteurExterne;
 use App\Form\VisiteurExterneType;
-use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +15,9 @@ class VisiteurExterneController extends AbstractController
     #[Route('/visiteur_externe', name: 'app_visiteur_externe')]
     public function index(ManagerRegistry $managerRegistry): Response
     {
-        $visiteurs = $managerRegistry->getRepository(VisiteurExterne::class)->findAll();
+        $manager = $managerRegistry->getManager();
+        $visiteurs = $manager->getRepository(VisiteurExterne::class)->findAll();
+
         return $this->render('visiteur_externe/index.html.twig', [
             'visiteurs' => $visiteurs
         ]);

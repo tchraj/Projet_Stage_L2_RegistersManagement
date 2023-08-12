@@ -12,21 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
 //#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class Employe extends Personne
 {
-
-    #[ORM\ManyToOne(inversedBy: 'employe')]
-    private ?Profil $profil = null;
-
     #[ORM\ManyToOne()]
     private ?Direction $direction = null;
-
     #[ORM\OneToOne()]
     private ?CompteUtilisateur $compteUtilisateur = null;
+    
+    // #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'directeur')]
+    // private ?self $employe = null;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'directeur')]
-    private ?self $employe = null;
-
-    #[ORM\OneToMany(mappedBy: 'employe', targetEntity: self::class)]
-    private Collection $directeur;
+    // // #[ORM\OneToMany(mappedBy: 'employe', targetEntity: self::class)]
+    // private Collection $directeur;
 
     #[ORM\OneToMany(mappedBy: 'EmployeVisiteur', targetEntity: Visite::class)]
     private Collection $Visiteeffectuee;
@@ -42,7 +37,7 @@ class Employe extends Personne
 
     public function __construct()
     {
-        $this->directeur = new ArrayCollection();
+        //$this->directeur = new ArrayCollection();
         $this->Visiteeffectuee = new ArrayCollection();
         $this->VisiteRecue = new ArrayCollection();
     }
@@ -50,18 +45,6 @@ class Employe extends Personne
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getProfil(): ?Profil
-    {
-        return $this->profil;
-    }
-
-    public function setProfil(?Profil $profil): static
-    {
-        $this->profil = $profil;
-
-        return $this;
     }
 
     public function getDirection(): ?Direction
@@ -88,47 +71,47 @@ class Employe extends Personne
         return $this;
     }
 
-    public function getEmploye(): ?self
-    {
-        return $this->employe;
-    }
+    // public function getEmploye(): ?self
+    // {
+    //     return $this->employe;
+    // }
 
-    public function setEmploye(?self $employe): static
-    {
-        $this->employe = $employe;
+    // public function setEmploye(?self $employe): static
+    // {
+    //     $this->employe = $employe;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, self>
      */
-    public function getDirecteur(): Collection
-    {
-        return $this->directeur;
-    }
+    // public function getDirecteur(): Collection
+    // {
+    //     return $this->directeur;
+    // }
 
-    public function addDirecteur(self $directeur): static
-    {
-        if (!$this->directeur->contains($directeur)) {
-            $this->directeur->add($directeur);
-            $directeur->setEmploye($this);
-        }
+    // public function addDirecteur(self $directeur): static
+    // {
+    //     if (!$this->directeur->contains($directeur)) {
+    //         $this->directeur->add($directeur);
+    //         $directeur->setEmploye($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeDirecteur(self $directeur): static
-    {
-        if ($this->directeur->removeElement($directeur)) {
-            // set the owning side to null (unless already changed)
-            if ($directeur->getEmploye() === $this) {
-                $directeur->setEmploye(null);
-            }
-        }
+    // public function removeDirecteur(self $directeur): static
+    // {
+    //     if ($this->directeur->removeElement($directeur)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($directeur->getEmploye() === $this) {
+    //             $directeur->setEmploye(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Visite>

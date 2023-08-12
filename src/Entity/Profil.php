@@ -15,23 +15,30 @@ class Profil
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: 'profils')]
-    private Collection $roles;
+    // #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: 'profils')]
+    #[ORM\ManyToMany(targetEntity: Role::class)]
+    private $roles;
 
     #[ORM\OneToMany(mappedBy: 'profil', targetEntity: Employe::class)]
-    private Collection $employe;
+    private $employe;
+
+    #[ORM\Column(length: 60)]
+    private ?string $nomProfil = null;
+
+    #[ORM\OneToMany(mappedBy: 'profil', targetEntity: CompteUtilisateur::class)]
+    private Collection $compteUtilisateurs;
 
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->employe = new ArrayCollection();
+        $this->compteUtilisateurs = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
     /**
      * @return Collection<int, Role>
      */
@@ -45,7 +52,6 @@ class Profil
         if (!$this->roles->contains($role)) {
             $this->roles->add($role);
         }
-
         return $this;
     }
 
@@ -68,7 +74,7 @@ class Profil
     {
         if (!$this->employe->contains($employe)) {
             $this->employe->add($employe);
-            $employe->setProfil($this);
+            //$employe->setProfil($this);
         }
 
         return $this;
@@ -78,8 +84,50 @@ class Profil
     {
         if ($this->employe->removeElement($employe)) {
             // set the owning side to null (unless already changed)
-            if ($employe->getProfil() === $this) {
+            /* if ($employe->getProfil() === $this) {
                 $employe->setProfil(null);
+            } */
+        }
+
+        return $this;
+    }
+
+    public function getNomProfil(): ?string
+    {
+        return $this->nomProfil;
+    }
+
+    public function setNomProfil(string $nomProfil): static
+    {
+        $this->nomProfil = $nomProfil;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CompteUtilisateur>
+     */
+    public function getCompteUtilisateurs(): Collection
+    {
+        return $this->compteUtilisateurs;
+    }
+
+    public function addCompteUtilisateur(CompteUtilisateur $compteUtilisateur): static
+    {
+        if (!$this->compteUtilisateurs->contains($compteUtilisateur)) {
+            $this->compteUtilisateurs->add($compteUtilisateur);
+            $compteUtilisateur->setProfil($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompteUtilisateur(CompteUtilisateur $compteUtilisateur): static
+    {
+        if ($this->compteUtilisateurs->removeElement($compteUtilisateur)) {
+            // set the owning side to null (unless already changed)
+            if ($compteUtilisateur->getProfil() === $this) {
+                $compteUtilisateur->setProfil(null);
             }
         }
 

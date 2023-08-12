@@ -1,0 +1,9 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+	{{ form_start(ProfilForm)}}
+	{{form_widget(ProfilForm)}}
+	<input type="submit" value="Envoyer">
+	{{ form_end(ProfilForm)}}
+
+{% endblock %}

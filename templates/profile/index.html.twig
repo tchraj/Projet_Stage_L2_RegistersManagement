@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="row">
 		<div>Bienvenue
-			{{ app.user.Email}}</div>
+			{{ app.user.username}}</div>
 	</div>
 	{# <div class="btn">
 	<a href="{{ path('app_edit_profile',{'id': app.user.id }) }}">
@@ -21,7 +21,7 @@
 		</button>
 	</div>
 	<h2>Motifs des visites de
-		{{ app.user.Email}}</h2>
+		{{ app.user.username}}</h2>
 	{# {% for visite_recue in app.employe.VisiteRecue %}
 					<div class="col">Motif:</div>
 					<div>{{ visite_recue.motif }}</div>

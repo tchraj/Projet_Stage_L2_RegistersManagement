@@ -1,0 +1,14 @@
+{% apply inline_css %}
+    <style>
+        p {
+            font-family: Arial;
+            font-size: 14px;
+            color: black;
+        }
+    </style>
+    {{ message|raw }}
+    <p style="margin-top:20px">
+        <span style="color: #038719; font-weight: bold; font-size: 15px;">ORAGEST : GESTION DES REGISTRES A ORABANK TOGO</span><br>
+        <img src="{{ email.image('@emails/signature.png') }}" alt="signature" width="20%">
+    </p>
+{% endapply %}

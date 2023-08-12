@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\VisiteurExterne;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,7 +28,6 @@ class VisiteurExterneType extends AbstractType
             ->add('tel', null, [])
             ->add('Creer', SubmitType::class);
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

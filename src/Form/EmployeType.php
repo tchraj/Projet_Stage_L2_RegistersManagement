@@ -40,25 +40,11 @@ class EmployeType extends AbstractType
                 TextType::class,
             )
             ->add(
-                'profil',
-                EntityType::class,
-                [
-                    'class' => Profil::class
-                ],
-            )
-            ->add(
                 'direction',
                 EntityType::class,
                 [
                     'class' => Direction::class
                 ],
-            )
-            ->add(
-                'compteUtilisateur',
-                EntityType::class,
-                [
-                    'class' => CompteUtilisateur::class
-                ]
             )
             ->add(
                 'Envoyer',

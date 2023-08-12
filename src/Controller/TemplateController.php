@@ -2,25 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\VisiteurExterne;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Models\SearchData;
-use App\Form\SearchType;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Request;
 
 class TemplateController extends AbstractController
 {
 
-    #[Route('/admin', name: 'app_template')]
+    #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-        //$search = new SearchData();
-        $form = $this->createForm(SearchType::class);
-        return $this->render('template.html.twig', [
-            //'SearchForm' => $form->createView()
+        //$search = $this->createForm(VisiteurExtType::class,[]);
+        //$form = $this->createForm(SearchType::class);
+        return $this->render('acceuil/index.html.twig', [
+            //'Search' => $search->createView()
         ]);
     }
     /* public function search(Request $request, ManagerRegistry $managerRegistry)

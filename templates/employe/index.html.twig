@@ -4,71 +4,130 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Liste des employes</h1>
-	<div class="overflow-x-auto">
-		<div class="flex items-center  bg-gray-100 font-sans overflow-hidden">
-			<div class="w-full lg:w-5/6">
-				<div class="bg-white shadow-md rounded my-6">
-					<table class="min-w-max w-full table-auto">
-						<thead>
-							<tr class="bg-blue-400 uppercase text-sm leading-normal">
-								<th class="py-3 px-6 text-left">Nom & prenoms</th>
-								<th class="py-3 px-6 text-left">Poste</th>
-								<th class="py-3 px-6 text-center">Email</th>
-								<th class="py-3 px-6 text-center">Telephone</th>
-								<th class="py-3 px-6 text-center">Direction</th>
-								<th class="py-3 px-6 text-center">Actions</th>
-							</tr>
-						</thead>
-						<tbody class="text-gray-600 text-sm font-light">
-							{% for emp in employes %}
-								<tr class="border-b border-blue-200 hover:bg-gray-100">
-									<td class="py-3 px-6 text-left whitespace-nowrap">
-										<div class="flex items-center">
-
-											<span class="font-medium">
-												{{ emp.Nom}}
-												{{emp.prenoms}}</span>
-										</div>
-									</td>
-									<td class="py-3 px-6 text-left">
-										<div class="flex items-center">
-											<span>{{emp.poste}}</span>
-										</div>
-									</td>
-									<td class="py-3 px-6 text-left">
-										<div class="flex items-center">
-											<span>{{emp.email}}</span>
-										</div>
-									</td>
-									<td class="py-3 px-6 text-left">
-										<div class="flex items-center">
-											<span>{{emp.tel}}</span>
-										</div>
-									</td>
-									<td class="py-3 px-6 text-left">
-										<div class="flex items-center">
-											<span>{{emp.direction}}</span>
-										</div>
-									</td>
-									<td class="">
-										<div class="flex item-center justify-center">
-											<a href="{{ path('app_update_employe',{'id':emp.id}) }}">
-												<div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-													</svg>
-												</div>
-											</a>
-										</div>
-
-									</td>
+	<div id="layoutSidenav">
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="card mb-4">
+					<div class="card-header" style="display:flex;justify-content:space-around">
+						<i class="fas fa-table me-1"></i>
+						<h3>Liste des employes</h3>
+						<a href="{{path('app_add_employe')}}">
+							<input type="button" value="Nouvel employé" class="btn btn-success">
+						</a>
+					</div>
+					<div class="card-body">
+						<table id="datatablesSimple">
+							<thead>
+								<tr>
+									<th>Nom</th>
+									<th>Prenoms</th>
+									<th>Email</th>
+									<th>Poste</th>
+									<th>Télephone</th>
+									<th>Direction</th>
+									{#Age#}
+									<th>Actions</th>
 								</tr>
-							{% endfor %}
-						</tbody>
-					</tbody>
-				</table>
-			</div>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>Nom</th>
+									<th>Prenoms</th>
+									<th>Email</th>
+									<th>Poste</th>
+									<th>Télephone</th>
+									<th>Direction</th>
+									{#Age#}
+									<th>Actions</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								{% for emp in employes %}
+									<tr>
+										<td>
+											{{ emp.Nom }}
+										</td>
+										<td>{{emp.prenoms}}</td>
+										<td>{{emp.email}}</td>
+										<td>{{emp.poste}}</td>
+										<td>{{emp.tel}}</td>
+										<td>{{emp.direction}}</td>
+										<td>Editer</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
 		</div>
 	</div>
-</div>{% endblock body  %}
+	{# <h1>Liste des employes</h1>
+																				<div class="overflow-x-auto">
+																					<div class="flex items-center  bg-gray-100 font-sans overflow-hidden">
+																						<div class="w-full lg:w-5/6">
+																							<div class="bg-white shadow-md rounded my-6">
+																								<table class="min-w-max w-full table-auto">
+																									<thead>
+																										<tr class="bg-blue-400 uppercase text-sm leading-normal">
+																											<th class="py-3 px-6 text-left">Nom & prenoms</th>
+																											<th class="py-3 px-6 text-left">Poste</th>
+																											<th class="py-3 px-6 text-center">Email</th>
+																											<th class="py-3 px-6 text-center">Telephone</th>
+																											<th class="py-3 px-6 text-center">Direction</th>
+																											<th class="py-3 px-6 text-center">Actions</th>
+																										</tr>
+																									</thead>
+																									<tbody class="text-gray-600 text-sm font-light">
+																										{% for emp in employes %}
+																											<tr class="border-b border-blue-200 hover:bg-gray-100">
+																												<td class="py-3 px-6 text-left whitespace-nowrap">
+																													<div class="flex items-center">
+																			
+																														<span class="font-medium">
+																															{{ emp.Nom}}
+																															{{emp.prenoms}}</span>
+																													</div>
+																												</td>
+																												<td class="py-3 px-6 text-left">
+																													<div class="flex items-center">
+																														<span>{{emp.poste}}</span>
+																													</div>
+																												</td>
+																												<td class="py-3 px-6 text-left">
+																													<div class="flex items-center">
+																														<span>{{emp.email}}</span>
+																													</div>
+																												</td>
+																												<td class="py-3 px-6 text-left">
+																													<div class="flex items-center">
+																														<span>{{emp.tel}}</span>
+																													</div>
+																												</td>
+																												<td class="py-3 px-6 text-left">
+																													<div class="flex items-center">
+																														<span>{{emp.direction}}</span>
+																													</div>
+																												</td>
+																												<td class="">
+																													<div class="flex item-center justify-center">
+																														<a href="{{ path('app_update_employe',{'id':emp.id}) }}">
+																															<div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+																																<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+																																	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+																																</svg>
+																															</div>
+																														</a>
+																													</div>
+																			
+																												</td>
+																											</tr>
+																										{% endfor %}
+																									</tbody>
+																								</tbody>
+																							</table>
+																						</div>
+																					</div>
+																				</div>
+																			</div> #}
+{% endblock body  %}

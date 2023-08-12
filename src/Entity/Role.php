@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RoleRepository::class)]
@@ -18,13 +18,13 @@ class Role
     #[ORM\Column(length: 35, nullable: true)]
     private ?string $NomRole = null;
 
-    #[ORM\ManyToMany(targetEntity: Profil::class, mappedBy: 'roles')]
-    private Collection $profils;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description_role = null;
 
-    public function __construct()
-    {
-        $this->profils = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->profils = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -46,26 +46,42 @@ class Role
     /**
      * @return Collection<int, Profil>
      */
-    public function getProfils(): Collection
+    // public function getProfils(): Collection
+    // {
+    //     return $this->profils;
+    // }
+
+    // public function addProfil(Profil $profil): static
+    // {
+    //     if (!$this->profils->contains($profil)) {
+    //         $this->profils->add($profil);
+    //         $profil->addRole($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeProfil(Profil $profil): static
+    // {
+    //     if ($this->profils->removeElement($profil)) {
+    //         $profil->removeRole($this);
+    //     }
+
+    //     return $this;
+    // }
+    public function __toString()
     {
-        return $this->profils;
+        return $this->getNomRole();
     }
 
-    public function addProfil(Profil $profil): static
+    public function getDescriptionRole(): ?string
     {
-        if (!$this->profils->contains($profil)) {
-            $this->profils->add($profil);
-            $profil->addRole($this);
-        }
-
-        return $this;
+        return $this->description_role;
     }
 
-    public function removeProfil(Profil $profil): static
+    public function setDescriptionRole(?string $description_role): static
     {
-        if ($this->profils->removeElement($profil)) {
-            $profil->removeRole($this);
-        }
+        $this->description_role = $description_role;
 
         return $this;
     }

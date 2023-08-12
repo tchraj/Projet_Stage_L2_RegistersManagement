@@ -7,9 +7,6 @@ parameters:
 
 services:
     # default configuration for services in *this* file
-    sendmail_service:
-        class: App\Service\SendMail
-
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -25,3 +22,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    app_send_email_service:
+        class: App\Services\AppSendEmail

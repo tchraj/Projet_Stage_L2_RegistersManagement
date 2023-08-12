@@ -1,0 +1,11 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello RoleController!
+{% endblock %}
+
+{% block body %}
+	{% for role in roles %}
+		<div>{{role.nomRole}}</div>
+		<div>{{role.DescriptionRole}}</div>
+	{% endfor %}
+{% endblock %}

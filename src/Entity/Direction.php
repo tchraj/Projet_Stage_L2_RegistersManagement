@@ -23,6 +23,9 @@ class Direction
 
     #[ORM\ManyToOne(inversedBy: 'directions', targetEntity: Filiale::class)]
     private ?Filiale $filiale = null;
+
+    #[ORM\ManyToOne]
+    private ?Employe $responsable = null;
     /* #[ORM\ManyToOne(inversedBy: 'directions', targetEntity: Filiale::class)]
     private ?string $filiale = null; */
     public function __construct()
@@ -91,5 +94,17 @@ class Direction
     public function __toString()
     {
         return $this->NomDirection;
+    }
+
+    public function getResponsable(): ?Employe
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(?Employe $responsable): static
+    {
+        $this->responsable = $responsable;
+
+        return $this;
     }
 }

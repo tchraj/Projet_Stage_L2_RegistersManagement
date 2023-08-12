@@ -1,10 +1,11 @@
+
+{% block stylesheets %}
 <title>Application de Gestion des Visiteurs</title>
 <style>
 	.button-section {
 		text-align: center;
 		margin-top: 30px;
 	}
-
 	.button-section button {
 		padding: 12px 20px;
 		font-size: 18px;
@@ -82,7 +83,9 @@
 		padding: 10px;
 	}
 </style>
-<body class="body-home">
+{% endblock stylesheets %}
+
+ <body class="body-home">
 	<header>
 		<h1>Application de Gestion des Visiteurs</h1>
 	</header>
@@ -97,21 +100,8 @@
 			<a href="{{ path('app_login') }}">
 				<button class="login-btn" onclick="window.location.href='#'">Se connecter</button>
 			</a>
-			{# 			<button class=" signup-btn" onclick=" window.location.href='#'">S'inscrire</button>#}
-		</div>
-		</div>
-			{#<img
-			src="{{ asset('assets/img/acceuil2.jpg')}}" alt="Image Convaincante 2" class="animated-image">#}
-		<!-- Ajoutez d'autres images convaincantes ici -->
-		</div>
-
-	</div>
-	<footer class=" footer-home">
-		<p>© 2023 Orabank. Tous droits réservés.</p>
-	</footer>
-	<script>
-		// Code JavaScript pour l'animation
-const animatedImages = document.querySelectorAll('.animated-image');
+			 			
+<script>>const animatedImages = document.querySelectorAll('.animated-image');
 
 function animateImages() {
 let delay = 0;
@@ -127,6 +117,6 @@ delay += 200;
 });
 }
 
+
 window.addEventListener('load', animateImages);
-	</script>
-</body>
+</script

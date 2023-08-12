@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\SendMail;
 use App\Entity\Employe;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class VisiteController extends AbstractController
 {
@@ -181,4 +182,7 @@ class VisiteController extends AbstractController
             'visiteurExterne' => $manager->getRepository(VisiteurExterne::class)->findAll()
         ]);
     }
+    // public function EditVisite($id, ManagerRegistry $managerRegistry,VisiteRepository $rep, RequestStack $requestStack,TraitFormulaire $traitFormulaire ){
+    //     $request = $requestStack->getMainRequest();
+    // }
 }

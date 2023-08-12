@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Direction;
+use App\Entity\Employe;
 use App\Entity\Filiale;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -24,6 +25,12 @@ class DirectionType extends AbstractType
                     'placeholder' => 'choisir une filiale'
                 ],
                 'class' => Filiale::class
+            ])
+            ->add('responsable', EntityType::class, [
+                'attr' => [
+                    'placeholder' => 'Responsable de la direction'
+                ],
+                'class' => Employe::class
             ])
             ->add('Envoyer', SubmitType::class);
     }

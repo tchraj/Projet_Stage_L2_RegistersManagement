@@ -6,7 +6,6 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MailController extends AbstractController
@@ -23,12 +22,10 @@ class MailController extends AbstractController
                 'nom' => 'Jane',
                 'prenom' => 'Doe',
                 'job' => 'Dev symfony',
-                'presentation ' => 'Voici une nouvelle recrue'
             ]);
         $mailer->send($email);
-        return $this->render('mail/index.html.twig', [
+        return $this->render('emails/mail.html.twig', [
             'controller_name' => 'MailController',
         ]);
     }
 }
-

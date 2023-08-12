@@ -4,12 +4,10 @@ namespace App\Entity;
 
 use App\Repository\CompteUtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: CompteUtilisateurRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'Un compte existe déja avec cette adresse')]
 class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -18,9 +16,9 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    private ?string $username = null;
 
-    #[ORM\Column]
+    // #[ORM\Column]
     private array $roles = [];
 
     /**
@@ -29,25 +27,25 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    #[ORM\ManyToOne]
+    private ?Profil $profil;
 
-    #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    private $resetToken;
+    #[ORM\Column(length: 15, nullable: true)]
+    private ?string $passClair = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getUsername(): ?string
     {
-        return $this->email;
+        return $this->username;
     }
 
-    public function setEmail(string $email): static
+    public function setUsername(string $username): static
     {
-        $this->email = $email;
+        $this->username = $username;
 
         return $this;
     }
@@ -59,25 +57,30 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
-
     /**
      * @see UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        if ($this->getProfil() !== null) {
+            $profil = $this->getProfil();
+            $objRoles = $profil->getRoles();
+            $i = 0;
+            foreach ($objRoles as $role) {
+                $r[$i] = $role->getNomRole();
+                $i + 1;
+            }
+            $this->roles[] = $r;
+        }
+        //$roles[] = 'ROLE_USER';
+        return array_unique($this->roles);
     }
 
     public function setRoles(array $roles): static
     {
-        $this->roles = $roles;
-
         return $this;
     }
 
@@ -97,43 +100,39 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
     }
 
     /**
-     * @see UserInterface
+     * @see UserInterfacefsetR
      */
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->password = null;
+        // $this->plainPassword = null;
     }
 
-    public function isVerified(): bool
+    public function getProfil(): ?Profil
     {
-        return $this->isVerified;
+        return $this->profil;
     }
 
-    public function setIsVerified(bool $isVerified): static
+    public function setProfil(?Profil $profil): static
     {
-        $this->isVerified = $isVerified;
+        $this->profil = $profil;
 
-        return $this;
-    }
-
-    public function getResetToken(): ?string
-    {
-        return $this->resetToken;
-    }
-
-    public function setResetToken(?string $resetToken): self
-    {
-        $this->resetToken = $resetToken;
         return $this;
     }
     public function __toString()
     {
-        return $this->email;
+        return $this->getUsername();
     }
 
-    public function isIsVerified(): ?bool
+    public function getPassClair(): ?string
     {
-        return $this->isVerified;
+        return $this->passClair;
+    }
+
+    public function setPassClair(?string $passClair): static
+    {
+        $this->passClair = $passClair;
+
+        return $this;
     }
 }

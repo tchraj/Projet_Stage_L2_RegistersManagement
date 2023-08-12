@@ -68,7 +68,6 @@ input {
         display: block;
         padding: 20px;
     }
-
     .form {
         margin: 0
     }
@@ -82,16 +81,16 @@ body {
 }
 
 .image {
-    width: 180px;
     position: absolute;
-    top: 40px;
+    top: 0px;
+    display: none;
 }
 
 .container {
-    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    display: block;
 }
 
 .login-form {

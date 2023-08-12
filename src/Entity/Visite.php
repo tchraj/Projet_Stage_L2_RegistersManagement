@@ -18,11 +18,11 @@ class Visite
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: false)]
     private ?\DateTimeInterface $DateVisite;
 
-    #[ORM\Column(type: Types::TEXT, nullable: false)]
-    private ?string $HeureDeb;
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: false)]
+    private ?\DateTimeInterface $HeureDeb;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $HeureFin;
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $HeureFin;
 
     #[ORM\Column(type: Types::TEXT, nullable: false)]
     private ?string $motif;
@@ -83,24 +83,24 @@ class Visite
     }
 
 
-    public function getHeureDeb(): ?string
+    public function getHeureDeb(): ?\DateTimeInterface
     {
         return $this->HeureDeb;
     }
 
-    public function setHeureDeb(string $HeureDeb): static
+    public function setHeureDeb(\DateTimeInterface $HeureDeb): static
     {
         $this->HeureDeb = $HeureDeb;
 
         return $this;
     }
 
-    public function getHeureFin(): ?string
+    public function getHeureFin(): ?\DateTimeInterface
     {
         return $this->HeureFin;
     }
 
-    public function setHeureFin(string $HeureFin): static
+    public function setHeureFin(\DateTimeInterface $HeureFin): static
     {
         $this->HeureFin = $HeureFin;
 
