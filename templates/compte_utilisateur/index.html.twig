@@ -1,45 +1,34 @@
 {% extends 'template.html.twig' %}
-
-{% block title %}Hello ProfilController!
-{% endblock %}
-
 {% block body %}
-
 	<div id="layoutSidenav">
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="card mb-4">
 					<div class="card-header">
 						<i class="fas fa-table me-1"></i>
-						<h3>Liste des profils</h3>
+						<h3>Liste des comptes</h3>
 					</div>
 					<div class="card-body">
 						<table id="datatablesSimple">
 							<thead>
 								<tr>
-									<th>Nom du profil</th>
-									<th>Roles</th>
+									<th>Nom d'utilisateur</th>
+									<th>Profil</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
-									<th>Nom du profil</th>
-									<th>Roles</th>
+									<th>Nom d'utilisateur</th>
+									<th>Profil</th>
 									<th>Actions</th>
 								</tr>
 							</tfoot>
 							<tbody>
-								{% for profil in profils %}
+								{% for compte in comptes %}
 									<tr>
-										<td>{{profil.nomProfil}}</td>
-										<td>
-											{% if profil.roles is not empty %}
-												{% for role in profil.roles %}
-													<span>{{role.NomRole}}, </span>
-												{% endfor %}
-											{% endif %}
-										</td>
+										<td>{{compte.username}}</td>
+										<td>{{compte.profil}}</td>
 										<td>Editer</td>
 									</tr>
 								{% endfor %}
@@ -50,7 +39,7 @@
 			</main>
 		</div>
 	</div>
-{% endblock %}
+{% endblock body %}
 
 {% block javascript %}
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -62,4 +51,3 @@
 	<script src="js/datatables-simple-demo.js"></script>
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 {% endblock %}
-

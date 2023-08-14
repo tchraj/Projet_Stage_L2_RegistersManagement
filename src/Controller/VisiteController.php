@@ -11,9 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\SendMail;
 use App\Entity\Employe;
-use Symfony\Component\HttpFoundation\RequestStack;
+
+#[Route('/visite')]
 
 class VisiteController extends AbstractController
 {
@@ -22,7 +22,7 @@ class VisiteController extends AbstractController
     {
         $this->repository = $repository;
     }
-    #[Route('/visite', name: 'app_visite')]
+    #[Route('/', name: 'app_visite')]
     public function index(ManagerRegistry $managerRegistry): Response
     {
         $manager = $managerRegistry->getManager();
@@ -38,8 +38,8 @@ class VisiteController extends AbstractController
 
         ]);
     }
-    #[Route('/add_visite', name: 'app_add_visite')]
-    public function addVisite(ManagerRegistry $managerRegistry, SendMail $SendMail, Request $request): Response
+    #[Route('/add', name: 'app_add_visite')]
+    public function addVisite(ManagerRegistry $managerRegistry, Request $request): Response
     {
         $manager = $managerRegistry->getManager();
         $visite = new Visite();
@@ -52,7 +52,13 @@ class VisiteController extends AbstractController
             $manager->persist($visite);
             //dd($visite->getVisiteurExterne());
             $manager->flush();
-            $this->addFlash("Succes", "Visite ajouté avec succes!");
+            $employeVisite = $visite->getEmployeVisite();
+            $employeVisite->addVisiteRecue($visite);
+            if ($visite->getTypeVisiteur() == "Employe visiteur") {
+                $employeVisiteur = $visite->getEmployeVisiteur();
+                $employeVisiteur->addVisiteeffectuee($visite);
+            }
+            $this->addFlash("Succes", "Visite ajoutée avec succes!");
             return $this->redirectToRoute('app_visite');
         } else
             return $this->render('visite/add.html.twig', [
@@ -147,7 +153,7 @@ class VisiteController extends AbstractController
     //             'VisiteForm' => $form->createView()
     //         ]);
     // }
-    #[Route('/update_visite/{id}', name: 'app_update_visite')]
+    #[Route('/update/{id}', name: 'app_update_visite')]
     public function updateVisite($id, ManagerRegistry $managerRegistry, Request $request)
     {
         $manager = $managerRegistry->getManager();

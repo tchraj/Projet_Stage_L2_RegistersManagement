@@ -14,7 +14,7 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    const ROLE_ADMIN = "ROLE_ADMIN_ORGANIZATION";
     #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
 
@@ -134,5 +134,9 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
         $this->passClair = $passClair;
 
         return $this;
+    }
+    public function isAdmin(): bool
+    {
+        return in_array(self::ROLE_ADMIN, $this->getRoles());
     }
 }

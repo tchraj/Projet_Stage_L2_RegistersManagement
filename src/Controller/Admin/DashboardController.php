@@ -59,7 +59,6 @@ class DashboardController extends AbstractDashboardController
     {
         return [
             MenuItem::linkToDashboard('ORAGUEST', 'fa fa-home'),
-
             MenuItem::section(),
             MenuItem::subMenu('Employes', 'fas fa-user')->setSubItems([
                 MenuItem::linkToCrud('Creer un employe', 'fas fa-plus', Employe::class)->setAction('new'),

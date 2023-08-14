@@ -4,15 +4,17 @@ namespace App\Controller;
 
 use App\Entity\VisiteurExterne;
 use App\Form\VisiteurExterneType;
+use App\Entity\Visite;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/visiteur_externe')]
 class VisiteurExterneController extends AbstractController
 {
-    #[Route('/visiteur_externe', name: 'app_visiteur_externe')]
+    #[Route('/', name: 'app_visiteur_externe')]
     public function index(ManagerRegistry $managerRegistry): Response
     {
         $manager = $managerRegistry->getManager();
@@ -22,7 +24,7 @@ class VisiteurExterneController extends AbstractController
             'visiteurs' => $visiteurs
         ]);
     }
-    #[Route('/add_visiteur', name: 'app_add_visiteur')]
+    #[Route('/add', name: 'app_add_visiteur')]
     public function addVisiteurExterne(ManagerRegistry $managerRegistry, Request $request): Response
     {
         $entityManager = $managerRegistry->getManager();
@@ -40,7 +42,7 @@ class VisiteurExterneController extends AbstractController
                 'VisiteurForm' => $form->createView()
             ]);
     }
-    #[Route('/update_visiteur/{id}', name: 'app_update_visiteur')]
+    #[Route('/update/{id}', name: 'app_update_visiteur')]
     public function updatePiece(VisiteurExterne $visiteur, ManagerRegistry $managerRegistry, Request $request): Response
     {
         //$piece = $managerRegistry->getRepository(TypePiece::class, $piece);

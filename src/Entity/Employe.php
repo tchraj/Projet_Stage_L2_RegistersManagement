@@ -16,7 +16,7 @@ class Employe extends Personne
     private ?Direction $direction = null;
     #[ORM\OneToOne()]
     private ?CompteUtilisateur $compteUtilisateur = null;
-    
+
     // #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'directeur')]
     // private ?self $employe = null;
 
@@ -34,6 +34,9 @@ class Employe extends Personne
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $poste = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $actif = null;
 
     public function __construct()
     {
@@ -205,5 +208,17 @@ class Employe extends Personne
     public function isIsVerified(): ?bool
     {
         return $this->isVerified;
+    }
+
+    public function isActif(): ?bool
+    {
+        return $this->actif;
+    }
+
+    public function setActif(?bool $Actif): static
+    {
+        $this->actif = $Actif;
+
+        return $this;
     }
 }

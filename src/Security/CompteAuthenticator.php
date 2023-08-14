@@ -47,6 +47,9 @@ class CompteAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
+        // if ($token->getUser()->isAdmin()) {
+        //     return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
+        // }
 
         // For example:
         return new RedirectResponse($this->urlGenerator->generate('app_home'));

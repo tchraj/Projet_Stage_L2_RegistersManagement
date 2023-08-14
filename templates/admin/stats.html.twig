@@ -1,0 +1,40 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello AdminController!
+{% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body %}
+	<div id="layoutSidenav">
+		<div id="layoutSidenav_content">
+			<main>
+				<h2>Statistiques</h2>
+				<div>
+					<canvas id="visites" width="400" height="100"></canvas>
+				</div>
+			</main>
+		</div>
+	</div>
+{% endblock %}
+{% block javascript %}
+	<script>
+		let visites = document.querrySelector("#visites")
+let categGraph = new Chart(visites, {
+type: "pie",
+data: {
+labels: [
+"cat1", "cat2", "cat3", "cat4"
+],
+datasets: [
+label: "Repartition des visites",
+data: [2, 5, 0, 9]]
+}
+})
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.3/chart.min.js" integrity="sha512-fMPPLjF/Xr7Ga0679WgtqoSyfUoQgdt8IIxJymStR5zV3Fyb6B3u/8DcaZ6R6sXexk5Z64bCgo2TYyn760EdcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.3/chart.umd.min.js" integrity="sha512-mCXCsj30LV3PLPTIuWjZQX84qiQ56EgBZOsPUA+ya5mWmAb8Djdxa976zWzxquOwkh0TxI12KA4eniKpY3yKhA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.3/helpers.js" integrity="sha512-anj5/i5SL58AMWK5Of5xtDoVzCdpaXhCRHfJxrrRSqbjjYeNDBtvxsLUQqVHhh1tB+fbyZTGiUiTLTCWAQ6BLA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.3/helpers.min.js" integrity="sha512-JG3S/EICkp8Lx9YhtIpzAVJ55WGnxT3T6bfiXYbjPRUoN9yu+ZM+wVLDsI/L2BWRiKjw/67d+/APw/CDn+Lm0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock javascript %}

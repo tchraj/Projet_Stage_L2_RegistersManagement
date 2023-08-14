@@ -10,9 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 
+#[Route('/direction')]
 class DirectionController extends AbstractController
 {
-    #[Route('/direction', name: 'app_direction')]
+    #[Route('/', name: 'app_direction')]
     public function index(ManagerRegistry $managerRegistry): Response
     {
         $directions = $managerRegistry->getRepository(Direction::class)->findAll();
@@ -20,7 +21,7 @@ class DirectionController extends AbstractController
             'directions' => $directions
         ]);
     }
-    #[Route('/add_direction', name: 'app_add_direction')]
+    #[Route('/add', name: 'app_add_direction')]
     public function AddDirection(ManagerRegistry $managerRegistry, Request $request): Response
     {
         $entityManager = $managerRegistry->getManager();
@@ -39,7 +40,7 @@ class DirectionController extends AbstractController
                 'DirectionForm' => $form->createView()
             ]);
     }
-    #[Route('/update_direction/{id}', name: 'app_update_direction')]
+    #[Route('/update/{id}', name: 'app_update_direction')]
     public function updatePiece(Direction $direction, ManagerRegistry $managerRegistry, Request $request): Response
     {
         $form = $this->createForm(DirectionType::class, $direction);

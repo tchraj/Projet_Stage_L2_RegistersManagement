@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-
 use App\Entity\VisiteurExterne;
 use App\Repository\VisiteRepository;
 use Doctrine\DBAL\Types\Types;

@@ -5,12 +5,31 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
     </body>
 </html>
+{# <a data-toggle="collapse" href="#collapse1" class="nav-link collapsed">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													
+    Visites
+    <div class="sb-sidenav-collapse-arrow">
+        <i class="fas fa-angle-down"></i>
+    </div>
+</a>
+<div id="collapse1" class="collapse">
+    <nav class="sb-sidenav-menu-nested nav">
+        <a href="{{ path('app_visite') }}" class="nav-link active">
+            <div>
+                Liste des visites</div>
+        </a>
+        
+    </nav>
+</div> #}
+

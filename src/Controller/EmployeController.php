@@ -5,13 +5,15 @@ namespace App\Controller;
 use App\Entity\CompteUtilisateur;
 use App\Entity\Employe;
 use App\Form\EmployeType;
-use App\Repository\EmployeRepository;
+use App\Services\AppSendEmail;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+
+#[Route('/employe')]
 
 class EmployeController extends AbstractController
 {
@@ -23,7 +25,7 @@ class EmployeController extends AbstractController
         $this->repository = $repository;
     }*/
 
-    #[Route('/employe', name: 'app_employe')]
+    #[Route('/', name: 'app_employe')]
     public function index(ManagerRegistry $managerRegistry): Response
     {
         $employes = $managerRegistry->getRepository(Employe::class)->findAll();
@@ -43,8 +45,8 @@ class EmployeController extends AbstractController
             //'SearchForm' => $form->createView()
         ]);
     }
-    #[Route('/add_employe', name: 'app_add_employe')]
-    public function addEmploye(UserPasswordHasherInterface $passwordHasher, ManagerRegistry $managerRegistry, Request $request): Response
+    #[Route('/add', name: 'app_add_employe')]
+    public function addEmploye(UserPasswordHasherInterface $passwordHasher, ManagerRegistry $managerRegistry, Request $request, AppSendEmail $appSendEmail): Response
     {
         $employe = new Employe();
         $form = $this->createForm(EmployeType::class, $employe);
@@ -75,14 +77,26 @@ class EmployeController extends AbstractController
             $employe->setCompteUtilisateur($compte);
             $manager->persist($employe);
             $manager->flush();
-            
+            $flag = $appSendEmail->sendUnique(
+                "amanarodia@gmail.com",
+                $employe->getEmail(),
+                "RENSEIGNEMENT DES IDENTIFIANTS",
+                "Bonjour Monsieur/Madame" .
+                    $employe->getNom() . "  " .
+                    $employe->getPrenoms() .
+                    " Voici vos identifiants pour vous connecter
+                  à l'application de gestion des registres de 
+                  ORABANK TOGO: <br> Nom d'utilisateur:$username; <br>Mot de passe:$password",
+                'alert.html.twig'
+            );
+            dd($flag);
             return $this->redirectToRoute('app_employe');
         } else
             return $this->render('employe/add.html.twig', [
                 'EmployeForm' => $form->createView()
             ]);
     }
-    #[Route('/update_employe/{id}', name: 'app_update_employe')]
+    #[Route('/update/{id}', name: 'app_update_employe')]
     public function UpdateEmploye(Employe $employe, ManagerRegistry $managerRegistry, Request $request): Response
     {
         $form = $this->createForm(EmployeType::class, $employe);
@@ -98,6 +112,40 @@ class EmployeController extends AbstractController
                 'EmployeForm' =>  $form->createView()
             ]);
     }
+    //   public function visitesRecues(ManagerRegistry $managerRegistry )
+    //   {
+    //     $managerRegistry->getManager();
+    //     // On récupère l'EntityManager
+    //     //via le service ManagerRegistry qui nous a été injecté dans la méthode du contrôleur
+    //     $em=$managerRegistry->getRepository("App\Entity\Visite");
+    //     //$visites= $em->findAll();
+    //     /*
+    //     * Je vais faire une requête pour recuperer les données de ma table Visite
+    //     et je retournera un objet QueryBuilder
+    //     avec toutes mes conditions préalablement définies
+    //     */
+    //     $queryBuilder =$em -> createQueryBuilder('v')
+    //     ->select(['v','c']);
+    //     //je veux que mon select soit composée d'une colonne de la table
+    //     Visite ('v')
+    //     ->join ('App\Entity\Employe c ','v.employeVisiteur = c ')
+    //     ;
+    //     $paginator  = new Paginator($queryBuilder,$fetchJoinCollection = true );
+    //     $resultat = $paginator->paginate(
+    //         10 , ['*'], null,[
+    //             'defaultSortFieldName'=>'DateVisite',
+    //             'defaultSortOrder'=>"DESC",]
+    //             );
+    //             dump($resultat);
+    //             die;
+    //             return $this->render('employe/index.html.twig',[
+    //                 "visites"=>$resultat]);
+    //             }
+    //     }
+
+
+
+    //   }
     /*
     #[Route('/update_employe/{id}', name: 'app_update_employe')]
     public function UpdateEmploye(Employe $employe, ManagerRegistry $managerRegistry, Request $request): Response

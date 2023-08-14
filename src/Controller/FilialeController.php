@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/filiale')]
 class FilialeController extends AbstractController
 {
-    #[Route('/filiale', name: 'app_filiale')]
+    #[Route('/', name: 'app_filiale')]
     public function index(ManagerRegistry $managerRegistry): Response
     {
         $filiales = $managerRegistry->getRepository(Filiale::class)->findAll();
@@ -20,7 +21,7 @@ class FilialeController extends AbstractController
             'filiales' => $filiales
         ]);
     }
-    #[Route('/add_filiale', name: 'app_add_filiale')]
+    #[Route('/add', name: 'app_add_filiale')]
     public function AddFiliale(ManagerRegistry $managerRegistry, Request $request): Response
     {
         $entityManager = $managerRegistry->getManager();
@@ -39,7 +40,7 @@ class FilialeController extends AbstractController
                 'FilialeForm' => $form->createView()
             ]);
     }
-    #[Route('/update_filiale/{id}', name: 'app_update_filiale')]
+    #[Route('/update/{id}', name: 'app_update_filiale')]
     public function updatePiece(Filiale $fil, ManagerRegistry $managerRegistry, Request $request): Response
     {
         $form = $this->createForm(FilialeType::class, $fil);

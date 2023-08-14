@@ -9,20 +9,20 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Profil;
 use App\Form\ProfilType;
-use App\Repository\ProfilRepository;
 
+#[Route('/profil')]
 class ProfilController extends AbstractController
 {
-    #[Route('/profil', name: 'app_profil')]
+    #[Route('/', name: 'app_profil')]
     public function index(ManagerRegistry $managerRegistry): Response
     {
         $profils = $managerRegistry->getRepository(Profil::class)->findAll();
         return $this->render('profil/index.html.twig', [
             'controller_name' => 'ProfilController',
-            'profils' => $profils
+            'profils' => $profils,
         ]);
     }
-    #[Route('/add_profil', name: 'app_add_profil')]
+    #[Route('/add', name: 'app_add_profil')]
     public function addProfil(ManagerRegistry $managerRegistry, Request $request): Response
     {
         $profil = new Profil();
@@ -38,7 +38,7 @@ class ProfilController extends AbstractController
                 'ProfilForm' => $form->createView()
             ]);
     }
-    #[Route('/update_profil/{id}', name: 'app_update_profil')]
+    #[Route('/update/{id}', name: 'app_update_profil')]
     public function updateProfil(Profil $profil, ManagerRegistry $managerRegistry, Request $request): Response
     {
         //$piece = $managerRegistry->getRepository(TypePiece::class, $piece);
@@ -55,7 +55,7 @@ class ProfilController extends AbstractController
                 'ProfilForm' => $form->createView()
             ]);
     }
-    #[Route('/delete_profil/{id}', name: 'app_delete_profil')]
+    #[Route('/delete/{id}', name: 'app_delete_profil')]
     public function deleteProfil(Profil $profil, ManagerRegistry $managerRegistry): Response
     {
         //$profil = $managerRegistry->getRepository(TypePiece::class, $piece);

@@ -2,10 +2,12 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ['ROLE_ADMIN_ORGANIZATION'] }
+        # - { path: ^/admin/employe, roles: ROLE_SHOW_STAT }
+        # - { path: ^/admin, roles: ROLE_SHOW_VISITE }
+        # - { path: ^/profile, roles: ROLE_CREATE_VISITE }
         # - { path: ^/connexion, roles: PUBLIC_ACCESS }
-        # - { path: '^/', roles: PUBLIC_ACCESS }
+                
 
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
