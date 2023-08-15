@@ -4,14 +4,17 @@ namespace App\Controller;
 
 use App\Form\VisiteType;
 use App\Entity\Visite;
+use App\Form\LierVisiteType;
 use App\Entity\VisiteurExterne;
 use App\Repository\VisiteRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Employe;
+use App\Entity\Personne;
 
 #[Route('/visite')]
 
@@ -152,6 +155,57 @@ class VisiteController extends AbstractController
     //         return $this->render('visite/update.html.twig', [
     //             'VisiteForm' => $form->createView()
     //         ]);
+    // } */
+    #[Route('/lier/{id}', name: 'app_lier_visiteur')]
+    public function lierVisiteur($id, ManagerRegistry $managerRegistry, Request $request, EntityManagerInterface $entityManager)
+    {
+        //$visiteur = $managerRegistry->getRepository(VisiteurExterne::class)->find($id);
+        $manager = $managerRegistry->getManager();
+        $visite = new Visite();
+        $visite->setTypeVisiteur("Visiteur externe");
+        $visite->setDefaultVisiteur($id, $entityManager);
+        $form = $this->createForm(LierVisiteType::class, $visite);
+        // $visiteur = $managerRegistry->getRepository(VisiteurExterne::class)->find($id);
+        // $visite = new Visite();
+        // $form = $this->createForm(LierVisiteType::class, $visite, [
+        //     'default_visiteur' => $visiteur,
+        // ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $managerRegistry->getManager();
+            $manager->persist($visite);
+            $manager->flush();
+            return $this->redirectToRoute('app_visite');
+        } else {
+            return $this->render(
+                'visite/lier.html.twig',
+                ['VisiteForm' => $form->createView()]
+            );
+        }
+    }
+
+    // #[Route('/lier/{id}', name: 'app_lier_employe')]
+    // public function lierEmploye($id, ManagerRegistry $managerRegistry, Request $request)
+    // {
+    //     $visiteur = $managerRegistry->getRepository(Employe::class)->find($id);
+    //     $visite = new Visite();
+    //     $form = $this->createForm(LierVisiteType::class, $visite);
+    //     $form->handleRequest($request);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $manager = $managerRegistry->getManager();
+    //         $visite->setTypeVisiteur("Employe visiteur");
+    //         $visite->setEmployeVisiteur($visiteur);
+    //         dd($visiteur);
+    //         $manager->persist($visite);
+    //         $manager->flush();
+    //         dd($visite);
+    //         return $this->redirectToRoute('app_visite');
+    //     } else {
+    //         return $this->render(
+    //             'visite/lier.html.twig',
+    //             ['VisiteForm' => $form->createView()]
+    //         );
+    //     }
     // }
     #[Route('/update/{id}', name: 'app_update_visite')]
     public function updateVisite($id, ManagerRegistry $managerRegistry, Request $request)
@@ -188,6 +242,7 @@ class VisiteController extends AbstractController
             'visiteurExterne' => $manager->getRepository(VisiteurExterne::class)->findAll()
         ]);
     }
+
     // public function EditVisite($id, ManagerRegistry $managerRegistry,VisiteRepository $rep, RequestStack $requestStack,TraitFormulaire $traitFormulaire ){
     //     $request = $requestStack->getMainRequest();
     // }

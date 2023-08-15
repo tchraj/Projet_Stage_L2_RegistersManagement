@@ -1,0 +1,31 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello visites
+{% endblock title  %}
+{% block body %}
+	<div class="container" style="width:50%;">
+		{{ form_start(VisiteForm) }}
+		<h1>
+			Nouvelle visite</h1>
+		<label>
+			Date de visite</label>
+		{{ form_widget(VisiteForm.DateVisite)}}
+
+		<label>
+			Heure de début</label>
+		{{ form_widget(VisiteForm.HeureDeb)}}
+		<label>
+			Heure de fin</label>
+		{{ form_widget(VisiteForm.HeureFin)}}
+		<label>
+			Motif</label>
+		{{form_widget(VisiteForm.motif)}}
+		{{ form_row(VisiteForm.EmployeVisite) }}
+
+		{{ form_row(VisiteForm.EtatVisite)}}
+		<input type="submit" value="Envoyer" id="showModalBtn" class="btn btn-success">
+
+		{{ form_end(VisiteForm) }}
+	</div>
+
+{% endblock body %}

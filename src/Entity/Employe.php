@@ -35,8 +35,8 @@ class Employe extends Personne
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $poste = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $actif = null;
+    #[ORM\Column()]
+    private ?bool $actif = true;
 
     public function __construct()
     {
@@ -115,7 +115,20 @@ class Employe extends Personne
 
     //     return $this;
     // }
+    #[ORM\Column(type: 'boolean')]
+    private $visible = true;
 
+    public function isVisible(): bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
     /**
      * @return Collection<int, Visite>
      */

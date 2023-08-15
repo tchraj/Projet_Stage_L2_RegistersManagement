@@ -7,6 +7,7 @@ use App\Entity\Employe;
 use App\Form\EmployeType;
 use App\Services\AppSendEmail;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\EmployeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/employe')]
-
 class EmployeController extends AbstractController
 {
     /*
@@ -29,20 +29,20 @@ class EmployeController extends AbstractController
     public function index(ManagerRegistry $managerRegistry): Response
     {
         $employes = $managerRegistry->getRepository(Employe::class)->findAll();
-        //$search = new SearchData();
-        /*$form = $this->createForm(SearchType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted()) {*/
-        //$search->page = $request->query->getInt('page', 1);
-        //$employes2 = $employeRepository->findBySearch($search);
-        //return $this->render('employe/index.html.twig', [
-        //'form' => $form,
-        /*'employes' => $employes
-        ]);*/
-        //}
+
         return $this->render('employe/index.html.twig', [
             'employes' => $employes,
             //'SearchForm' => $form->createView()
+        ]);
+    }
+    #[Route('/actifs', name: 'app_employe_actifs')]
+    public function listeEmployesActifs(ManagerRegistry $managerRegistry)
+    {
+        $manager = $managerRegistry->getManager();
+        $employes = $manager->getRepository(Employe::class)->findBy(['visible' => true]);
+
+        return $this->render('employe/index.html.twig', [
+            'employes' => $employes,
         ]);
     }
     #[Route('/add', name: 'app_add_employe')]
@@ -89,7 +89,6 @@ class EmployeController extends AbstractController
                   ORABANK TOGO: <br> Nom d'utilisateur:$username; <br>Mot de passe:$password",
                 'alert.html.twig'
             );
-            dd($flag);
             return $this->redirectToRoute('app_employe');
         } else
             return $this->render('employe/add.html.twig', [
@@ -111,6 +110,56 @@ class EmployeController extends AbstractController
             return $this->render('employe/update.html.twig', [
                 'EmployeForm' =>  $form->createView()
             ]);
+    }
+    // #[Route('/delete/{id}', name: 'app_delete_employe')]
+    // public function desactiverEmploye($id, ManagerRegistry $managerRegistry)
+    // {
+    //     $entityManager = $managerRegistry->getManager();
+    //     $employe = $entityManager->getRepository(Employe::class)->find($id);
+
+    //     if (!$employe) {
+    //         throw $this->createNotFoundException('Employé introuvable');
+    //     }
+    //     $employe->setVisible(false);
+    //     $employe->setActif(false);
+    //     $entityManager->flush();
+    //     return $this->redirectToRoute('app_employe_actifs');
+    // }
+    /* #[Route('/indexVisible', name: 'app_hide_employe')]
+    public function listeEmployes(ManagerRegistry $managerRegistry)
+    {
+        $employes = $$managerRegistry->getRepository(Employe::class)->findBy(['visible' => true]);
+        return $this->render('employe/index.html.twig', [
+            'employes' => $employes,
+        ]);
+    } */
+    #[Route('/indexVisible/{id}', name: 'app_hide_employe')]
+    public function listeEmployes($id, ManagerRegistry $managerRegistry)
+    {
+        $manager = $managerRegistry->getManager();
+        $employe = $manager->getRepository(Employe::class)->find($id);
+        if (!$employe) {
+            throw $this->createNotFoundException('Employé introuvable');
+        }
+        $employe->setVisible(false);
+        $manager->flush();
+        return $this->redirectToRoute('app_employe_actifs');
+    }
+    #[Route('/visites_effectuees/{id}', name: 'app_visites_effectuees')]
+    public function visitesEffectuees(Employe $employe)
+    {
+        $visitesEffectuees = $employe->getVisiteeffectuee();
+        return $this->render('employe/visites_effectuees.html.twig', [
+            'visitesEffectuees' => $visitesEffectuees,
+        ]);
+    }
+    #[Route('/visites_recues/{id}', name: 'app_visites_recues')]
+    public function visitesRecues(Employe $employe)
+    {
+        $visitesRecues = $employe->getVisiteRecue();
+        return $this->render('employe/visites_recues.html.twig', [
+            'visitesRecues' => $visitesRecues,
+        ]);
     }
     //   public function visitesRecues(ManagerRegistry $managerRegistry )
     //   {

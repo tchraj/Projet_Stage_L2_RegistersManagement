@@ -4,73 +4,56 @@
 {% endblock title %}
 
 {% block body %}
-	<div id="layoutSidenav">
-		<div id="layoutSidenav_content">
-			<main>
-				<div class="card mb-4">
-					<div class="card-header">
-						<i class="fas fa-table me-1"></i>
-						<h3>Liste des visiteurs externes</h3>
-					</div>
-					<div class="card-body">
-						<table id="datatablesSimple">
-							<thead>
-								<tr>
-									<th>Nom</th>
-									<th>Prenoms</th>
-									<th>Email</th>
-									<th>Télephone</th>
-									{#Age#}
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th>Nom</th>
-									<th>Prenoms</th>
-									<th>Email</th>
-									<th>Télephone</th>
-									{#Age#}
-									<th>Actions</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								{% for visiteur in visiteurs %}
-									<tr>
-										<td>
-											{{ visiteur.Nom }}
-										</td>
-										<td>{{visiteur.prenoms}}</td>
-										<td>{{visiteur.email}}</td>
-										<td>{{visiteur.tel}}</td>
-										<td>
-											<a href="{{path('app_add_visite')}}">Lier à une visite</a>
-										</td>
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</main>
+	<div class="card mb-4">
+		<div class="card-header">
+			<i class="fas fa-table me-1"></i>
+			<h3>Liste des visiteurs externes</h3>
+		</div>
+		<div class="card-body">
+			<table id="datatablesSimple">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prenoms</th>
+						<th>Email</th>
+						<th>Télephone</th>
+						{#Age#}
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>Nom</th>
+						<th>Prenoms</th>
+						<th>Email</th>
+						<th>Télephone</th>
+						{#Age#}
+						<th>Actions</th>
+					</tr>
+				</tfoot>
+				<tbody>
+					{% for visiteur in visiteurs %}
+						<tr>
+							<td>
+								{{ visiteur.Nom }}
+							</td>
+							<td>{{visiteur.prenoms}}</td>
+							<td>{{visiteur.email}}</td>
+							<td>{{visiteur.tel}}</td>
+							<td>
+								<a href="{{path('app_lier_visiteur',{'id':visiteur.id})}}">Lier à une visite</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
 	{# <a href="{{ path('app_update_visiteur',{'id':vis.id}) }}">
-											<div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-												</svg>
-											</div>
-										</a> #}
+																		<div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+																			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+																				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+																			</svg>
+																		</div>
+																	</a> #}
 {% endblock body %}
-
-{% block javascript %}
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-	<script src="js/scripts.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-	<script src="assets/demo/chart-area-demo.js"></script>
-	<script src="assets/demo/chart-bar-demo.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-	<script src="js/datatables-simple-demo.js"></script>
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-{% endblock %}

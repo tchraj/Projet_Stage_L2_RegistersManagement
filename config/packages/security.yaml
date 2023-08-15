@@ -1,13 +1,19 @@
 security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    role_hierarchy:
+        ROLE_CREATE_VISITE: []
+        ROLE_SHOW_VISITE: [ROLE_CREATE_VISITE]
+        ROLE_SHOW_STAT: [ROLE_CREATE_VISITE]
+        ROLE_MANAGE_EMPLOYE: [ROLE_SHOW_STAT]
+        ROLE_ADMIN_ORGANIZATION: [ROLE_MANAGE_EMPLOYE]
     access_control:
         # - { path: ^/admin, roles: ['ROLE_ADMIN_ORGANIZATION'] }
-        # - { path: ^/admin/employe, roles: ROLE_SHOW_STAT }
-        # - { path: ^/admin, roles: ROLE_SHOW_VISITE }
-        # - { path: ^/profile, roles: ROLE_CREATE_VISITE }
+        # - { path: ^/admin, roles: ROLE_SHOW_STAT }
+        # - { path: ^/visite, roles: ROLE_SHOW_VISITE }
+        # - { path: ^/employe, roles: ROLE_CREATE_VISITE }
         # - { path: ^/connexion, roles: PUBLIC_ACCESS }
-                
+        # - { path: ^/, roles: IS_AUTHENTICATED_FULLY }       
 
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:

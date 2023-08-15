@@ -1,0 +1,16 @@
+{% extends 'template.html.twig' %}
+{% for visite in visitesEffectuees %}
+	<td>
+		{% if visite.typeVisiteur == 'Visiteur externe' %}
+			{{ visite.visiteurExterne }}
+		{% elseif visite.typeVisiteur == 'Employe visiteur' %}
+			{{ visite.employeVisiteur}}
+		{% endif %}
+	</td>
+	<td>{{visite.EmployeVisite}}</td>
+	<td>{{visite.Motif}}</td>
+	<td>{{visite.EtatVisite}}</td>
+	<td>{{visite.DateVisite|date("m/d/Y")}}</td>
+	<td>Editer</td>
+
+{% endfor %}

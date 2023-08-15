@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -47,14 +48,13 @@ class EmployeType extends AbstractType
                     'class' => Direction::class
                 ],
             )
-            ->add(
-                'actif',
-                CheckboxType::class,
-                [
-                    'label' => 'Actif/Inactif',
-                    'required' => false
-                ],
-            )
+            ->add('actif', CheckboxType::class, [
+                'label' => 'Actif',
+                'required' => false,
+            ])
+            ->add('visible', HiddenType::class, [
+                'data' => true
+            ])
             ->add(
                 'Envoyer',
                 SubmitType::class

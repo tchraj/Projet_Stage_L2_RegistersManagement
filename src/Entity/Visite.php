@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Entity;
+
 use App\Entity\VisiteurExterne;
 use App\Repository\VisiteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[ORM\Entity(repositoryClass: VisiteRepository::class)]
 class Visite
@@ -163,5 +165,13 @@ class Visite
         $this->EmployeVisite = $EmployeVisite;
 
         return $this;
+    }
+
+    public function setDefaultVisiteur($visiteurId, EntityManagerInterface $entityManager)
+    {
+        $visiteurExterne = $entityManager->getRepository(VisiteurExterne::class)->find($visiteurId);
+        if ($visiteurExterne) {
+            $this->visiteurExterne = $visiteurExterne;
+        }
     }
 }
