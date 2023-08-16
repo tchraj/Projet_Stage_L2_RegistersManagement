@@ -21,37 +21,41 @@
 			Motif</label>
 		{{form_widget(VisiteForm.motif)}}
 		{{ form_row(VisiteForm.EmployeVisite) }}
+		<label>Type de piece</label>
+		{{form_widget(VisiteForm.typePiece)}}
+		<label>Numéro de la piece</label>
+		{{form_widget(VisiteForm.NumPiece)}}
 
 		{{form_row(VisiteForm.typeVisiteur)}}
-		 <div id="champVisiteurExterne" style="display: none;">
+		<div id="champVisiteurExterne" style="display: none;">
 			{{ form_row(VisiteForm.visiteurExterne) }}
 		</div>
 		<div id="champEmployeVisiteur" style="display: none;">
 			{{ form_row(VisiteForm.employeVisiteur) }}
 		</div>
+		{{ form_errors(VisiteForm, {'attr':{'class':'alert alert-danger'}}
+		)}}
 		{{ form_row(VisiteForm.EtatVisite)}}
 		<input type="submit" value="Envoyer" id="showModalBtn" class="btn btn-success">
-		
 		{{ form_end(VisiteForm) }}
 	</div>
 	<script>
-    const typeVisiteurField = document.querySelector('#{{ VisiteForm.typeVisiteur.vars.id }}');
-    const champVisiteurExterne = document.querySelector('#champVisiteurExterne');
-    const champEmployeVisiteur = document.querySelector('#champEmployeVisiteur');
+		const typeVisiteurField = document.querySelector('#    {{ VisiteForm.typeVisiteur.vars.id }}');
+const champVisiteurExterne = document.querySelector('#champVisiteurExterne');
+const champEmployeVisiteur = document.querySelector('#champEmployeVisiteur');
 
-    typeVisiteurField.addEventListener('change', () => {
-        if (typeVisiteurField.value === 'Visiteur externe') {
-            champVisiteurExterne.style.display = 'block';
-            champEmployeVisiteur.style.display = 'none';
-        } else if (typeVisiteurField.value === 'Employe visiteur') {
-            champVisiteurExterne.style.display = 'none';
-            champEmployeVisiteur.style.display = 'block';
-        } else {
-            champVisiteurExterne.style.display = 'none';
-            champEmployeVisiteur.style.display = 'none';
-        }
-    });
-</script>
+typeVisiteurField.addEventListener('change', () => {
+if (typeVisiteurField.value === 'Visiteur externe') {
+champVisiteurExterne.style.display = 'block';
+champEmployeVisiteur.style.display = 'none';
+} else if (typeVisiteurField.value === 'Employe visiteur') {
+champVisiteurExterne.style.display = 'none';
+champEmployeVisiteur.style.display = 'block';
+} else {
+champVisiteurExterne.style.display = 'none';
+champEmployeVisiteur.style.display = 'none';
+}
+});
+	</script>
 
 {% endblock body %}
-

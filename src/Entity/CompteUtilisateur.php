@@ -33,6 +33,20 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $passClair = null;
 
+    #[ORM\OneToOne(targetEntity: Employe::class, inversedBy: "compteUtilisateur")]
+    private ?Employe $employe = null;
+
+    public function getEmploye(): ?Employe
+    {
+        return $this->employe;
+    }
+
+    public function setEmploye(?Employe $employe): static
+    {
+        $this->employe = $employe;
+
+        return $this;
+    }
     public function getId(): ?int
     {
         return $this->id;

@@ -51,6 +51,12 @@ class Visite
     #[ORM\Column(type: Types::TEXT, nullable: false)]
     private ?string $typeVisiteur;
 
+    #[ORM\Column(length: 60, nullable: true)]
+    private ?string $typePiece = null;
+
+    #[ORM\Column(length: 15)]
+    private ?string $NumPiece = null;
+
     public function getTypeVisiteur(): ?string
     {
         return $this->typeVisiteur;
@@ -173,5 +179,29 @@ class Visite
         if ($visiteurExterne) {
             $this->visiteurExterne = $visiteurExterne;
         }
+    }
+
+    public function getTypePiece(): ?string
+    {
+        return $this->typePiece;
+    }
+
+    public function setTypePiece(?string $typePiece): static
+    {
+        $this->typePiece = $typePiece;
+
+        return $this;
+    }
+
+    public function getNumPiece(): ?string
+    {
+        return $this->NumPiece;
+    }
+
+    public function setNumPiece(string $NumPiece): static
+    {
+        $this->NumPiece = $NumPiece;
+
+        return $this;
     }
 }

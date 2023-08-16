@@ -1,16 +1,27 @@
 {% extends 'template.html.twig' %}
-{% for visite in visitesRecues %}
-	<td>
-		{% if visite.typeVisiteur == 'Visiteur externe' %}
-			{{ visite.visiteurExterne }}
-		{% elseif visite.typeVisiteur == 'Employe visiteur' %}
-			{{ visite.employeVisiteur}}
-		{% endif %}
-	</td>
-	<td>{{visite.EmployeVisite}}</td>
-	<td>{{visite.Motif}}</td>
-	<td>{{visite.EtatVisite}}</td>
-	<td>{{visite.DateVisite|date("m/d/Y")}}</td>
-	<td>Editer</td>
+{% block body %}
+	<h1>Visites recues par
+		{{ employe.nom }}
+		{{employe.prenoms}}</h1>
 
-{% endfor %}
+	{% if visitesRecues is empty %}
+		<p>Aucune visite recue par cet employé.</p>
+	{% else %}
+
+		{% for visite in visitesRecues %}
+			<td>
+				{% if visite.typeVisiteur == 'Visiteur externe' %}
+					{{ visite.visiteurExterne }}
+				{% elseif visite.typeVisiteur == 'Employe visiteur' %}
+					{{ visite.employeVisiteur}}
+				{% endif %}
+			</td>
+			<td>{{visite.EmployeVisite}}</td>
+			<td>{{visite.Motif}}</td>
+			<td>{{visite.EtatVisite}}</td>
+			<td>{{visite.DateVisite|date("m/d/Y")}}</td>
+			<td>Editer</td>
+
+		{% endfor %}
+	{% endif %}
+{% endblock %}

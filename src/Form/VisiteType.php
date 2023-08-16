@@ -40,6 +40,8 @@ class VisiteType extends AbstractType
                 ]
             ])
             ->add('EmployeVisite', EntityType::class, ['class' => Employe::class])
+            ->add('typePiece')
+            ->add('NumPiece')
             ->add(
                 'typeVisiteur',
                 ChoiceType::class,

@@ -1,5 +1,5 @@
 {% extends 'template.html.twig' %}
-{% for visite in visitesEffectuees %}
+{#{% for visite in visitesEffectuees %}
 	<td>
 		{% if visite.typeVisiteur == 'Visiteur externe' %}
 			{{ visite.visiteurExterne }}
@@ -13,4 +13,23 @@
 	<td>{{visite.DateVisite|date("m/d/Y")}}</td>
 	<td>Editer</td>
 
-{% endfor %}
+{% endfor %} #}
+
+{% block body %}
+	<h1>Visites effectuées par
+		{{ employe.nom }}
+		{{employe.prenoms}}</h1>
+
+	{% if visitesEffectuees is empty %}
+		<p>Aucune visite effectuée par cet employé.</p>
+	{% else %}
+		<ul>
+			{% for visite in visitesEffectuees %}
+				<li>{{ visite.DateVisite | date('d/m/Y') }}
+					-
+					{{ visite.Motif }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+	{# <a href="{{ path('nom_de_votre_route') }}">Retour à la liste des employés</a> #}
+{% endblock %}

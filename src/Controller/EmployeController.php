@@ -40,7 +40,6 @@ class EmployeController extends AbstractController
     {
         $manager = $managerRegistry->getManager();
         $employes = $manager->getRepository(Employe::class)->findBy(['visible' => true]);
-
         return $this->render('employe/index.html.twig', [
             'employes' => $employes,
         ]);
@@ -111,90 +110,43 @@ class EmployeController extends AbstractController
                 'EmployeForm' =>  $form->createView()
             ]);
     }
-    // #[Route('/delete/{id}', name: 'app_delete_employe')]
-    // public function desactiverEmploye($id, ManagerRegistry $managerRegistry)
-    // {
-    //     $entityManager = $managerRegistry->getManager();
-    //     $employe = $entityManager->getRepository(Employe::class)->find($id);
+    #[Route('/hide/{id}', name: 'app_hide_employe')]
+    public function desactiverEmploye($id, ManagerRegistry $managerRegistry)
+    {
+        $entityManager = $managerRegistry->getManager();
+        $employe = $entityManager->getRepository(Employe::class)->find($id);
 
-    //     if (!$employe) {
-    //         throw $this->createNotFoundException('Employé introuvable');
-    //     }
-    //     $employe->setVisible(false);
-    //     $employe->setActif(false);
-    //     $entityManager->flush();
-    //     return $this->redirectToRoute('app_employe_actifs');
-    // }
-    /* #[Route('/indexVisible', name: 'app_hide_employe')]
-    public function listeEmployes(ManagerRegistry $managerRegistry)
-    {
-        $employes = $$managerRegistry->getRepository(Employe::class)->findBy(['visible' => true]);
-        return $this->render('employe/index.html.twig', [
-            'employes' => $employes,
-        ]);
-    } */
-    #[Route('/indexVisible/{id}', name: 'app_hide_employe')]
-    public function listeEmployes($id, ManagerRegistry $managerRegistry)
-    {
-        $manager = $managerRegistry->getManager();
-        $employe = $manager->getRepository(Employe::class)->find($id);
         if (!$employe) {
             throw $this->createNotFoundException('Employé introuvable');
         }
         $employe->setVisible(false);
-        $manager->flush();
+        $employe->setActif(false);
+        $entityManager->flush();
         return $this->redirectToRoute('app_employe_actifs');
     }
     #[Route('/visites_effectuees/{id}', name: 'app_visites_effectuees')]
-    public function visitesEffectuees(Employe $employe)
+    public function visitesEffectuees(Employe $employe, $id, ManagerRegistry $managerRegistry)
     {
+        $manager = $managerRegistry->getManager();
+        $employe = $manager->getRepository(Employe::class)->findOneBy(['id' => $id]);
         $visitesEffectuees = $employe->getVisiteeffectuee();
         return $this->render('employe/visites_effectuees.html.twig', [
             'visitesEffectuees' => $visitesEffectuees,
+            'employe' => $employe
         ]);
     }
     #[Route('/visites_recues/{id}', name: 'app_visites_recues')]
-    public function visitesRecues(Employe $employe)
+    public function visitesRecues(Employe $employe, $id, ManagerRegistry $managerRegistry)
     {
+        $manager = $managerRegistry->getManager();
+        $employe = $manager->getRepository(Employe::class)->findOneBy(['id' => $id]);
         $visitesRecues = $employe->getVisiteRecue();
         return $this->render('employe/visites_recues.html.twig', [
             'visitesRecues' => $visitesRecues,
+            'employe' => $employe
         ]);
     }
-    //   public function visitesRecues(ManagerRegistry $managerRegistry )
-    //   {
-    //     $managerRegistry->getManager();
-    //     // On récupère l'EntityManager
-    //     //via le service ManagerRegistry qui nous a été injecté dans la méthode du contrôleur
-    //     $em=$managerRegistry->getRepository("App\Entity\Visite");
-    //     //$visites= $em->findAll();
-    //     /*
-    //     * Je vais faire une requête pour recuperer les données de ma table Visite
-    //     et je retournera un objet QueryBuilder
-    //     avec toutes mes conditions préalablement définies
-    //     */
-    //     $queryBuilder =$em -> createQueryBuilder('v')
-    //     ->select(['v','c']);
-    //     //je veux que mon select soit composée d'une colonne de la table
-    //     Visite ('v')
-    //     ->join ('App\Entity\Employe c ','v.employeVisiteur = c ')
-    //     ;
-    //     $paginator  = new Paginator($queryBuilder,$fetchJoinCollection = true );
-    //     $resultat = $paginator->paginate(
-    //         10 , ['*'], null,[
-    //             'defaultSortFieldName'=>'DateVisite',
-    //             'defaultSortOrder'=>"DESC",]
-    //             );
-    //             dump($resultat);
-    //             die;
-    //             return $this->render('employe/index.html.twig',[
-    //                 "visites"=>$resultat]);
-    //             }
-    //     }
-
-
-
-    //   }
+    
     /*
     #[Route('/update_employe/{id}', name: 'app_update_employe')]
     public function UpdateEmploye(Employe $employe, ManagerRegistry $managerRegistry, Request $request): Response

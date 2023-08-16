@@ -234,4 +234,8 @@ class Employe extends Personne
 
         return $this;
     }
+    public function nombreVisite(): int
+    {
+        return $this->Visiteeffectuee->count();
+    }
 }
