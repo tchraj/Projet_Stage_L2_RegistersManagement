@@ -14,8 +14,8 @@ class Employe extends Personne
 {
     #[ORM\ManyToOne()]
     private ?Direction $direction = null;
-    #[ORM\OneToOne()]
-    private ?CompteUtilisateur $compteUtilisateur = null;
+    #[ORM\OneToOne(targetEntity: CompteUtilisateur::class, inversedBy: "Employe")]
+    private ?CompteUtilisateur $compteUtilisateur;
 
     // #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'directeur')]
     // private ?self $employe = null;
@@ -234,8 +234,12 @@ class Employe extends Personne
 
         return $this;
     }
-    public function nombreVisite(): int
+    public function nombreVisitesEffectuées(): int
     {
         return $this->Visiteeffectuee->count();
+    }
+    public function nombreVisitesRecues(): int
+    {
+        return $this->VisiteRecue->count();
     }
 }

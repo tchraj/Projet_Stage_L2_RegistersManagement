@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/acceuil')]
+#[Route('/')]
 class AcceuilController extends AbstractController
 {
     #[Route('/', name: 'app_acceuil')]
@@ -20,27 +20,14 @@ class AcceuilController extends AbstractController
             'employes' => $employes,
         ]);
     }
-    // #[Route('/', name: 'app_nombre_visite')]
-    // public function nombreVisite()
-    // {
-    //     $user = $this->getUser(); // Récupère l'objet User de l'utilisateur connecté
 
-    //     if ($user) {
-    //         $employe = $user->get // Récupère l'employé associé à l'utilisateur connecté
-
-    //         if ($employe) {
-    //             $nombreVisites = $employe->getVisiteEffectuees()->count();
-    //         } else {
-    //             // L'utilisateur n'a pas d'employé associé, gérer le cas si nécessaire
-    //             $nombreVisites = 0;
-    //         }
-    //     } else {
-    //         // L'utilisateur n'est pas connecté, gérer le cas si nécessaire
-    //         $nombreVisites = 0;
-    //     }
-
-    //     return $this->render('acceuil.html.twig', [
-    //         'nombreVisites' => $nombreVisites,
-    //     ]);
-    // }
+    #[Route('/infos_employes', name: 'app_infos_employe')]
+    public function infosEmployes(Employe $employe, ManagerRegistry $managerRegistry)
+    {
+        $manager = $managerRegistry->getManager();
+        $employes = $manager->getRepository(Employe::class)->findAll();
+        return $this->redirectToRoute('app_acceuil', [
+            'employes' => $employes
+        ]);
+    }
 }
