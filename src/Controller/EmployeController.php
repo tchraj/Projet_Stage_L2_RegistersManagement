@@ -7,6 +7,7 @@ use App\Entity\Employe;
 use App\Form\EmployeType;
 use App\Services\AppSendEmail;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Repository\EmployeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -146,7 +147,7 @@ class EmployeController extends AbstractController
             'employe' => $employe
         ]);
     }
-    
+
     /*
     #[Route('/update_employe/{id}', name: 'app_update_employe')]
     public function UpdateEmploye(Employe $employe, ManagerRegistry $managerRegistry, Request $request): Response
@@ -165,4 +166,33 @@ class EmployeController extends AbstractController
                 'EmployeForm' =>  $form->createView()
             ]);
     } */
+    #[Route('/profil', name: 'app_profil_employe')]
+    public function profil(): Response
+    {
+        // Récupérer l'utilisateur connecté (compte utilisateur)
+        $user = $this->getUser();
+
+        if ($user instanceof CompteUtilisateur) {
+            // Récupérer l'employé associé au compte
+            $employe = $user->getEmploye();
+
+            // Vérifier si l'employé est présent
+            if ($employe !== null) {
+                $nom = $employe->getNom(); // Remplacez par la méthode appropriée
+                $prenoms = $employe->getPrenoms();
+                $email = $employe->getEmail();
+                $poste = $employe->getPoste();
+                $tel = $employe->getTel();
+                return $this->render('employe/detail.html.twig', [
+                    'nom' => $nom,
+                    'prenoms' => $prenoms,
+                    'email' =>  $email,
+                    'poste' => $poste,
+                    'tel' => $tel
+                
+                ]);
+            }
+        }
+        throw new NotFoundHttpException("L'employé n'existe pas");
+    }
 }

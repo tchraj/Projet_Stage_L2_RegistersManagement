@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/')]
 class AcceuilController extends AbstractController
 {
-    #[Route('/', name: 'app_acceuil')]
+    #[Route('/acceuil', name: 'app_acceuil')]
     public function index(ManagerRegistry $managerRegistry, Request $request): Response
     {
         $employes = $managerRegistry->getRepository(Employe::class)->findAll();

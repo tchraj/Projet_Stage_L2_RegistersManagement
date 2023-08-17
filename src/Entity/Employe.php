@@ -12,9 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 //#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class Employe extends Personne
 {
-    #[ORM\ManyToOne()]
+    #[ORM\ManyToOne(inversedBy: "employes")]
     private ?Direction $direction = null;
-    #[ORM\OneToOne(targetEntity: CompteUtilisateur::class, inversedBy: "Employe")]
+
+    #[ORM\OneToOne(targetEntity: CompteUtilisateur::class, mappedBy: "Employe")]
     private ?CompteUtilisateur $compteUtilisateur;
 
     // #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'directeur')]

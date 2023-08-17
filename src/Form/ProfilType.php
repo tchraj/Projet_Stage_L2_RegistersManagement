@@ -7,6 +7,7 @@ use App\Entity\Profil;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -20,7 +21,8 @@ class ProfilType extends AbstractType
     {
         $builder
             ->add('nomProfil', TextType::class, ['label' => 'Nom du profil'])
-            ->add('roles');
+            ->add('roles')
+            ->add('Envoyer',SubmitType::class);
     }
     // SearchableEntityType::class, [
     //     'class' => Role::class,

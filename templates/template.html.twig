@@ -7,9 +7,8 @@
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
 		<title>
-			{% block title %}
-				Static Navigation - SB Admin
-			{% endblock %}
+			Gestion des registres||
+			{% block title %}{% endblock %}
 		</title>
 		{% block styles %}
 			<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
@@ -50,7 +49,7 @@
 							</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="#!">Mon profil</a>
+							<a class="dropdown-item" href="{{path('app_profil_employe')}}">Mon profil</a>
 						</li>
 						<li>
 							<hr class="dropdown-divider"/>
@@ -68,43 +67,49 @@
 				<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
 					<div class="sb-sidenav-menu" style="background-color:black">
 						<div class="nav">
-							<a class="nav-link" href="/" style="margin-top:40px;">
-								<div class="sb-nav-link-icon">
-									<i class="fa-solid fa-house" style="color:white"></i>
-								</div>
-								Acceuil
+							{# {% if is_granted('ROLE_CREATE_VISITE') %} 
+																													<a class="nav-link" href="#" style="margin-top:40px;">
+																														Acceuil
+																													</a>#}
+							{# {% endif %} #}
+							{#{% if is_granted('ROLE_ADMIN_ORGANIZATION') %}#}
+								<a class="nav-link" href="/" style="margin-top:40px;"> Tableau de bord
 							</a>
+							{#{% endif %}
+																					
+																												{% if is_granted('ROLE_MANAGE_EMPLOYE') %}#}
 							<a class="nav-link" href="{{ path('app_employe_actifs') }}">
-								<div class="sb-nav-link-icon">
-									<i class="fa-solid fa-person" style="color:white"></i>
-								</div>
 								Employes
 							</a>
+							{#{% endif %}
+																												{% if is_granted('ROLE_CREATE_VISITE') %}#}
 							<a class="nav-link" href="{{ path('app_visiteur_externe') }}">
 								Visiteurs
 							</a>
+							{#{% endif %}
+																					
+																												{% if is_granted('ROLE_ADMIN_ORGANIZATION') %}#}
 							<a class="nav-link" href="{{ path('app_filiale') }}">
-
 								Filiales
-
 							</a>
 							<a class="nav-link" href="{{ path('app_direction') }}">
 								Directions
 							</a>
+							{#{% endif %}
+																												{% if is_granted('ROLE_SHOW_VISITE') %}#}
 							<a class="nav-link" href="{{path('app_visite')}}">
-
 								Visites
 							</a>
-
+							{#{% endif %}
+																												{% if is_granted('ROLE_ADMIN_ORGANIZATION') %}#}
 							<a class="nav-link" href="{{path('app_profil')}}">
 								<i class="fa-solid fa-id-badge"></i>
 								Profils
 							</a>
 							<a class="nav-link" href="{{path('app_compte_utilisateur')}}">
-
 								Comptes
-
 							</a>
+							{#{% endif %}#}
 						</div>
 					</div>
 					<div class="sb-sidenav-footer" style="background-color: gray">
@@ -150,7 +155,5 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 		<script src="bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
-
 	{% endblock %}
-
-</html>
+</html></body></html>

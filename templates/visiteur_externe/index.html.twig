@@ -5,9 +5,12 @@
 
 {% block body %}
 	<div class="card mb-4">
-		<div class="card-header">
+		<div class="card-header" style="display:flex;justify-content:space-around">
 			<i class="fas fa-table me-1"></i>
 			<h3>Liste des visiteurs externes</h3>
+			<a href="{{path('app_add_employe')}}">
+				<input type="button" value="Nouveau visiteur" class="btn btn-success">
+			</a>
 		</div>
 		<div class="card-body">
 			<table id="datatablesSimple">
@@ -41,7 +44,8 @@
 							<td>{{visiteur.email}}</td>
 							<td>{{visiteur.tel}}</td>
 							<td>
-								<a href="{{path('app_lier_visiteur',{'id':visiteur.id})}}">Lier à une visite</a>
+								<a href="{{path('app_lier_visiteur',{'id':visiteur.id})}}" class="btn btn-primary">Lier à une visite</a>
+								<a href="{{path('app_update_visiteur',{'id':visiteur.id})}}" class="btn btn-warning">Modifier</a>
 							</td>
 						</tr>
 					{% endfor %}
@@ -49,11 +53,4 @@
 			</table>
 		</div>
 	</div>
-	{# <a href="{{ path('app_update_visiteur',{'id':vis.id}) }}">
-																		<div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-																			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-																				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-																			</svg>
-																		</div>
-																	</a> #}
-{% endblock body %}
+	{% endblock body %}

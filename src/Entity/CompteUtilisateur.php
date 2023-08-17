@@ -14,7 +14,7 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    const ROLE_ADMIN = "ROLE_ADMIN_ORGANIZATION";
+    //const ROLE_ADMIN = "ROLE_ADMIN_ORGANIZATION";
     #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
 
@@ -27,7 +27,7 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: "comptes")]
     private ?Profil $profil;
 
     #[ORM\Column(length: 15, nullable: true)]
@@ -76,28 +76,41 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
     /**
      * @see UserInterface
      */
+    // public function getRoles(): array
+    // {
+    //     // guarantee every user at least has ROLE_USER
+    //     if ($this->getProfil() !== null) {
+    //         $profil = $this->getProfil();
+    //         $objRoles = $profil->getRoles();
+    //         $i = 0;
+    //         foreach ($objRoles as $role) {
+    //             $r[$i] = $role->getNomRole();
+    //             $i + 1;
+    //         }
+    //         $this->roles[] = $r;
+    //     }
+    //     //$roles[] = 'ROLE_USER';
+    //     return array_unique($this->roles);
+    // }
     public function getRoles(): array
     {
         // guarantee every user at least has ROLE_USER
         if ($this->getProfil() !== null) {
             $profil = $this->getProfil();
             $objRoles = $profil->getRoles();
-            $i = 0;
+            $r = []; // Créez un tableau pour stocker les rôles
             foreach ($objRoles as $role) {
-                $r[$i] = $role->getNomRole();
-                $i + 1;
+                $r[] = $role->getNomRole(); // Ajoutez chaque rôle au tableau
             }
-            $this->roles[] = $r;
+            $this->roles = $r; // Mettez à jour $this->roles avec le tableau de rôles
         }
         //$roles[] = 'ROLE_USER';
         return array_unique($this->roles);
     }
-
     public function setRoles(array $roles): static
     {
         return $this;
     }
-
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -149,8 +162,8 @@ class CompteUtilisateur implements UserInterface, PasswordAuthenticatedUserInter
 
         return $this;
     }
-    public function isAdmin(): bool
+    /* public function isAdmin(): bool
     {
         return in_array(self::ROLE_ADMIN, $this->getRoles());
-    }
+    } */
 }

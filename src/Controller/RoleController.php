@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Form\RoleType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -1,27 +1,101 @@
 {% extends 'template.html.twig' %}
 {% block body %}
-	<h1>Visites recues par
-		{{ employe.nom }}
-		{{employe.prenoms}}</h1>
+	<div class="card mb-4">
+		<div class="card-header" style="display:flex;justify-content:space-around">
+			<i class="fas fa-table me-1"></i>
+			<h3>Visites recues par
+				{{employe.nom}}
+				{{employe.prenoms}}</h3>
+		</div>
+		<div class="card-body">
+			<table id="datatablesSimple">
+				<thead>
+					<tr>
+						<th>Visiteur</th>
+						<th>Motif</th>
+						<th>Date de visite</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>Visiteur</th>
+						<th>Motif</th>
+						<th>Date de visite</th>
+					</tr>
+				</tfoot>
+				<tbody>
+					{% for visite in visitesRecues %}
+						{% if visitesRecues is empty %}
+							<h1>Aucune visite recue par cet employé.</h1>
+						{% else %}
+							<tr>
 
-	{% if visitesRecues is empty %}
-		<p>Aucune visite recue par cet employé.</p>
-	{% else %}
+								<td>
+									{% if visite.typeVisiteur == 'Visiteur externe' %}
+										{{ visite.visiteurExterne }}
+									{% elseif visite.typeVisiteur == 'Employe visiteur' %}
+										{{ visite.employeVisiteur}}
+									{% endif %}
+								</td>
+								<td>
+									{{ visite.Motif }}
+								</td>
+								<td>{{visite.DateVisite|date("m/d/Y")}}</td>
 
-		{% for visite in visitesRecues %}
-			<td>
-				{% if visite.typeVisiteur == 'Visiteur externe' %}
-					{{ visite.visiteurExterne }}
-				{% elseif visite.typeVisiteur == 'Employe visiteur' %}
-					{{ visite.employeVisiteur}}
-				{% endif %}
-			</td>
-			<td>{{visite.EmployeVisite}}</td>
-			<td>{{visite.Motif}}</td>
-			<td>{{visite.EtatVisite}}</td>
-			<td>{{visite.DateVisite|date("m/d/Y")}}</td>
-			<td>Editer</td>
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</tbody>
+		</table>
+			<a href="{{ path('app_employe_actifs') }}">
+				<button class="btn btn-primary">Retour</button>
+			</a>
+	</div>
+</div>
+<script type="module">
+	import Swal from 'sweetalert2';
+document.querySelectorAll('.delete-button').forEach(button => {
+button.addEventListener('click', function (event) {
+event.preventDefault();
+console.log('Bouton Supprimer cliqué !');
+const deleteUrl = this.getAttribute('href');
 
-		{% endfor %}
-	{% endif %}
-{% endblock %}
+Swal.fire({
+title: 'Confirmation',
+text: 'Voulez-vous vraiment supprimer cet employé ?',
+icon: 'warning',
+showCancelButton: true,
+confirmButtonText: 'Oui',
+cancelButtonText: 'Annuler'
+}).then((result) => {
+if (result.isConfirmed) {
+window.location.href = deleteUrl; // Naviguer vers l'URL de désactivation
+}
+});
+});
+});
+</script>{# <h1>Visites recues par
+																							{{ employe.nom }}
+																							{{employe.prenoms}}</h1>
+																					
+																						{% if visitesRecues is empty %}
+																							<p>Aucune visite recue par cet employé.</p>
+																						{% else %}
+																					
+																							{% for visite in visitesRecues %}
+																								<td>
+																									{% if visite.typeVisiteur == 'Visiteur externe' %}
+																										{{ visite.visiteurExterne }}
+																									{% elseif visite.typeVisiteur == 'Employe visiteur' %}
+																										{{ visite.employeVisiteur}}
+																									{% endif %}
+																								</td>
+																								<td>{{visite.EmployeVisite}}</td>
+																								<td>{{visite.Motif}}</td>
+																								<td>{{visite.EtatVisite}}</td>
+																								<td>{{visite.DateVisite|date("m/d/Y")}}</td>
+																								<td>Editer</td>
+																					
+																							{% endfor %}
+																						{% endif %} #}{% endblock %}

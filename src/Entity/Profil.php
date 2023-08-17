@@ -19,20 +19,20 @@ class Profil
     #[ORM\ManyToMany(targetEntity: Role::class)]
     private $roles;
 
-    #[ORM\OneToMany(mappedBy: 'profil', targetEntity: Employe::class)]
-    private $employe;
+    #[ORM\OneToMany(mappedBy: 'profil', targetEntity: CompteUtilisateur::class)]
+    private Collection $comptes;
 
     #[ORM\Column(length: 60)]
     private ?string $nomProfil = null;
 
-    #[ORM\OneToMany(mappedBy: 'profil', targetEntity: CompteUtilisateur::class)]
-    private Collection $compteUtilisateurs;
+    // #[ORM\OneToMany(mappedBy: 'profil', targetEntity: CompteUtilisateur::class)]
+    // private Collection $compteUtilisateurs;
 
     public function __construct()
     {
         $this->roles = new ArrayCollection();
-        $this->employe = new ArrayCollection();
-        $this->compteUtilisateurs = new ArrayCollection();
+        //$this->employe = new ArrayCollection();
+        $this->comptes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,35 +62,35 @@ class Profil
         return $this;
     }
 
-    /**
-     * @return Collection<int, Employe>
-     */
-    public function getEmploye(): Collection
-    {
-        return $this->employe;
-    }
+    // /**
+    //  * @return Collection<int, Employe>
+    //  */
+    // public function getEmploye(): Collection
+    // {
+    //     return $this->employe;
+    // }
 
-    public function addEmploye(Employe $employe): static
-    {
-        if (!$this->employe->contains($employe)) {
-            $this->employe->add($employe);
-            //$employe->setProfil($this);
-        }
+    // public function addEmploye(Employe $employe): static
+    // {
+    //     if (!$this->employe->contains($employe)) {
+    //         $this->employe->add($employe);
+    //         //$employe->setProfil($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeEmploye(Employe $employe): static
-    {
-        if ($this->employe->removeElement($employe)) {
-            // set the owning side to null (unless already changed)
-            /* if ($employe->getProfil() === $this) {
-                $employe->setProfil(null);
-            } */
-        }
+    // public function removeEmploye(Employe $employe): static
+    // {
+    //     if ($this->employe->removeElement($employe)) {
+    //         // set the owning side to null (unless already changed)
+    //         /* if ($employe->getProfil() === $this) {
+    //             $employe->setProfil(null);
+    //         } */
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getNomProfil(): ?string
     {
@@ -107,24 +107,24 @@ class Profil
     /**
      * @return Collection<int, CompteUtilisateur>
      */
-    public function getCompteUtilisateurs(): Collection
+    public function getComptes(): Collection
     {
-        return $this->compteUtilisateurs;
+        return $this->comptes;
     }
 
-    public function addCompteUtilisateur(CompteUtilisateur $compteUtilisateur): static
+    public function addComptes(CompteUtilisateur $comptes): static
     {
-        if (!$this->compteUtilisateurs->contains($compteUtilisateur)) {
-            $this->compteUtilisateurs->add($compteUtilisateur);
-            $compteUtilisateur->setProfil($this);
+        if (!$this->comptes->contains($comptes)) {
+            $this->comptes->add($comptes);
+            $comptes->setProfil($this);
         }
 
         return $this;
     }
 
-    public function removeCompteUtilisateur(CompteUtilisateur $compteUtilisateur): static
+    public function removeComptes(CompteUtilisateur $compteUtilisateur): static
     {
-        if ($this->compteUtilisateurs->removeElement($compteUtilisateur)) {
+        if ($this->comptes->removeElement($compteUtilisateur)) {
             // set the owning side to null (unless already changed)
             if ($compteUtilisateur->getProfil() === $this) {
                 $compteUtilisateur->setProfil(null);
@@ -132,5 +132,9 @@ class Profil
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->getNomProfil();
     }
 }
