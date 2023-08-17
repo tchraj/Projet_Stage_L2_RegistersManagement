@@ -8,7 +8,6 @@ use App\Form\EmployeType;
 use App\Services\AppSendEmail;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Repository\EmployeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,6 +71,7 @@ class EmployeController extends AbstractController
             );
             $compte->setPassClair($password);
             $compte->setPassword($hashedPassword);
+            $compte->setEmploye($employe);
             $manager->persist($compte);
             $manager->flush();
             $employe->setCompteUtilisateur($compte);
@@ -166,6 +166,36 @@ class EmployeController extends AbstractController
                 'EmployeForm' =>  $form->createView()
             ]);
     } */
+    // #[Route('/profil', name: 'app_profil_employe')]
+    // public function profil(): Response
+    // {
+    //     // Récupérer l'utilisateur connecté (compte utilisateur)
+    //     $user = $this->getUser();
+
+    //     if ($user instanceof CompteUtilisateur) {
+    //         // Récupérer l'employé associé au compte
+    //         $employe = $user->getEmploye();
+
+    //         // Vérifier si l'employé est présent
+    //         if ($employe !== null) {
+    //             $nom = $employe->getNom(); // Remplacez par la méthode appropriée
+    //             $prenoms = $employe->getPrenoms();
+    //             $email = $employe->getEmail();
+    //             $poste = $employe->getPoste();
+    //             $tel = $employe->getTel();
+    //             $username = $user->getUsername();
+    //             return $this->render('employe/detail.html.twig', [
+    //                 'nom' => $nom,
+    //                 'prenoms' => $prenoms,
+    //                 'email' =>  $email,
+    //                 'poste' => $poste,
+    //                 'tel' => $tel,
+    //                 'username' => $username
+    //             ]);
+    //         }
+    //     }
+    //     throw new NotFoundHttpException("L'employé n'existe pas");
+    // }
     #[Route('/profil', name: 'app_profil_employe')]
     public function profil(): Response
     {
@@ -183,13 +213,18 @@ class EmployeController extends AbstractController
                 $email = $employe->getEmail();
                 $poste = $employe->getPoste();
                 $tel = $employe->getTel();
+                $username = $user->getUsername();
+                $visitesEffectuees = $employe->getVisiteeffectuee();
+                $visitesRecues = $employe->getVisiteRecue();
                 return $this->render('employe/detail.html.twig', [
                     'nom' => $nom,
                     'prenoms' => $prenoms,
                     'email' =>  $email,
                     'poste' => $poste,
-                    'tel' => $tel
-                
+                    'tel' => $tel,
+                    'username' => $username,
+                    'visitesE' => $visitesEffectuees,
+                    'visitesR' => $visitesRecues
                 ]);
             }
         }

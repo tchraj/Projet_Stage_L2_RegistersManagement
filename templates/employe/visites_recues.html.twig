@@ -3,9 +3,7 @@
 	<div class="card mb-4">
 		<div class="card-header" style="display:flex;justify-content:space-around">
 			<i class="fas fa-table me-1"></i>
-			<h3>Visites recues par
-				{{employe.nom}}
-				{{employe.prenoms}}</h3>
+			<h3>Visites recues</h3>
 		</div>
 		<div class="card-body">
 			<table id="datatablesSimple">
@@ -48,34 +46,11 @@
 				</tbody>
 			</tbody>
 		</table>
-			<a href="{{ path('app_employe_actifs') }}">
-				<button class="btn btn-primary">Retour</button>
-			</a>
+		<a href="{{ path('app_employe_actifs') }}">
+			<button class="btn btn-primary">Retour</button>
+		</a>
 	</div>
-</div>
-<script type="module">
-	import Swal from 'sweetalert2';
-document.querySelectorAll('.delete-button').forEach(button => {
-button.addEventListener('click', function (event) {
-event.preventDefault();
-console.log('Bouton Supprimer cliqué !');
-const deleteUrl = this.getAttribute('href');
-
-Swal.fire({
-title: 'Confirmation',
-text: 'Voulez-vous vraiment supprimer cet employé ?',
-icon: 'warning',
-showCancelButton: true,
-confirmButtonText: 'Oui',
-cancelButtonText: 'Annuler'
-}).then((result) => {
-if (result.isConfirmed) {
-window.location.href = deleteUrl; // Naviguer vers l'URL de désactivation
-}
-});
-});
-});
-</script>{# <h1>Visites recues par
+{# <h1>Visites recues par
 																							{{ employe.nom }}
 																							{{employe.prenoms}}</h1>
 																					

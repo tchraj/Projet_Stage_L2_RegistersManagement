@@ -9,7 +9,7 @@
 			<i class="fas fa-table me-1"></i>
 			<h3>Liste des employes</h3>
 			<a href="{{path('app_add_employe')}}">
-				<input type="button" value="Nouvel employé" class="btn btn-warning">
+				<button class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
 			</a>
 		</div>
 		<div class="card-body">
@@ -49,10 +49,10 @@
 							<td>{{emp.direction}}</td>
 							<td>
 								<a href="{{ path('app_update_employe', {'id': emp.id}) }}">
-									<button class="btn btn-primary">Modifier</button>
+									<button class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></button>
 								</a>
 								<a href="{{ path('app_hide_employe', {'id': emp.id}) }}" class="delete-button">
-									<button class="btn btn-danger">Supprimer</button>
+									<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
 								</a>
 								<a href="{{ path('app_visites_effectuees', {'id': emp.id}) }}">
 									<button class="btn" style="background-color:#0F8E05">Visites éffectuées</button>
