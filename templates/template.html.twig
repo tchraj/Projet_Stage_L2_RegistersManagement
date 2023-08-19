@@ -13,8 +13,8 @@
 		{% block stylesheets %}
 			{{encore_entry_link_tags('app') }}
 			<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
-			<linkrel="preconnect"
-				href="https://fonts.gstatic.com">
+			<linkrel="preconnect" href="https://fonts.gstatic.com">
+				{{ ux_controller_link_tags() }}
 				{# <link rel="shortcut icon" href="{{asset('assets/img/icons/icon-48x48.png')}}"/> #}
 				<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 				<link rel="shortcut icon" href="{{asset('assets/img/icons/icon.jpg')}}"/>

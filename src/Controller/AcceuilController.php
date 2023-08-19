@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Visite;
 use App\Entity\Employe;
 use App\Repository\VisiteRepository;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,21 +15,45 @@ use Symfony\Component\Routing\Annotation\Route;
 class AcceuilController extends AbstractController
 {
     #[Route('/acceuil', name: 'app_acceuil')]
-    public function index(ManagerRegistry $managerRegistry,VisiteRepository $visiteRepository,): Response
+    public function index(ManagerRegistry $managerRegistry, VisiteRepository $visiteRepository,): Response
     {
-        $dailyVisits = $visiteRepository->findAll();
-        $labels = [];
-        $data = [];
-        foreach ($dailyVisits as $dailyVisit) {
-            $labels[] =$dailyVisit->getDateVisite()->format('d/m/Y');
-            $data[] =$dailyVisit->getEmployeVisite()->getNomComplet();
+        $year = new DateTime('today');
+        $yearInt = (int)$year->format('Y');
+        $visites = $managerRegistry->getRepository(Visite::class)->findAll();
+        foreach ($visites as $visite) {
+            $month = $visite->getDateVisite()->format('m');
         }
-        $employes = $managerRegistry->getRepository(Employe::class)->findAll();
-        if ($this->isGranted('ROLE_USER')) {
-            return $this->redirectToRoute('app_dashboard'); // Remplacez 'app_dashboard' par la route de votre page d'accueil
+        $visits = $visiteRepository->findVisitsByMonth($yearInt, $month);
+        $visitsPerDay = array_fill(1, cal_days_in_month(CAL_GREGORIAN, $month, $yearInt), 0);
+        foreach ($visits as $visit) {
+            $day = $visit->getDateVisite()->format('j');
+            $visitsPerDay[$day]++;
         }
+        $visitsPerMonth = array_fill(1, 12, 0);
+        foreach ($visits as $visit) {
+            $visitMonth = (int)$month;
+            $visitsPerMonth[$visitMonth]++;
+        }
+
+        $mostVisitedEmployees = $visiteRepository->countVisitsByEmployee();
+        $employeeNames = [];
+        $visitCounts = [];
+        foreach ($mostVisitedEmployees as $employeeData) {
+            $employeeNames[] = $employeeData['name'] . " " . $employeeData['firstname'];
+            $visitCounts[] = $employeeData['count'];
+        }
+        //$totalVisites = $visiteRepository->countVisitsPerMonth($year);
         return $this->render('acceuil/index.html.twig', [
-            'employes' => $employes,
+            'mois' => $month,
+            'annee' => $yearInt,
+            "visites" => count($visits),
+            "visitsPerDay" => $visitsPerDay,
+            'visitsPerMonth ' => $visitsPerMonth,
+            'mostVisitedEmployees' => $mostVisitedEmployees,
+            'employeeNames' => json_encode($employeeNames),
+            'visitCounts' => json_encode($visitCounts),
+
+            //'total'  => $totalVisites
         ]);
     }
 

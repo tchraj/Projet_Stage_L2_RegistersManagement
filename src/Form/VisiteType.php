@@ -28,7 +28,7 @@ class VisiteType extends AbstractType
             //     ]
             // ])
             ->add('HeureDeb', TimeType::class, [
-                'input' => 'string',
+                'input' => 'datetime',
                 'widget' => 'single_text',
                 'attr' => [
                     'min' => '06:00',

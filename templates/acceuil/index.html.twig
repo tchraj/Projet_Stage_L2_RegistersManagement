@@ -1,82 +1,67 @@
 {% extends "template.html.twig" %}
-
 {% block body %}
+	{# <div>
+				<canvas id="myChart"></canvas>
+			</div>
+		
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		
+			<script>
+				const ctx = document.getElementById('myChart');
+		new Chart(ctx, {
+		type: 'line',
+		data: {
+		labels: [
+		'Janvier',
+		'Février',
+		'Mars',
+		'Avril',
+		'Mai',
+		'Juin',
+		'Juillet',
+		'Aout',
+		'Septembre',
+		'Octobre',
+		'Novembre',
+		'Décembre',
+		],
+		datasets: [
+		{
+		label: 'Visites par jour',
+		data: [{{ visitsPerDay | join(', ') }}], // Utilisez les données que vous avez passées
+		backgroundColor: 'blue',
+		borderColor: 'white',
+		borderWidth: 0
+		}
+		]
+		},
+		options: {
+		scales: {
+		y: {
+		beginAtZero: true
+		}
+		}
+		}
+		}); #}
+</script>
+<div class="chart-container" style="width:60%;height:60%">
+	<canvas id="employeeChart"></canvas>
+</div>
 
-	<div>
-		<canvas id="myChart"></canvas>
-	</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-	<script>
-		const ctx = document.getElementById('myChart');
-
-// Utilisez AJAX pour récupérer les données de votre contrôleur Symfony
-// Par exemple :
-fetch("{{ path('app_acceuil') }}").then(response => response.json()).then(data => {
-new Chart(ctx, {
-type: 'pie',
-data: {
-labels: data.labels,
-datasets: [
-{
-label: '# Visites par mois',
-data: data.visits,
-backgroundColor: 'rgba(75, 192, 192, 0.2)',
-borderColor: 'rgba(75, 192, 192, 1)',
-borderWidth: 1
-},
-]
-},
-options: {
-scales: {
-y: {
-beginAtZero: true
-}
-}
-}
-});
-});
-	</script>
-
-{% endblock %}
-
-
-{# {% extends "template.html.twig" %}
-
-{% block body %}
-
-	<div>
-		<canvas id="myChart"></canvas>
-	</div>
-
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-	<script>
-		const ctx = document.getElementById('myChart');
-
-new Chart(ctx, {
+<script>
+	const employeeChart = document.getElementById('employeeChart').getContext('2d');
+new Chart(employeeChart, {
 type: 'bar',
 data: {
-labels: [
-'Red',
-'Blue',
-'Yellow',
-'Green',
-'Purple',
-'Orange'
-],
+labels: {{ employeeNames | raw }},
 datasets: [
 {
-label: '# visites',
-data: [
-12,
-19,
-3,
-5,
-2,
-3
-],
+label: 'Nombre de visites',
+data: {{ visitCounts | raw }},
+backgroundColor: '#ffbe0b',
+borderColor: 'rgba(75, 192, 192, 1)',
 borderWidth: 1
 }
 ]
@@ -89,148 +74,223 @@ beginAtZero: true
 }
 }
 });
-	</script>
-{% endblock %} #}
-
-{# {% for employe in employes %}
-				<div class="container-fluid px-4">
-					<h1 class="mt-4">Tableau de bord de l'employe
-						{{employe.nom}}
-						{{employe.prenoms}}</h1>
-					<ol class="breadcrumb mb-4">
-						<li class="breadcrumb-item active">Tableau de bord</li>
-					</ol>
-					<div class="row">
-						<div class="col-xl-3 col-md-6 mb-4">
-							<div class="card border-left-primary shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-												Visites effectuées</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">{{employe.nombreVisitesEffectuées}}</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-calendar fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- Earnings (Monthly) Card Example -->
-						<div class="col-xl-3 col-md-6 mb-4">
-							<div class="card border-left-success shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-												Visites recues</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">{{employe.nombreVisitesRecues}}</div>
-										</div>
-										<div class="col-auto">
-											<i class="fa-solid fa-people-group fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+</script>{% endblock %}{#     <h1>Tableau de bord</h1>
 		
-						<!-- Earnings (Monthly) Card Example -->
-						<div class="col-xl-3 col-md-6 mb-4">
-							<div class="card border-left-info shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Visites crées
-											</div>
+		    <p>Mois: {{ mois }}</p>
+		    <p>Année: {{ annee }}</p>
+		    <p>Nombre total de visites: {{ visites }}</p>
+		
+		    <h2>Visites par jour:</h2>
+		    <ul>
+		        {% for day, count in visitsPerDay %}
+		            <li>{{ day }}: {{ count }} visites</li>
+		        {% endfor %}
+		    </ul>
+		
+		    <h2>Liste des employés:</h2>
+		    <ul>
+		        {% for employe in employes %}
+		            <li>{{ employe.nom }} {{ employe.prenoms }}</li>
+		        {% endfor %}
+		    </ul>
+		{% endblock %}
+		
+		
+		{% block body %}
+		
+			<div>
+				<canvas id="myChart"></canvas>
+			</div>
+		
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		
+			<script>
+				const ctx = document.getElementById('myChart');
+		new Chart(ctx, {
+		type: 'bar',
+		data: {
+		labels: [
+		'Janvier',
+		'Février',
+		'Mars',
+		'Avril',
+		'Mai',
+		'Juin',
+		'Juillet',
+		'Aout',
+		'Septembre',
+		'Octobre',
+		'Novembre',
+		'Décembre'
+		],
+		datasets: [
+		{
+		label: '# visites',
+		data: [
+		12,
+		19,
+		3,
+		5,
+		2,
+		3,
+		0,
+		45,
+		10,
+		3,
+		1,
+		0
+		],
+		borderWidth: 1
+		}
+		]
+		},
+		options: {
+		scales: {
+		y: {
+		beginAtZero: true
+		}
+		}
+		}
+		});
+			</script>
+		{% endblock %} #}{# {% for employe in employes %}
+						<div class="container-fluid px-4">
+							<h1 class="mt-4">Tableau de bord de l'employe
+								{{employe.nom}}
+								{{employe.prenoms}}</h1>
+							<ol class="breadcrumb mb-4">
+								<li class="breadcrumb-item active">Tableau de bord</li>
+							</ol>
+							<div class="row">
+								<div class="col-xl-3 col-md-6 mb-4">
+									<div class="card border-left-primary shadow h-100 py-2">
+										<div class="card-body">
 											<div class="row no-gutters align-items-center">
-												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+												<div class="col mr-2">
+													<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+														Visites effectuées</div>
+													<div class="h5 mb-0 font-weight-bold text-gray-800">{{employe.nombreVisitesEffectuées}}</div>
 												</div>
-												<div class="col">
-													<div class="progress progress-sm mr-2">
-														<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+												<div class="col-auto">
+													<i class="fas fa-calendar fa-2x text-gray-300"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- Earnings (Monthly) Card Example -->
+								<div class="col-xl-3 col-md-6 mb-4">
+									<div class="card border-left-success shadow h-100 py-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2">
+													<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+														Visites recues</div>
+													<div class="h5 mb-0 font-weight-bold text-gray-800">{{employe.nombreVisitesRecues}}</div>
+												</div>
+												<div class="col-auto">
+													<i class="fa-solid fa-people-group fa-2x text-gray-300"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+				
+								<!-- Earnings (Monthly) Card Example -->
+								<div class="col-xl-3 col-md-6 mb-4">
+									<div class="card border-left-info shadow h-100 py-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2">
+													<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Visites crées
+													</div>
+													<div class="row no-gutters align-items-center">
+														<div class="col-auto">
+															<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+														</div>
+														<div class="col">
+															<div class="progress progress-sm mr-2">
+																<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+															</div>
+														</div>
 													</div>
 												</div>
+												<div class="col-auto">
+													<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+												</div>
 											</div>
 										</div>
-										<div class="col-auto">
-											<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+									</div>
+								</div>
+							</div>
+							<!-- Pending Requests Card Example -->
+							<div class="col-xl-3 col-md-6 mb-4">
+								<div class="card border-left-warning shadow h-100 py-2">
+									<div class="card-body">
+										<div class="row no-gutters align-items-center">
+											<div class="col mr-2">
+												<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+													Visites refusées</div>
+												<div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+											</div>
+											<div class="col-auto">
+												<i class="fas fa-comments fa-2x text-gray-300"></i>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!-- Pending Requests Card Example -->
-					<div class="col-xl-3 col-md-6 mb-4">
-						<div class="card border-left-warning shadow h-100 py-2">
-							<div class="card-body">
-								<div class="row no-gutters align-items-center">
-									<div class="col mr-2">
-										<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-											Visites refusées</div>
-										<div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-									</div>
-									<div class="col-auto">
-										<i class="fas fa-comments fa-2x text-gray-300"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			{% endfor %} #}
-{# <script>
-		document.addEventListener('DOMContentLoaded', function () {
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-type: 'bar',
-data: {
-labels: [
-'Jan',
-'Feb',
-'Mar',
-'Apr',
-'May',
-'Jun',
-'Jul',
-'Aug',
-'Sep',
-'Oct',
-'Nov',
-'Dec'
-],
-datasets: [
-{
-label: 'Visits per Month',
-data: [
-12,
-19,
-3,
-5,
-2,
-3,
-7,
-8,
-10,
-6,
-8,
-15
-],
-backgroundColor: 'rgba(75, 192, 192, 0.2)',
-borderColor: 'rgba(75, 192, 192, 1)',
-borderWidth: 1
-}
-]
-},
-options: {
-scales: {
-y: {
-beginAtZero: true
-}
-}
-}
-});
-});
-	</script> #}
+					{% endfor %} #}{# <script>
+				document.addEventListener('DOMContentLoaded', function () {
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+		labels: [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec'
+		],
+		datasets: [
+		{
+		label: 'Visits per Month',
+		data: [
+		12,
+		19,
+		3,
+		5,
+		2,
+		3,
+		7,
+		8,
+		10,
+		6,
+		8,
+		15
+		],
+		backgroundColor: 'rgba(75, 192, 192, 0.2)',
+		borderColor: 'rgba(75, 192, 192, 1)',
+		borderWidth: 1
+		}
+		]
+		},
+		options: {
+		scales: {
+		y: {
+		beginAtZero: true
+		}
+		}
+		}
+		});
+		});
+			</script> #}

@@ -16,6 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class VisiteRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Visite::class);
@@ -62,6 +63,30 @@ class VisiteRepository extends ServiceEntityRepository
             ->where('v.DateVisite BETWEEN :DateDebut AND :DateFin')
             ->setParameter('DateDebut', $DateDebut)
             ->setParameter('DateFin', $DateFin)
+            ->getQuery()
+            ->getResult();
+    }
+    public function getMonthFromDate(\DateTime $date)
+    {
+        return (int)$date->format('m');
+    }
+    // public function countVisitsPerMonth($year)
+    // {
+    //     return $this->createQueryBuilder('v')
+    //         ->select('v.DateVisite as visitDate, COUNT(v) as count')
+    //         ->where('DATE_FORMAT(v.DateVisite, \'%Y\') = :year')
+    //         ->groupBy('visitDate')
+    //         ->setParameter('year', $year)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+    public function countVisitsByEmployee()
+    {
+        return $this->createQueryBuilder('v')
+            ->select('e.nom as name,e.prenoms as firstname',  'COUNT(v) as count')
+            ->join('v.EmployeVisite', 'e')
+            ->groupBy('e')
+            ->orderBy('count', 'DESC')
             ->getQuery()
             ->getResult();
     }
