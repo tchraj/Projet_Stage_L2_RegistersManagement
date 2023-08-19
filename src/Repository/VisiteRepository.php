@@ -52,4 +52,17 @@ class VisiteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+    public function findVisitsByMonth($year, $month)
+    {
+        $DateDebut = new \DateTime("$year-$month-01");
+        $DateFin = clone $DateDebut;
+        $DateFin->modify('last day of this month');
+
+        return $this->createQueryBuilder('v')
+            ->where('v.DateVisite BETWEEN :DateDebut AND :DateFin')
+            ->setParameter('DateDebut', $DateDebut)
+            ->setParameter('DateFin', $DateFin)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -3,61 +3,22 @@
 {% endblock %}
 {% block body %}
 	<section style="background-color: #eee;">
-		<div class="container py-5">
+		<div class="container">
 			<div class="row">
 				<div class="col">
-					<nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+					<nav aria-label="breadcrumb" class="bg-light rounded-1  mb-2">
 						<ol class="breadcrumb mb-0">
-							<li class="breadcrumb-item">
+							<li class="">
 								<a href="#">Acceuil</a>
 							</li>
 							<li class="breadcrumb-item">
-								<a href="#">Compte</a>
+								<a href="{{path('app_profil_employe')}}">Compte</a>
 							</li>
 							<li class="breadcrumb-item active" aria-current="page">Profil</li>
 						</ol>
 					</nav>
 				</div>
 			</div>
-			<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-			<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-			<!------ Include the above in your HEAD tag ---------->
-
-			<section id="counter" class="sec-padding">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-3 ">
-							<div class="count">
-								<span class="fa fa-smile-o"></span>
-								<p class="number">126</p>
-								<h4>Visites faites</h4>
-							</div>
-						</div>
-						<div class="col-md-3 ">
-							<div class="count">
-								<span class="fa fa-smile-o"></span>
-								<p class="number">535</p>
-								<h4>Visites recues</h4>
-							</div>
-						</div>
-						<div class="col-md-3 ">
-							<div class="count">
-								<span class="fa fa-smile-o"></span>
-								<p class="number">896</p>
-								<h4>Total Hours</h4>
-							</div>
-						</div>
-						<div class="col-md-3 ">
-							<div class="count">
-								<span class="fa fa-smile-o"></span>
-								<p class="number">777</p>
-								<h4>Projects Complete</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
 			<div class="row">
 				<div class="col-lg-4">
 					<div class="card mb-4">
@@ -66,12 +27,12 @@
 							<h5 class="my-3">{{nom}}
 								{{prenoms}}</h5>
 							<p class="text-muted mb-1">{{poste}}</p>
-							<p class="text-muted mb-4">{{email}}</p>
-							<p class="text-muted mb-4">{{tel}}</p>
+							<p class="text-muted mb-1">{{email}}</p>
+							<p class="text-muted ">{{tel}}</p>
 							{# <div class="d-flex justify-content-center mb-2">
-																																																																																																																																													<button type="button" class="btn btn-primary">Follow</button>
-																																																																																																																																													<button type="button" class="btn btn-outline-primary ms-1">Message</button>
-																																																																																																																																												</div> #}
+																																																																																																																																																																																																																																																																										<button type="button" class="btn btn-primary">Follow</button>
+																																																																																																																																																																																																																																																																										<button type="button" class="btn btn-outline-primary ms-1">Message</button>
+																																																																																																																																																																																																																																																																									</div> #}
 						</div>
 					</div>
 				</div>
@@ -127,67 +88,116 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		{% if visitesE is empty %}
-
-			<p>Aucune visite effectuée pour le moment.</p>
-		{% else %}
-			<h1>Visites effectuées</h1>
-			<ul>
-				{% for visite in visitesE %}
-					<li>{{ visite.DateVisite | date('d/m/Y') }}
-						-
-						{{ visite.Motif }}</li>
-				{% endfor %}
-			</ul>
-		{% endif %}
-		{% if visitesR is empty %}
-			<p>Aucune visite effectuée pour le moment.</p>
-		{% else %}
-			<div class="card mb-4">
-				<div class="card-header" style="display:flex;justify-content:space-around">
-					<i class="fas fa-table me-1"></i>
-					<h3>Visites recues</h3>
+			<section id="counter" class="sec-padding">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 ">
+							<div
+								class="count">
+								{# <span class="fas fa-smile-o"></span> #}
+								<p class="number">{{nombreVisE}}</p>
+								<h4>
+									{% if nombreVisE > 1 %}
+										Visites faites
+									{% else %}
+										Visite faite
+									{% endif %}
+								</h4>
+							</div>
+						</div>
+						<div class="col-md-3 ">
+							<div
+								class="count">
+								{# <span class="fa fa-smile-o"></span> #}
+								<p class="number">{{nombreVisR}}</p>
+								<h4>
+									{% if nombreVisR > 1 %}
+										Visites recues
+									{% else %}
+										Visite recue
+									{% endif %}
+								</h4>
+							</div>
+						</div>
+						<div class="col-md-3 ">
+							<div
+								class="count">
+								{# <span class="fa fa-smile-o"></span> #}
+								<p class="number">896</p>
+								<h4>Total Hours</h4>
+							</div>
+						</div>
+						<div class="col-md-3 ">
+							<div
+								class="count">
+								{# <span class="fa fa-smile-o"></span> #}
+								<p class="number">777</p>
+								<h4>Projects Complete</h4>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="card-body">
-					<table id="datatablesSimple">
-						<thead>
-							<tr>
-								<th>Visiteur</th>
-								<th>Motif</th>
-								<th>Date de visite</th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<th>Visiteur</th>
-								<th>Motif</th>
-								<th>Date de visite</th>
-							</tr>
-						</tfoot>
-						<tbody>
-							{% for visite in visitesR %}
+			</section>
+			{% if visitesE is not empty %}
+				<h1>Visites effectuées</h1>
+				<ul>
+					{% for visite in visitesE %}
+						<li>{{ visite.DateVisite | date('d/m/Y') }}
+							-
+							{{ visite.Motif }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+			{% if visitesR is empty and visitesE is empty %}
+				<h2 style="text-align:center;margin:40px 0;">Aucune visite pour le moment.</h2>
+			{% endif %}
+			{% if visitesR is not empty %}
+
+				<div class="card mb-4">
+					<div class="card-header" style="display:flex;justify-content:space-around">
+						<i class="fas fa-table me-1"></i>
+						<h3>Visites recues</h3>
+					</div>
+					<div class="card-body">
+						<table id="datatablesSimple">
+							<thead>
 								<tr>
-									<td>
-										{% if visite.typeVisiteur == 'Visiteur externe' %}
-											{{ visite.visiteurExterne }}
-										{% elseif visite.typeVisiteur == 'Employe visiteur' %}
-											{{ visite.employeVisiteur}}
-										{% endif %}
-									</td>
-									<td>
-										{{ visite.Motif }}
-									</td>
-									<td>{{visite.DateVisite|date("m/d/Y")}}</td>
+									<th>Visiteur</th>
+									<th>Motif</th>
+									<th>Date de visite</th>
 								</tr>
-							{% endfor %}
+							</thead>
+							<tfoot>
+								<tr>
+									<th>Visiteur</th>
+									<th>Motif</th>
+									<th>Date de visite</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								{% for visite in visitesR %}
+									<tr>
+										<td>
+											{% if visite.typeVisiteur == 'Visiteur externe' %}
+												{{ visite.visiteurExterne }}
+											{% elseif visite.typeVisiteur == 'Employe visiteur' %}
+												{{ visite.employeVisiteur}}
+											{% endif %}
+										</td>
+										<td>
+											{{ visite.Motif }}
+										</td>
+										<td>{{visite.DateVisite|date("m/d/Y")}}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
 						</tbody>
-					</tbody>
-				</table>
-				<a href="{{ path('app_employe_actifs') }}">
-					<button class="btn btn-primary">Retour</button>
-				</a>
-			</div>
-		{% endif %}
-	</section>
+					</table>
+					<a href="{{ path('app_employe_actifs') }}">
+						<button class="btn btn-primary">Retour</button>
+					</a>
+				</div>
+			{% endif %}
+		</section>
+	</div>
 {% endblock %}

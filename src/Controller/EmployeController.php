@@ -121,7 +121,6 @@ class EmployeController extends AbstractController
             throw $this->createNotFoundException('Employé introuvable');
         }
         $employe->setVisible(false);
-        $employe->setActif(false);
         $entityManager->flush();
         return $this->redirectToRoute('app_employe_actifs');
     }
@@ -216,6 +215,8 @@ class EmployeController extends AbstractController
                 $username = $user->getUsername();
                 $visitesEffectuees = $employe->getVisiteeffectuee();
                 $visitesRecues = $employe->getVisiteRecue();
+                $nbVisitesE = $employe->nombreVisitesEffectuées();
+                $nbVisitesR = $employe->nombreVisitesRecues();
                 return $this->render('employe/detail.html.twig', [
                     'nom' => $nom,
                     'prenoms' => $prenoms,
@@ -224,7 +225,9 @@ class EmployeController extends AbstractController
                     'tel' => $tel,
                     'username' => $username,
                     'visitesE' => $visitesEffectuees,
-                    'visitesR' => $visitesRecues
+                    'visitesR' => $visitesRecues,
+                    'nombreVisE' => $nbVisitesE,
+                    'nombreVisR' => $nbVisitesR
                 ]);
             }
         }

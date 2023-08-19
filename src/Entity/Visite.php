@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\VisiteurExterne;
 use App\Repository\VisiteRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,12 +29,20 @@ class Visite
     #[ORM\Column(type: Types::TEXT, nullable: false)]
     private ?string $motif;
 
-    #[ORM\Column]
-    private ?string $EtatVisite;
+    #[ORM\Column(type: 'boolean')]
+    private $EtatVisite = false;
 
-    // #[ORM\Column(type: Types::TEXT)]
-    // private ?string $nomVisiteur;
+    public function isEtatVisite(): bool
+    {
+        return $this->EtatVisite;
+    }
 
+    public function setEtatVisite(bool $EtatVisite): self
+    {
+        $this->EtatVisite = $EtatVisite;
+
+        return $this;
+    }
     #[ORM\ManyToOne(inversedBy: 'visites')]
     private ?VisiteurExterne $visiteurExterne = null;
 
@@ -61,15 +70,7 @@ class Visite
     {
         return $this->typeVisiteur;
     }
-    // public function getNomVisiteur()
-    // {
-    //     return $this->nomVisiteur;
-    // }
-    // public function setNomVisiteur(?string $nomVisiteur): static
-    // {
-    //     $this->nomVisiteur = $nomVisiteur;
-    //     return $this;
-    // }
+
     public function setTypeVisiteur(string $typeVisiteur): static
     {
         $this->typeVisiteur = $typeVisiteur;
@@ -84,6 +85,7 @@ class Visite
 
     public function setDateVisite(\DateTimeInterface $DateVisite): static
     {
+        $DateVisite = new DateTime();
         $this->DateVisite = $DateVisite;
 
         return $this;
@@ -122,18 +124,6 @@ class Visite
     public function setMotif(string $motif): static
     {
         $this->motif = $motif;
-
-        return $this;
-    }
-
-    public function getEtatVisite(): ?string
-    {
-        return $this->EtatVisite;
-    }
-
-    public function setEtatVisite(string $EtatVisite): static
-    {
-        $this->EtatVisite = $EtatVisite;
 
         return $this;
     }
@@ -204,4 +194,5 @@ class Visite
 
         return $this;
     }
+   
 }

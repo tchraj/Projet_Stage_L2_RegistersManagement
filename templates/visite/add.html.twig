@@ -2,48 +2,44 @@
 
 {% block title %}Hello visites
 {% endblock title  %}
+
 {% block body %}
+	<style>
+		.colonne {
+			;
+			//
+		}
+	</style>
 	<div class="container" style="width:50%;">
 		{{ form_start(VisiteForm) }}
 		<h1>
 			Nouvelle visite</h1>
-		<label>
-			Date de visite</label>
-		{{ form_widget(VisiteForm.DateVisite)}}
+		{{form_row(VisiteForm.typeVisiteur)}}
 
 		<label>
 			Heure de début</label>
 		{{ form_widget(VisiteForm.HeureDeb)}}
-		<label>
-			Heure de fin</label>
-		{{ form_widget(VisiteForm.HeureFin)}}
-		<label>
-			Motif</label>
-		{{form_widget(VisiteForm.motif)}}
-		{{ form_row(VisiteForm.EmployeVisite) }}
-		<label>Type de piece</label>
-		{{form_widget(VisiteForm.typePiece)}}
-		<label>Numéro de la piece</label>
-		{{form_widget(VisiteForm.NumPiece)}}
+		{{ form_row(VisiteForm.typePiece) }}
+		{{ form_row(VisiteForm.NumPiece) }}
 
-		{{form_row(VisiteForm.typeVisiteur)}}
-		<div id="champVisiteurExterne" style="display: none;">
-			{{ form_row(VisiteForm.visiteurExterne) }}
-		</div>
-		<div id="champEmployeVisiteur" style="display: none;">
-			{{ form_row(VisiteForm.employeVisiteur) }}
-		</div>
-		{{ form_errors(VisiteForm, {'attr':{'class':'alert alert-danger'}}
-		)}}
-		{{ form_row(VisiteForm.EtatVisite)}}
-		<input type="submit" value="Envoyer" id="showModalBtn" class="btn btn-success">
-		{{ form_end(VisiteForm) }}
+		Motif</label>
+	{{form_widget(VisiteForm.motif)}}
+	{{ form_row(VisiteForm.EmployeVisite) }}
+
+	<div id="champVisiteurExterne" style="display: none;">
+		{{ form_row(VisiteForm.visiteurExterne) }}
 	</div>
-	<script>
-		const typeVisiteurField = document.querySelector('#    {{ VisiteForm.typeVisiteur.vars.id }}');
+	<div id="champEmployeVisiteur" style="display: none;">
+		{{ form_row(VisiteForm.employeVisiteur) }}
+	</div>
+	{# {{ form_row(VisiteForm.EtatVisite)}} #}
+	{# <input type="submit" value="Envoyer" id="showModalBtn" class="btn btn-success"> #}
+
+	{{ form_end(VisiteForm) }}</div>
+<script>
+	const typeVisiteurField = document.querySelector('#          {{ VisiteForm.typeVisiteur.vars.id }}');
 const champVisiteurExterne = document.querySelector('#champVisiteurExterne');
 const champEmployeVisiteur = document.querySelector('#champEmployeVisiteur');
-
 typeVisiteurField.addEventListener('change', () => {
 if (typeVisiteurField.value === 'Visiteur externe') {
 champVisiteurExterne.style.display = 'block';
@@ -56,6 +52,4 @@ champVisiteurExterne.style.display = 'none';
 champEmployeVisiteur.style.display = 'none';
 }
 });
-	</script>
-
-{% endblock body %}
+</script>{% endblock body %}

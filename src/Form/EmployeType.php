@@ -48,10 +48,7 @@ class EmployeType extends AbstractType
                     'class' => Direction::class
                 ],
             )
-            ->add('actif', CheckboxType::class, [
-                'label' => 'Actif',
-                'required' => false,
-            ])
+            
             ->add('visible', HiddenType::class, [
                 'data' => true
             ])

@@ -36,9 +36,6 @@ class Employe extends Personne
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $poste = null;
 
-    #[ORM\Column()]
-    private ?bool $actif = true;
-
     public function __construct()
     {
         //$this->directeur = new ArrayCollection();
@@ -224,17 +221,7 @@ class Employe extends Personne
         return $this->isVerified;
     }
 
-    public function isActif(): ?bool
-    {
-        return $this->actif;
-    }
 
-    public function setActif(?bool $Actif): static
-    {
-        $this->actif = $Actif;
-
-        return $this;
-    }
     public function nombreVisitesEffectuées(): int
     {
         return $this->Visiteeffectuee->count();

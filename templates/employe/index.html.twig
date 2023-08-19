@@ -3,13 +3,15 @@
 {% endblock %} #}
 
 {% block body %}
-
 	<div class="card mb-4">
-		<div class="card-header" style="display:flex;justify-content:space-around">
+		<div class="card-header">
 			<i class="fas fa-table me-1"></i>
 			<h3>Liste des employes</h3>
 			<a href="{{path('app_add_employe')}}">
-				<button class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+				<button class="btn btn-primary float-end">
+					{# <i class="fa-solid fa-plus"></i> #}
+					Nouvel employe
+				</button>
 			</a>
 		</div>
 		<div class="card-body">
@@ -23,6 +25,7 @@
 						<th>Télephone</th>
 						<th>Direction</th>
 						<th>Actions</th>
+
 					</tr>
 				</thead>
 				<tfoot>
@@ -49,16 +52,14 @@
 							<td>{{emp.direction}}</td>
 							<td>
 								<a href="{{ path('app_update_employe', {'id': emp.id}) }}">
-									<button class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></button>
+									<button style="background-color:green;border-width:0;color:white;">
+										<i class="fa-regular fa-pen-to-square"></i>
+									</button>
 								</a>
 								<a href="{{ path('app_hide_employe', {'id': emp.id}) }}" class="delete-button">
-									<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-								</a>
-								<a href="{{ path('app_visites_effectuees', {'id': emp.id}) }}">
-									<button class="btn" style="background-color:#0F8E05">Visites éffectuées</button>
-								</a>
-								<a href="{{ path('app_visites_recues', {'id': emp.id}) }}">
-									<button class="btn">Visites recues</button>
+									<button style="background-color:red;border-width:0;color:white">
+										<i class="fa-solid fa-trash"></i>
+									</button>
 								</a>
 							</td>
 						</tr>

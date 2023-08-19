@@ -12,6 +12,13 @@
 					<div class="card-header">
 						<i class="fas fa-table me-1"></i>
 						<h3>Liste des profils</h3>
+						<a href="{{path('app_add_profil')}}">
+							<button
+								class="btn btn-primary float-end">
+								{# <i class="fa-solid fa-plus"></i> #}
+								Nouveau profil
+							</button>
+						</a>
 					</div>
 					<div class="card-body">
 						<table id="datatablesSimple">
@@ -36,11 +43,23 @@
 										<td>
 											{% if profil.roles is not empty %}
 												{% for role in profil.roles %}
-													<span>{{role.NomRole}}, </span>
+													<span>-{{role.NomRole}}
+													</span><br>
 												{% endfor %}
 											{% endif %}
 										</td>
-										<td>Editer</td>
+										<td>
+											<a href="{{ path('app_update_profil', {'id': profil.id}) }}">
+												<button style="background-color:green;border-width:0;color:white;">
+													<i class="fa-regular fa-pen-to-square"></i>
+												</button>
+											</a>
+											<a href="{{ path('app_delete_profil', {'id': profil.id}) }}" class="delete-button">
+												<button style="background-color:red;border-width:0;color:white">
+													<i class="fa-solid fa-trash"></i>
+												</button>
+											</a>
+										</td>
 									</tr>
 								{% endfor %}
 							</tbody>
@@ -62,4 +81,3 @@
 	<script src="js/datatables-simple-demo.js"></script>
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 {% endblock %}
-

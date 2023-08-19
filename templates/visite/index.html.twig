@@ -1,61 +1,79 @@
 {% extends "template.html.twig" %}
 {% block body %}
-					<div class="card-header">
-						<i class="fas fa-table me-1"></i>
-						<h3>Liste des visites</h3>
-					</div>
-					<div class="card-body">
-						<table id="datatablesSimple">
-							<thead>
-								<tr>
-									<th>Visiteur</th>
-									<th>Employé visité</th>
-									<th>Motif</th>
-									<th>Etat</th>
-									{#Age#}
-									<th>Date</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th>Visiteur</th>
-									<th>Employé visité</th>
-									<th>Motif</th>
-									<th>Etat</th>
-									<th>Date</th>
-									<th>Actions</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								{% for visite in visites %}
-									<tr>
-										<td>
-											{% if visite.typeVisiteur == 'Visiteur externe' %}
-												{{ visite.visiteurExterne }}
-											{% elseif visite.typeVisiteur == 'Employe visiteur' %}
-												{{ visite.employeVisiteur}}
-											{% endif %}
-										</td>
-										<td>{{visite.EmployeVisite}}</td>
-										<td>{{visite.Motif}}</td>
-										<td>{{visite.EtatVisite}}</td>
-										<td>{{visite.DateVisite|date("m/d/Y")}}</td>
-										<td>Editer</td>
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-					</div>	
+	<div class="card mb-4">
+		<div class="card-header" style="justify-content:center">
+			<i class="fas fa-table me-1"></i>
+			<h3>Liste des visites</h3>
+			<a href="{{path('app_add_visite')}}">
+				<button
+					class="btn btn-primary float-end">
+					{# <i class="fa-solid fa-plus"></i> #}
+					Nouvelle visite
+				</button>
+			</a>
+		</div>
+		<div class="card-body">
+			<table id="datatablesSimple">
+				<thead>
+					<tr>
+						<th>Type de visiteur</th>
+						<th>Visiteur</th>
+						<th>Employé visité</th>
+						<th>Motif</th>
+						<th>Etat</th>
+						{#Age#}
+						<th>Date</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>Type de visiteur</th>
+						<th>Visiteur</th>
+						<th>Employé visité</th>
+						<th>Motif</th>
+						<th>Etat</th>
+						<th>Date</th>
+						<th>Actions</th>
+					</tr>
+				</tfoot>
+				<tbody>
+					{% for visite in visites %}
+						<tr>
+							<td>{{visite.typeVisiteur}}
+							</td>
+							<td>
+								{% if visite.typeVisiteur == 'Visiteur externe' %}
+									{{ visite.visiteurExterne }}
+								{% elseif visite.typeVisiteur == 'Employe visiteur' %}
+									{{ visite.employeVisiteur}}
+								{% endif %}
+							</td>
+							<td>{{visite.EmployeVisite}}
+							</td>
+							<td>{{visite.Motif}}
+							</td>
+							<td>
+								<input type="checkbox" class="etat-checkbox" data-visite-id="{{ visite.id }}" {% if visite.EtatVisite %} checked {% endif %}>
+							</td>
+							<td>{{visite.DateVisite|date("d/m/Y")}}
+							</td>
+							<td>
+								<a href="{{ path('app_update_employe', {'id': visite.id}) }}">
+									<button style="background-color:green;border-width:0;color:white;">
+										<i class="fa-regular fa-pen-to-square"></i>
+									</button>
+								</a>
+								<a href="{{ path('app_hide_employe', {'id': visite.id}) }}" class="delete-button">
+									<button style="background-color:red;border-width:0;color:white">
+										<i class="fa-solid fa-trash"></i>
+									</button>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 {% endblock %}
-{# 
-{% block javascript %}
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-	<script src="js/scripts.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-	<script src="assets/demo/chart-area-demo.js"></script>
-	<script src="assets/demo/chart-bar-demo.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-	<script src="js/datatables-simple-demo.js"></script>
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-{% endblock %} #}

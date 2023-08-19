@@ -29,7 +29,18 @@
 									<tr>
 										<td>{{compte.username}}</td>
 										<td>{{compte.profil}}</td>
-										<td>Editer</td>
+										<td>
+											<a href="{{ path('app_update_compte', {'id': compte.id}) }}">
+												<button style="background-color:green;border-width:0;color:white;">
+													<i class="fa-regular fa-pen-to-square"></i>
+												</button>
+											</a>
+											<a href="{{ path('app_delete_compte', {'id': compte.id}) }}" class="delete-button">
+												<button style="background-color:red;border-width:0;color:white">
+													<i class="fa-solid fa-trash"></i>
+												</button>
+											</a>
+										</td>
 									</tr>
 								{% endfor %}
 							</tbody>

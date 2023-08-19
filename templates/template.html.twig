@@ -10,492 +10,293 @@
 			Gestion des registres||
 			{% block title %}{% endblock %}
 		</title>
-		{% block styles %}
-			<link
-			rel="preconnect" href="https://fonts.gstatic.com">
-			{# <link rel="shortcut icon" href="{{asset('assets/img/icons/icon-48x48.png')}}"/> #}
-			<link rel="shortcut icon" href="{{asset('assets/img/icons/icon.jpg')}}"/>
-			<link rel="canonical" href="https://demo-basic.adminkit.io/"/>
-			<link href="{{asset('css/app.css')}}" rel="stylesheet">
-			<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+		{% block stylesheets %}
+			{{encore_entry_link_tags('app') }}
 			<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
-			<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
-			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-			<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
-			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-			<link rel="stylesheet" type="text/css" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
-			<style>
+			<linkrel="preconnect"
+				href="https://fonts.gstatic.com">
+				{# <link rel="shortcut icon" href="{{asset('assets/img/icons/icon-48x48.png')}}"/> #}
+				<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+				<link rel="shortcut icon" href="{{asset('assets/img/icons/icon.jpg')}}"/>
+				<link rel="canonical" href="https://demo-basic.adminkit.io/"/>
+				<link href="{{asset('css/app.css')}}" rel="stylesheet">
+				<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+				<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+				<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+				<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+				<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+				<link rel="stylesheet" type="text/css" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
+				<style>
+					#counter {
+						background-color: #076dbb;
+						color: #fff;
+						display: block;
+						overflow: hidden;
+						text-align: center;
+						padding: 20px 0;
+					}
+					#counter .count {
+						padding: 20px;
+						background: rgba(255, 255, 255, 0.1);
+						color: #fff;
+						text-align: center;
+					}
+					.count h4 {
+						color: #fff;
+						font-size: 16px;
+						margin-top: 0;
+					}
+					#counter .count .fa {
+						font-size: 40px;
+						display: block;
+						color: #fff;
+					}
+					#counter .number {
+						font-size: 30px;
+						font-weight: 700;
+						margin: 0;
+					}
+					/*  Pricing Section  */
 
-				#counter {
-					background-color: #076dbb;
-					color: #fff;
-					display: block;
-					overflow: hidden;
-					text-align: center;
-					padding: 50px 0;
-				}
-				#counter .count {
-					padding: 50px;
-					background: rgba(255, 255, 255, 0.1);
-					color: #fff;
-					text-align: center;
-				}
-				.count h4 {
-					color: #fff;
-					font-size: 16px;
-					margin-top: 0;
-				}
-				#counter .count .fa {
-					font-size: 40px;
-					display: block;
-					color: #fff;
-				}
-				#counter .number {
-					font-size: 30px;
-					font-weight: 700;
-					margin: 0;
-				}
-				/*  Pricing Section  */
-
-				#pricing {
-					background: #f7f7f7;
-				}
-				.pricing-items {
-					padding-top: 50px;
-				}
-				.pricing-item {
-					background: #fff;
-					position: relative;
-					box-shadow: 0 0 9px 0 rgba(130, 121, 121, 0.2);
-					padding: 50px 0;
-					border-top-right-radius: 2em;
-					border-bottom-left-radius: 2em;
-				}
-				.pricing-item.active {
-					top: -50px;
-				}
-				.price-list li {
-					list-style: none;
-					margin-bottom: 15px;
-				}
-
-				.price-list .price {
-					font-size: 30px;
-					font-weight: bold;
-				}
-				.pricing-item .ribbon {
-					margin: -50px 0 20px;
-					display: block;
-					background-color: #ffb400;
-					padding: 15px 0 2px;
-					opacity: 0.8;
-					border-top-right-radius: 2em;
-				}
-				.pricing-item:hover .ribbon {
-					background-color: #ffb400;
-					opacity: 1;
-				}
-				.pricing-item.active .ribbon {
-					background-color: #ffb400;
-					opacity: 1;
-				}
-				.pricing-item .ribbon p {
-					color: #fff;
-					font-size: 22px;
-					margin: 0 0 10px;
-					font-weight: 600;
-				}
-				.pricing-item.active .price-list li,
-				.pricing-item:hover .price-list li {
-					color: #848181;
-				}
-				ul.price-list {
-					margin-bottom: 30px;
-					padding: 0;
-				}
-				.btn-price {
-					display: inline-block;
-					position: relative;
-					text-align: center;
-					text-transform: uppercase;
-					padding: 14px 40px;
-					-webkit-border-radius: 26px;
-					-moz-border-radius: 26px;
-					-o-border-radius: 26px;
-					border-radius: 26px;
-					border: 1px solid #848181;
-					background-color: transparent;
-					color: #848181;
-				}
-				.pricing-item:hover .btn-price,
-				.active .btn-price {
-					border: 1px solid #ffb400;
-					background-color: #ffb400;
-					color: #fff;
-				}
-				.btn-price:focus {
-					background-color: transparent;
-					text-decoration: none;
-				}
-				@media only screen and(max-width: 767px) {
+					#pricing {
+						background: #f7f7f7;
+					}
 					.pricing-items {
-						padding-top: 0;
+						padding-top: 50px;
+					}
+					.pricing-item {
+						background: #fff;
+						position: relative;
+						box-shadow: 0 0 9px 0 rgba(130, 121, 121, 0.2);
+						padding: 50px 0;
+						border-top-right-radius: 2em;
+						border-bottom-left-radius: 2em;
 					}
 					.pricing-item.active {
-						top: 20px;
-						margin-bottom: 40px;
+						top: -50px;
 					}
-				}
-			</style>
-		{% endblock %}
-	</head>
-	<body>
-		{# <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" style="background-color:#049D12"><!-- Navbar Brand--><a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
-																									<!-- Sidebar Toggle-->
-																									<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
-																										<i class="fas fa-bars"></i>
-																									</button>
-																									<!-- Navbar Search-->
-																									<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-																										<div class="input-group">
-																											<input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch"/>
-																											<button class="btn btn-primary" id="btnNavbarSearch" type="button">
-																												<i class="fas fa-search"></i>
-																											</button>
-																										</div>
-																									</form>
-																									<!-- Navbar-->
-																									<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-																										<li class="nav-item dropdown">
-																											<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
-																												<i class="fas fa-user fa-fw"></i>
-																											</a>
-																											<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-																												<li>
-																													<a class="dropdown-item" href="#!">
-																														{% if app.user != null %}
-																															{{ app.user.Username}}
-																														{% endif %}
-																													</a>
-																												</li>
-																												<li>
-																													<a class="dropdown-item" href="{{path('app_profil_employe')}}">Mon profil</a>
-																												</li>
-																												<li>
-																													<hr class="dropdown-divider"/>
-																												</li>
-																												<li>
-																													<a class="dropdown-item" href="{{ path('app_logout')}}">
-																														<i class="fa-solid fa-arrow-right-from-bracket"></i>Me deconnecter</a>
-																												</li>
-																											</ul>
-																										</li>
-																									</ul>
-																								</nav> #}
-		<div class="wrapper">
-			<nav id="sidebar" class="sidebar js-sidebar">
-				<div class="sidebar-content js-simplebar">
-					<a class="sidebar-brand mb-3" href="/" style="font-size:25px;">
-						<span class="align-middle">ORAGUEST</span>
-					</a>
-					<ul class="sidebar-nav">
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_acceuil')}}">
-								<i class="align-middle" data-feather="sliders"></i>
-								<span class="align-middle">Tableau de bord</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ path('app_employe_actifs') }}">
-								<i class="align-middle" data-feather="user"></i>
-								<span class="align-middle">Employes</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_visite')}}">
-								<i class="align-middle" data-feather="square"></i>
-								<span class="align-middle">Visites</span>
-							</a>
-						</li>
+					.price-list li {
+						list-style: none;
+						margin-bottom: 15px;
+					}
 
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ path('app_visiteur_externe') }}">
-								<i class="align-middle" data-feather="check-square"></i>
-								<span class="align-middle">Visiteurs</span>
-							</a>
-						</li>
+					.price-list .price {
+						font-size: 30px;
+						font-weight: bold;
+					}
+					.pricing-item .ribbon {
+						margin: -50px 0 20px;
+						display: block;
+						background-color: #ffb400;
+						padding: 15px 0 2px;
+						opacity: 0.8;
+						border-top-right-radius: 2em;
+					}
+					.pricing-item:hover .ribbon {
+						background-color: #ffb400;
+						opacity: 1;
+					}
+					.pricing-item.active .ribbon {
+						background-color: #ffb400;
+						opacity: 1;
+					}
+					.pricing-item .ribbon p {
+						color: #fff;
+						font-size: 22px;
+						margin: 0 0 10px;
+						font-weight: 600;
+					}
+					.pricing-item.active .price-list li,
+					.pricing-item:hover .price-list li {
+						color: #848181;
+					}
+					ul.price-list {
+						margin-bottom: 30px;
+						padding: 0;
+					}
+					.btn-price {
+						display: inline-block;
+						position: relative;
+						text-align: center;
+						text-transform: uppercase;
+						padding: 14px 40px;
+						-webkit-border-radius: 26px;
+						-moz-border-radius: 26px;
+						-o-border-radius: 26px;
+						border-radius: 26px;
+						border: 1px solid #848181;
+						background-color: transparent;
+						color: #848181;
+					}
+					.pricing-item:hover .btn-price,
+					.active .btn-price {
+						border: 1px solid #ffb400;
+						background-color: #ffb400;
+						color: #fff;
+					}
+					.btn-price:focus {
+						background-color: transparent;
+						text-decoration: none;
+					}
+					@media only screen and(max-width: 767px) {
+						.pricing-items {
+							padding-top: 0;
+						}
+						.pricing-item.active {
+							top: 20px;
+							margin-bottom: 40px;
+						}
+					}
+				</style>
+			{% endblock %}
+		</head>
+		<body>
+			<div class="wrapper">
+				<nav id="sidebar" class="sidebar js-sidebar">
+					<div class="sidebar-content js-simplebar">
+						<a class="sidebar-brand mb-3" href="/" style="font-size:25px;">
+							<span class="align-middle">ORAGUEST</span>
+						</a>
+						<ul class="sidebar-nav">
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{path('app_acceuil')}}">
+									<i class="align-middle" data-feather="sliders"></i>
+									<span class="align-middle">Tableau de bord</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{ path('app_employe_actifs') }}">
+									<i class="align-middle" data-feather="user"></i>
+									<span class="align-middle">Employes</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{ path('app_employe') }}">
+									<i class="align-middle" data-feather="user"></i>
+									<span class="align-middle">Tous les employes</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{path('app_visite')}}">
+									<i class="align-middle" data-feather="square"></i>
+									<span class="align-middle">Visites</span>
+								</a>
+							</li>
 
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ path('app_direction') }}">
-								<i class="align-middle" data-feather="grid"></i>
-								<span class="align-middle">Directions</span>
-							</a>
-						</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{ path('app_visiteur_externe') }}">
+									<i class="align-middle" data-feather="check-square"></i>
+									<span class="align-middle">Visiteurs</span>
+								</a>
+							</li>
 
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ path('app_filiale') }}">
-								<i class="align-middle" data-feather="align-left"></i>
-								<span class="align-middle">Filiales</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_profil')}}">
-								<i class="fa-solid fa-address-card"></i>
-								<span class="align-middle">Profils</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_compte_utilisateur')}}">
-								<i class="fa-solid fa-users"></i>
-								<span class="align-middle">Utilisateurs</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_profil_employe')}}">
-								<i class="fa-solid fa-address-card"></i>
-								<span class="align-middle">Mon profil</span>
-							</a>
-						</li>
-					</ul>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{ path('app_direction') }}">
+									<i class="align-middle" data-feather="grid"></i>
+									<span class="align-middle">Directions</span>
+								</a>
+							</li>
 
-					<div class="sidebar-cta">
-						<div class="sidebar-cta-content">
-							<strong class="d-inline-block mb-2">Connecté comme:</strong>
-							<div class="mb-3">
-								{% if app.user != null %}
-									{{ app.user.Username}}
-								{% endif %}
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{ path('app_filiale') }}">
+									<i class="align-middle" data-feather="align-left"></i>
+									<span class="align-middle">Filiales</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{path('app_profil')}}">
+									<i class="fa-solid fa-address-card"></i>
+									<span class="align-middle">Profils</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{path('app_compte_utilisateur')}}">
+									<i class="fa-solid fa-users"></i>
+									<span class="align-middle">Utilisateurs</span>
+								</a>
+							</li>
+						</ul>
+
+						<div class="sidebar-cta">
+							<div class="sidebar-cta-content">
+								<strong class="d-inline-block mb-2">Nom d'utilisateur:</strong>
+								<div class="mb-3">
+									{% if app.user != null %}
+										{{ app.user.Username}}
+									{% endif %}
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</nav>
-
-			<div class="main">
-				<nav class="navbar navbar-expand navbar-light navbar-bg">
-					<a class="sidebar-toggle js-sidebar-toggle">
-						<i class="hamburger align-self-center"></i>
-					</a>
-					<div class="navbar-collapse collapse">
-						<ul class="navbar-nav navbar-align">
-							<li class="nav-item dropdown">
-								<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-									<div class="position-relative">
-										<i class="align-middle" data-feather="bell"></i>
-										<span class="indicator">4</span>
-									</div>
-								</a>
-								<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-									<div class="dropdown-menu-header">
-										4 New Notifications
-									</div>
-									<div class="list-group">
-										<a href="#" class="list-group-item">
-											<div class="row g-0 align-items-center">
-												<div class="col-2">
-													<i class="text-danger" data-feather="alert-circle"></i>
-												</div>
-												<div class="col-10">
-													<div class="text-dark">Update completed</div>
-													<div class="text-muted small mt-1">Restart server 12 to complete the
-																																																																																																															update.</div>
-													<div class="text-muted small mt-1">30m ago</div>
-												</div>
-											</div>
-										</a>
-										<a href="#" class="list-group-item">
-											<div class="row g-0 align-items-center">
-												<div class="col-2">
-													<i class="text-warning" data-feather="bell"></i>
-												</div>
-												<div class="col-10">
-													<div class="text-dark">Lorem ipsum</div>
-													<div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate
-																																																																																																															hendrerit et.</div>
-													<div class="text-muted small mt-1">2h ago</div>
-												</div>
-											</div>
-										</a>
-										<a href="#" class="list-group-item">
-											<div class="row g-0 align-items-center">
-												<div class="col-2">
-													<i class="text-primary" data-feather="home"></i>
-												</div>
-												<div class="col-10">
-													<div class="text-dark">Login from 192.186.1.8</div>
-													<div class="text-muted small mt-1">5h ago</div>
-												</div>
-											</div>
-										</a>
-										<a href="#" class="list-group-item">
-											<div class="row g-0 align-items-center">
-												<div class="col-2">
-													<i class="text-success" data-feather="user-plus"></i>
-												</div>
-												<div class="col-10">
-													<div class="text-dark">New connection</div>
-													<div class="text-muted small mt-1">Christina accepted your request.
-													</div>
-													<div class="text-muted small mt-1">14h ago</div>
-												</div>
-											</div>
-										</a>
-									</div>
-									<div class="dropdown-menu-footer">
-										<a href="#" class="text-muted">Show all notifications</a>
-									</div>
-								</div>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
-									<div class="position-relative">
-										<i class="align-middle" data-feather="message-square"></i>
-									</div>
-								</a>
-								<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">
-									<div class="dropdown-menu-header">
-										<div class="position-relative">
-											4 New Messages
-										</div>
-									</div>
-									<div class="list-group">
-										<a href="#" class="list-group-item">
-											<div class="row g-0 align-items-center">
-												<div class="col-2">
-													<img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
-												</div>
-												<div class="col-10 ps-2">
-													<div class="text-dark">Vanessa Tucker</div>
-													<div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu
-																																																																																																															tortor.</div>
-													<div class="text-muted small mt-1">15m ago</div>
-												</div>
-											</div>
-										</a>
-										<a href="#" class="list-group-item">
-											<div class="row g-0 align-items-center">
-												<div class="col-2">
-													<img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">
-												</div>
-												<div class="col-10 ps-2">
-													<div class="text-dark">William Harris</div>
-													<div class="text-muted small mt-1">Curabitur ligula sapien euismod
-																																																																																																															vitae.</div>
-													<div class="text-muted small mt-1">2h ago</div>
-												</div>
-											</div>
-										</a>
-										<a href="#" class="list-group-item">
-											<div class="row g-0 align-items-center">
-												<div class="col-2">
-													<img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">
-												</div>
-												<div class="col-10 ps-2">
-													<div class="text-dark">Christina Mason</div>
-													<div class="text-muted small mt-1">Pellentesque auctor neque nec urna.
-													</div>
-													<div class="text-muted small mt-1">4h ago</div>
-												</div>
-											</div>
-										</a>
-										<a href="#" class="list-group-item">
-											<div class="row g-0 align-items-center">
-												<div class="col-2">
-													<img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
-												</div>
-												<div class="col-10 ps-2">
-													<div class="text-dark">Sharon Lessman</div>
-													<div class="text-muted small mt-1">Aenean tellus metus, bibendum sed,
-																																																																																																															posuere ac, mattis non.</div>
-													<div class="text-muted small mt-1">5h ago</div>
-												</div>
-											</div>
-										</a>
-									</div>
-									<div class="dropdown-menu-footer">
-										<a href="#" class="text-muted">Show all messages</a>
-									</div>
-								</div>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
-									<i class="align-middle" data-feather="settings"></i>
-								</a>
-								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-									<img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall"/>
-									<span class="text-dark">Charles Hall</span>
-								</a>
-								<div class="dropdown-menu dropdown-menu-end">
-									<a class="dropdown-item" href="pages-profile.html">
-										<i class="align-middle me-1" data-feather="user"></i>
-										Profile</a>
-									<a class="dropdown-item" href="#">
-										<i class="align-middle me-1" data-feather="pie-chart"></i>
-										Analytics</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="index.html">
-										<i class="align-middle me-1" data-feather="settings"></i>
-										Settings & Privacy</a>
-									<a class="dropdown-item" href="#">
-										<i class="align-middle me-1" data-feather="help-circle"></i>
-										Help Center</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#">Log out</a>
-								</div>
-							</li>
-						</ul>
-					</div>
 				</nav>
-				<main class="content"> {% block body %}{% endblock %}
-					</main>
-					{# <footer class="footer">
-																																				<div class="container-fluid">
-																																					<div class="row text-muted">
-																																						<div class="col-6 text-start">
-																																							<p class="mb-0">
-																																								<a class="text-muted" href="https://adminkit.io/" target="_blank">
-																																									<strong>AdminKit</strong>
-																																								</a>
-																																								&copy;
-																																							</p>
-																																						</div>
-																																						<div class="col-6 text-end">
-																																							<ul class="list-inline">
-																																								<li class="list-inline-item">
-																																									<a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
-																																								</li>
-																																								<li class="list-inline-item">
-																																									<a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
-																																								</li>
-																																								<li class="list-inline-item">
-																																									<a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
-																																								</li>
-																																								<li class="list-inline-item">
-																																									<a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
-																																								</li>
-																																							</ul>
-																																						</div>
-																																					</div>
-																																				</div>
-																																			</footer> #}
-				</div>
-			</div>
+				<div class="main">
+					<nav class="navbar navbar-expand navbar-light navbar-bg">
+						<a class="sidebar-toggle js-sidebar-toggle" style="margin-left:4px;">
+							<i class="hamburger align-self-center"></i>
+						</a>
+						<div class="navbar-collapse collapse">
+							<ul class="navbar-nav navbar-align">
+								<li class="nav-item dropdown">
 
-		</body>
-		{% block scripts %}
-			<script src="{{asset('js/script.js')}}"></script>
-			<script src="{{asset('js/scripts.js')}}"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-			<script src="{{asset('js/datatables-simple-demo.js')}}"></script>
-			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-			<script src="{{asset('assets/demochart-area-demo.js')}}"></script>
-			<script src="{{asset('assets/demo/chart-bar-demo.js')}}"></script>
-			<script src="{{asset('assets/demo/chart-pie-demo.js')}}"></script>
-			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-			<script src="bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
-			<script src="{{asset('js/app.js')}}"></script>
-		{% endblock %}
+									<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
+												<i class="fas fa-user fa-fw"></i>
+											</a>
+											<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+												<li>
+													<a class="dropdown-item" href="#!">
+														{% if app.user != null %}
+															{{ app.user.Username}}
+														{% endif %}
+													</a>
+												</li>
+												<li>
+													<a class="dropdown-item" href="{{path('app_profil_employe')}}">Mon profil</a>
+												</li>
+												<li>
+													<hr class="dropdown-divider"/>
+												</li>
+												<li>
+													<a class="dropdown-item" href="{{ path('app_logout')}}">
+														<i class="fa-solid fa-arrow-right-from-bracket"></i>Me deconnecter</a>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</nav>
+					<main class="content"> {% block body %}{% endblock %}
+						</main>
+					</div>
+				</div>
+
+			</body>
+			{% block scripts %}
+				{{ importmap() }}
+				{{ encore_entry_script_tags('app') }}
+				<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+				<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+				<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+				<script src="{{asset('js/script.js')}}"></script>
+				<script src="{{asset('js/scripts.js')}}"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+				<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+				<script src="{{asset('js/datatables-simple-demo.js')}}"></script>
+				<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+				<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+				<script src="{{asset('assets/demochart-area-demo.js')}}"></script>
+				<script src="{{asset('assets/demo/chart-bar-demo.js')}}"></script>
+				<script src="{{asset('assets/demo/chart-pie-demo.js')}}"></script>
+				<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+				<script src="bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
+				<script src="{{asset('js/app.js')}}"></script>
+			{% endblock %}
+		</head>
 	</html>

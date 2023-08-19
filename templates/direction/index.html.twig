@@ -4,9 +4,12 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="card mb-4">
-					<div class="card-header">
+					<div class="card-header" style="display:flex;justify-content:space-around">
 						<i class="fas fa-table me-1"></i>
 						<h3>Liste des Directions</h3>
+						<a href="{{path('app_add_direction')}}">
+							<input type="button" value="Nouvelle direction" class="btn btn-success">
+						</a>
 					</div>
 					<div class="card-body">
 						<table id="datatablesSimple">
@@ -29,7 +32,14 @@
 									<tr>
 										<td>{{dir.NomDirection}}</td>
 										<td>{{dir.filiale}}</td>
-										<td>Editer</td>
+										<td>
+											<a href="{{ path('app_update_direction', {'id': dir.id}) }}">
+												<button style="background-color:green;border-width:0;color:white;">
+													<i class="fa-regular fa-pen-to-square"></i>
+												</button>
+											</a>
+
+										</td>
 									</tr>
 								{% endfor %}
 							</tbody>
