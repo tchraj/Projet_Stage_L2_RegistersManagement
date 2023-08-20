@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query\Expr;
 use App\Entity\Visite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -89,5 +90,99 @@ class VisiteRepository extends ServiceEntityRepository
             ->orderBy('count', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+    public function getAllVisits()
+    {
+        return $this->createQueryBuilder('v')
+            ->select('v', 'e', 'd')
+            ->join('v.EmployeVisite', 'e')
+            ->join('e.direction', 'd')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countVisitsByDepartment()
+    {
+        $allVisits = $this->getAllVisits();
+        $currentYear = date('Y'); // Obtenez l'année en cours
+
+        $statisticsByDepartment = [];
+
+        foreach ($allVisits as $visit) {
+            $visitYear = $visit->getDateVisite()->format('Y');
+
+            if ($visitYear === $currentYear) {
+                $departmentName = $visit->getEmployeVisite()->getDirection()->getNomDirection();
+                if (!isset($statisticsByDepartment[$departmentName])) {
+                    $statisticsByDepartment[$departmentName] = 1;
+                } else {
+                    $statisticsByDepartment[$departmentName]++;
+                }
+            }
+        }
+
+        arsort($statisticsByDepartment); // Triez par ordre décroissant
+
+        return $statisticsByDepartment;
+    }
+
+    public function findByYear($year)
+    {
+        $startDate = new \DateTime($year . '-01-01');
+        $endDate = new \DateTime($year . '-12-31');
+        return $this->createQueryBuilder('v')
+            ->where('v.DateVisite >= :startDate')
+            ->andWhere('v.DateVisite <= :endDate')
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->getQuery()
+            ->getResult();
+    }
+    public function getMonthlyVisitStatisticsByDirection()
+    {
+        $sql = "
+            SELECT
+                d.nom_direction AS direction,
+                MONTH(v.date_visite) AS mois,
+                COUNT(v.id) AS nombreVisites
+            FROM
+                visite v
+            JOIN
+                employe e ON v.employe_visite_id = e.id
+            JOIN
+                direction d ON e.direction_id = d.id
+            GROUP BY
+                direction, mois
+            ORDER BY
+                direction ASC, mois ASC
+        ";
+
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->getConnection()->executeQuery($sql);
+
+        return $query->fetchAllAssociative();
+    }
+    public function getMonthlyVisitStatisticsByDepartment($departmentId)
+    {
+        $sql = "
+            SELECT
+                MONTH(v.date_visite) AS mois,
+                COUNT(v.id) AS nombreVisites
+            FROM
+                visite v
+            JOIN
+                employe e ON v.employe_visite_id = e.id
+            WHERE
+                e.direction_id = :departmentId
+            GROUP BY
+                mois
+            ORDER BY
+                mois ASC
+        ";
+
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->getConnection()->executeQuery($sql, ['departmentId' => $departmentId]);
+
+        return $query->fetchAllAssociative();
     }
 }

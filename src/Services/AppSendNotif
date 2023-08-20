@@ -1,0 +1,36 @@
+<?php
+// src/Service/NotificationService.php
+namespace App\Services;
+
+use App\Entity\Visite;
+use App\Entity\Notification;
+use Doctrine\ORM\EntityManagerInterface;
+
+class NotificationService
+{
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    public function envoyerNotificationPourNouvelleVisite(Visite $visite)
+    {
+        // Créez une nouvelle notification et configurez ses propriétés
+        $notification = new Notification();
+        $notification->setContenu('Nouvelle visite créée.');
+        // ... configurez d'autres propriétés
+
+        // Associez la notification à la visite (si nécessaire)
+        $notification->setVisite($visite);
+
+        // Enregistrez la notification dans la base de données
+        $this->entityManager->persist($notification);
+        $this->entityManager->flush();
+
+        // Ici, vous pouvez appeler le code pour envoyer la notification réelle,
+        // comme envoyer un e-mail ou une notification dans l'application en temps réel.
+    }
+}
+?>

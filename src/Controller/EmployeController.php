@@ -77,7 +77,7 @@ class EmployeController extends AbstractController
             $employe->setCompteUtilisateur($compte);
             $manager->persist($employe);
             $manager->flush();
-            $flag = $appSendEmail->sendUnique(
+            $appSendEmail->sendUnique(
                 "amanarodia@gmail.com",
                 $employe->getEmail(),
                 "RENSEIGNEMENT DES IDENTIFIANTS",

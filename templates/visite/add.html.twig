@@ -3,53 +3,51 @@
 {% block title %}Hello visites
 {% endblock title  %}
 
+
 {% block body %}
 	<style>
 		.colonne {
 			;
-			//
+			// Vos styles ici
 		}
 	</style>
 	<div class="container" style="width:50%;">
 		{{ form_start(VisiteForm) }}
-		<h1>
-			Nouvelle visite</h1>
-		{{form_row(VisiteForm.typeVisiteur)}}
+		<h1>Nouvelle visite</h1>
 
-		<label>
-			Heure de début</label>
-		{{ form_widget(VisiteForm.HeureDeb)}}
+		{{ form_row(VisiteForm.typeVisiteur) }}
+
+		<label>Heure de début</label>
+		{{ form_widget(VisiteForm.HeureDeb) }}
+
 		{{ form_row(VisiteForm.typePiece) }}
 		{{ form_row(VisiteForm.NumPiece) }}
 
-		Motif</label>
-	{{form_widget(VisiteForm.motif)}}
-	{{ form_row(VisiteForm.EmployeVisite) }}
+		<label>Motif</label>
+		{{ form_widget(VisiteForm.motif) }}
 
-	<div id="champVisiteurExterne" style="display: none;">
-		{{ form_row(VisiteForm.visiteurExterne) }}
-	</div>
-	<div id="champEmployeVisiteur" style="display: none;">
-		{{ form_row(VisiteForm.employeVisiteur) }}
-	</div>
-	{# {{ form_row(VisiteForm.EtatVisite)}} #}
-	{# <input type="submit" value="Envoyer" id="showModalBtn" class="btn btn-success"> #}
+		{{ form_row(VisiteForm.EmployeVisite) }}
 
-	{{ form_end(VisiteForm) }}</div>
-<script>
-	const typeVisiteurField = document.querySelector('#          {{ VisiteForm.typeVisiteur.vars.id }}');
+		<div id="champVisiteurExterne">
+			{{ form_row(VisiteForm.visiteurExterne) }}
+		</div>
+
+		<div id="champEmployeVisiteur">
+			{{ form_row(VisiteForm.employeVisiteur) }}
+		</div>
+
+		{{ form_end(VisiteForm) }}
+	</div>
+	<a href="{{path('app_visite')}}" ><button class="btn btn-info">Retour</button></a>
+	
+	<script>
+		const typeVisiteurField = document.querySelector('[name="  {{ VisiteForm.vars.full_name }}[typeVisiteur]"]');
 const champVisiteurExterne = document.querySelector('#champVisiteurExterne');
 const champEmployeVisiteur = document.querySelector('#champEmployeVisiteur');
+
 typeVisiteurField.addEventListener('change', () => {
-if (typeVisiteurField.value === 'Visiteur externe') {
-champVisiteurExterne.style.display = 'block';
-champEmployeVisiteur.style.display = 'none';
-} else if (typeVisiteurField.value === 'Employe visiteur') {
-champVisiteurExterne.style.display = 'none';
-champEmployeVisiteur.style.display = 'block';
-} else {
-champVisiteurExterne.style.display = 'none';
-champEmployeVisiteur.style.display = 'none';
-}
+champVisiteurExterne.style.display = typeVisiteurField.value === 'Visiteur externe' ? 'block' : 'none';
+champEmployeVisiteur.style.display = typeVisiteurField.value === 'Employe visiteur' ? 'block' : 'none';
 });
-</script>{% endblock body %}
+	</script>
+{% endblock body %}

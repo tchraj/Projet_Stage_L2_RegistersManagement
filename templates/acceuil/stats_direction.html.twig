@@ -1,0 +1,25 @@
+ {% extends 'template.html.twig' %}
+
+{% block title %}Statistiques par Direction{% endblock title %}
+
+{% block body %}
+    <h1>Statistiques de Visites par Direction</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Direction</th>
+                <th>Mois</th>
+                <th>Nombre de Visites</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for statistique in statistiquesParDirection %}
+                <tr>
+                    <td>{{ statistique.direction }}</td>
+                    <td>{{ statistique.mois }}</td>
+                    <td>{{ statistique.nombreVisites }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock body %}

@@ -23,6 +23,18 @@ class Notification
     #[ORM\ManyToOne(inversedBy: 'notifications')]
     private ?Employe $employeNotifie = null;
 
+    #[ORM\ManyToOne(inversedBy: 'notificationsCrees')]
+    private ?Employe $emmeteur = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Visite $visite = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $contenu = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $lu = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +72,54 @@ class Notification
     public function setEmployeNotifie(?Employe $employeNotifie): static
     {
         $this->employeNotifie = $employeNotifie;
+
+        return $this;
+    }
+
+    public function getEmmeteur(): ?Employe
+    {
+        return $this->emmeteur;
+    }
+
+    public function setEmmeteur(?Employe $emmeteur): static
+    {
+        $this->emmeteur = $emmeteur;
+
+        return $this;
+    }
+
+    public function getVisite(): ?Visite
+    {
+        return $this->visite;
+    }
+
+    public function setVisite(?Visite $visite): static
+    {
+        $this->visite = $visite;
+
+        return $this;
+    }
+
+    public function getContenu(): ?string
+    {
+        return $this->contenu;
+    }
+
+    public function setContenu(?string $contenu): static
+    {
+        $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    public function isLu(): ?bool
+    {
+        return $this->lu;
+    }
+
+    public function setLu(?bool $lu): static
+    {
+        $this->lu = $lu;
 
         return $this;
     }

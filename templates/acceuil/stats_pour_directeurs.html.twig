@@ -1,0 +1,72 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Statistiques pour  directions
+{% endblock title %}
+{% block body %}
+	<h3>Statistiques du nombre de visites par mois pour la direction:
+		{{direction}}
+	</h3>
+	<div style="width:60%;height:50%">
+		<canvas id="visitsChart"></canvas>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+		const monthNames = {
+1: 'Janvier',
+2: 'Février',
+3: 'Mars',
+4: 'Avril',
+5: 'Mai',
+6: 'Juin',
+7: 'Juillet',
+8: 'Août',
+9: 'Septembre',
+10: 'Octobre',
+11: 'Novembre',
+12: 'Décembre'
+};
+
+const data = {
+labels: [{% for statistique in statistiquesParDepartement %}'{{ monthNames[statistique.mois] }}',{% endfor %}],
+datasets: [
+{
+label: 'Nombre de Visites',
+data: [{% for statistique in statistiquesParDepartement %}{{ statistique.nombreVisites }},{% endfor %}],
+backgroundColor: 'rgba(75, 192, 192, 0.9)',
+borderColor: 'rgb(75, 192, 192)',
+borderWidth: 1
+}
+]
+};
+const config = {
+type: 'bar',
+data: data,
+options: {
+responsive: true,
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+};
+
+const visitsChart = new Chart(document.getElementById('visitsChart'), config);
+	</script>
+	{# <table>
+					        <thead>
+					            <tr>
+					                <th>Mois</th>
+					                <th>Nombre de Visites</th>
+					            </tr>
+					        </thead>
+					        <tbody>
+					            {% for statistique in statistiquesParDepartement %}
+					                <tr>
+					                    <td>{{ statistique.mois }}</td>
+					                    <td>{{ statistique.nombreVisites }}</td>
+					                </tr>
+					            {% endfor %}
+					        </tbody>
+					    </table>  #}
+{% endblock body %}

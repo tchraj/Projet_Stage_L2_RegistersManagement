@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Form\VisiteType;
 use App\Entity\Visite;
+use App\Services\AppSendEmail;
+use App\Entity\Notification;
 use App\Form\LierVisiteType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\VisiteurExterne;
 use App\Repository\VisiteRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,7 +44,7 @@ class VisiteController extends AbstractController
         ]);
     }
     #[Route('/add', name: 'app_add_visite')]
-    public function addVisite(ManagerRegistry $managerRegistry, Request $request): Response
+    public function addVisite(ManagerRegistry $managerRegistry, Request $request, AppSendEmail $appSendEmail): Response
     {
         $manager = $managerRegistry->getManager();
         $visite = new Visite();
@@ -54,21 +55,29 @@ class VisiteController extends AbstractController
             $type = $form->get("typeVisiteur")->getData();
             $visite->setTypeVisiteur($type);
             $visite->setDateVisite(new DateTime('today'));
-            $manager->persist($visite);
-            //dd($visite->getVisiteurExterne());
-            $manager->flush();
             $employeVisite = $visite->getEmployeVisite();
             $visite->setEmployeVisite($employeVisite);
             if ($type == "Employe visiteur") {
-                $employeVisiteur = $visite->getEmployeVisiteur();
-                $visite->setEmployeVisiteur($employeVisiteur);
-                $employeVisiteur->addVisiteeffectuee($visite);
+                $visiteur = $visite->getEmployeVisiteur();
+                $visite->setEmployeVisiteur($visiteur);
+                $visiteur->addVisiteeffectuee($visite);
             } elseif ($type == "Visiteur externe") {
-                $visiteurExterne = $visite->getVisiteurExterne();
-                $visite->setVisiteurExterne($visiteurExterne);
+                $visiteur = $visite->getVisiteurExterne();
+                $visite->setVisiteurExterne($visiteur);
             }
             $employeVisite->addVisiteRecue($visite);
-
+            $manager->persist($visite);
+            $manager->flush();
+            $appSendEmail->sendUnique(
+                "amanarodia@gmail.com",
+                $employeVisite->getEmail(),
+                "Nouvelle visite!",
+                "Bonjour Monsieur/Madame" .
+                    $employeVisite->getNom() . "  " .
+                    $employeVisite->getPrenoms() .
+                    " Vous avez une nouvelle visite!<br>Monsieur/Madame $visiteur aimerais vous visiter;Veuillez répondre pour ne pas lui garder longtemps",
+                'alert.html.twig'
+            );
             $this->addFlash("Succes", "Visite ajoutée avec succes!");
             return $this->redirectToRoute('app_visite');
         } else
@@ -94,21 +103,36 @@ class VisiteController extends AbstractController
                 'VisiteForm' => $form->createView()
             ]);
     }
-    public function updateEtatVisite(ManagerRegistry $managerRegistry,Request $request): JsonResponse
+    #[Route('/accept_visite/{id}', name: 'app_accept_visite')]
+    public function acceptRefuse(Request $request, Visite $visite, ManagerRegistry $managerRegistry)
     {
-        $visiteId = $request->request->get('visite_id');
-        $isChecked = $request->request->get('is_checked');
-        $manager = $managerRegistry->getManager();
-        $visite = $manager->getRepository(Visite::class)->find($visiteId);
-        if (!$visite) {
-            return new JsonResponse(['message' => 'Visite introuvable'], Response::HTTP_NOT_FOUND);
+        if ($request->isMethod('POST')) {
+            $accepted = $request->request->get('accepted') === 'on';
+            $visite->setEtatVisite($accepted);
+            $visite->setEtatVisite(true);
+            $heureFin = new \DateTime($request->request->get('heure_fin'));
+            $visite->setHeureFin($heureFin);
         }
-        // Mettre à jour l'état de la visite
-        $visite->setEtatVisite($isChecked);
+        $manager = $managerRegistry->getManager();
+        $manager->persist($visite);
         $manager->flush();
-
-        return new JsonResponse(['message' => 'État de visite mis à jour']);
+        return $this->redirectToRoute('app_visite');
     }
+    // public function updateEtatVisite(ManagerRegistry $managerRegistry,Request $request): JsonResponse
+    // {
+    //     $visiteId = $request->request->get('visite_id');
+    //     $isChecked = $request->request->get('is_checked');
+    //     $manager = $managerRegistry->getManager();
+    //     $visite = $manager->getRepository(Visite::class)->find($visiteId);
+    //     if (!$visite) {
+    //         return new JsonResponse(['message' => 'Visite introuvable'], Response::HTTP_NOT_FOUND);
+    //     }
+    //     // Mettre à jour l'état de la visite
+    //     $visite->setEtatVisite($isChecked);
+    //     $manager->flush();
+
+    //     return new JsonResponse(['message' => 'État de visite mis à jour']);
+    // }
     #[Route('/lier/{id}', name: 'app_lier_visiteur')]
     public function lierVisiteur($id, ManagerRegistry $managerRegistry, Request $request, EntityManagerInterface $entityManager)
     {
@@ -137,5 +161,4 @@ class VisiteController extends AbstractController
             );
         }
     }
-    
 }

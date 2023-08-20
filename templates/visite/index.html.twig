@@ -16,11 +16,12 @@
 			<table id="datatablesSimple">
 				<thead>
 					<tr>
-						<th>Type de visiteur</th>
+						{# <th>Type de visiteur</th> #}
 						<th>Visiteur</th>
 						<th>Employé visité</th>
 						<th>Motif</th>
 						<th>Etat</th>
+						<th>Heure de fin</th>
 						{#Age#}
 						<th>Date</th>
 						<th>Actions</th>
@@ -28,11 +29,12 @@
 				</thead>
 				<tfoot>
 					<tr>
-						<th>Type de visiteur</th>
+						{# <th>Type de visiteur</th> #}
 						<th>Visiteur</th>
 						<th>Employé visité</th>
 						<th>Motif</th>
 						<th>Etat</th>
+						<th>Heure de fin</th>
 						<th>Date</th>
 						<th>Actions</th>
 					</tr>
@@ -40,8 +42,8 @@
 				<tbody>
 					{% for visite in visites %}
 						<tr>
-							<td>{{visite.typeVisiteur}}
-							</td>
+							{# <td>{{visite.typeVisiteur}}
+																																																	</td> #}
 							<td>
 								{% if visite.typeVisiteur == 'Visiteur externe' %}
 									{{ visite.visiteurExterne }}
@@ -54,24 +56,54 @@
 							<td>{{visite.Motif}}
 							</td>
 							<td>
-								<input type="checkbox" class="etat-checkbox" data-visite-id="{{ visite.id }}" {% if visite.EtatVisite %} checked {% endif %}>
-							</td>
-							<td>{{visite.DateVisite|date("d/m/Y")}}
+								<form action="{{ path('app_accept_visite', {'id': visite.id}) }}" method="post">
+									<select name="accepted">
+										<option value="1" {% if visite.isEtatVisite() %} selected {% endif %}>
+											<button class="btn-success">Accepté</button>
+										</option>
+										<option value="0" {% if not visite.isEtatVisite() %} selected {% endif %}>
+											<button class="btn-warning">Refusé</button>
+										</option>
+									</select>
+									<button type="submit" class="btn btn-info" style="padding: 1px;">Enregistrer</button>
+								</form>
 							</td>
 							<td>
-								<a href="{{ path('app_update_employe', {'id': visite.id}) }}">
-									<button style="background-color:green;border-width:0;color:white;">
-										<i class="fa-regular fa-pen-to-square"></i>
-									</button>
-								</a>
-								<a href="{{ path('app_hide_employe', {'id': visite.id}) }}" class="delete-button">
-									<button style="background-color:red;border-width:0;color:white">
-										<i class="fa-solid fa-trash"></i>
-									</button>
-								</a>
+							<form action="{{path('app_accept_visite',{'id': visite.id}) }}" method="post">
+								<input type="time" id="heure-fin-{{ visite.id }}" name="heure_fin" value="{{ visite.HeureFin|date('H:i') }}">
+							</td></form>
+							
+							<!-- Heure -->
+							{# <td>
+								{% if visite.HeureFin is null%}
+									...
+								{% else %}
+									{{visite.HeureFin|date("H:i")}}
+									{%endif%}</td> #}
+							{# </td>
+							<td>
+								<a href="#" data-toggle="modal" data-target="#myModal-{{visite.id}}">Voir la détails</a>
 							</td>
+							<div id="myModal-{{visite.id}}" class="modal fade" role="dialog"> #}
+								<div class="modal-dialog modal-lg">
+									<td>{{visite.DateVisite|date("d/m/Y")}}
+									</td>
+									<td>
+										<a href="{{ path('app_update_employe', {'id': visite.id}) }}">
+											<button style="background-color:green;border-width:0;color:white;">
+												<i class="fa-regular fa-pen-to-square"></i>
+											</button>
+										</a>
+										<a href="{{ path('app_hide_employe', {'id': visite.id}) }}" class="delete-button">
+											<button style="background-color:red;border-width:0;color:white">
+												<i class="fa-solid fa-trash"></i>
+											</button>
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
 						</tr>
-					{% endfor %}
+					</tbody>
 				</tbody>
 			</table>
 		</div>

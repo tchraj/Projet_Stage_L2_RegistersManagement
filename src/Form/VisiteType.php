@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use App\Entity\VisiteurExterne;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,6 +20,8 @@ class VisiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+
+        
             // ->add('DateVisite', null, [
             //     'widget' => 'single_text',
             //     'label_attr' => ['class' => 'label'],
@@ -27,6 +30,15 @@ class VisiteType extends AbstractType
             //         'class' => 'form-group',
             //     ]
             // ])
+            
+            // ->add('HeureFin', TimeType::class, [
+            //     'attr' => ['class' => 'colonne'],
+            //     'input'  => 'datetime',
+            //     'widget' => 'single_text',
+            // ])
+
+
+
             ->add('HeureDeb', TimeType::class, [
                 'input' => 'datetime',
                 'widget' => 'single_text',
@@ -34,11 +46,6 @@ class VisiteType extends AbstractType
                     'min' => '06:00',
                 ],
             ])
-            // ->add('HeureFin', TimeType::class, [
-            //     'attr' => ['class' => 'colonne'],
-            //     'input'  => 'datetime',
-            //     'widget' => 'single_text',
-            // ])
             ->add('motif', TextType::class, [
                 'attr' => [
                     'color' => 'black'
@@ -64,15 +71,26 @@ class VisiteType extends AbstractType
                 'attr' => ['class' => 'colonne'],
 
                 'class' => VisiteurExterne::class,
-                'required' => false, // Vous pouvez ajuster cette option en fonction de vos besoins
+                'required' => false, 
             ])
             ->add('employeVisiteur', EntityType::class, [
                 'attr' => ['class' => 'colonne'],
                 'class' => Employe::class,
-                'required' => false, // Vous pouvez ajuster cette option en fonction de vos besoins
+                'required' => false, 
             ])
-            ->add("Envoyer", SubmitType::class);
-        // ->add(
+            ->add("Envoyer", SubmitType::class)
+            ->add("Annuler", ResetType::class);
+    }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Visite::class,
+        ]);
+    }
+}
+
+
+// ->add(
         //     'EtatVisite',
         //     ChoiceType::class,
         //     [
@@ -85,37 +103,3 @@ class VisiteType extends AbstractType
         //     ]
         // );
         //->add('Envoyer', SubmitType::class)
-    }
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Visite::class,
-        ]);
-    }
-}
-
-//$nom = $builder->get("nomVisiteur");
-
-        /* $typeVisiteur = $builder->get("typeVisiteur");
-        if ($typeVisiteur == 'Visiteur externe') {
-            $builder->add('visiteurExterne', EntityType::class, ['class' => VisiteurExterne::class]);
-        } elseif ($typeVisiteur == 'Employe visiteur') {
-            $builder->add('EmployeVisiteur', EntityType::class, ['class' => Employe::class]);
-        }
-        /*  ->add('visiteurExterne', EntityType::class, [
-                'class' => VisiteurExterne::class,
-            ]) */
-        /* $formMofifier = function(FormFormInterface $form ,$TypeVisiteur){
-                if ($TypeVisiteur == true) {
-                    $form->add('EmployeVisiteur', EntityType::class, ['class' => Employe::class]);
-                }else {
-                    $form->add('visiteurExterne', EntityType::class, ['class' => VisiteurExterne::class]);
-                }
-            };
-            $builder->get('TypeVisiteur')->addEventListener(
-                FormEvents::POST_SUBMIT,
-                function(FormEvent $event) use ($formMofifier){
-                    $TypeVisiteur = $event->getForm()->getData();
-                    $formMofifier($event->getForm()->getParent(),$TypeVisiteur);
-                }
-            ); */

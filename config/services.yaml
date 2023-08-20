@@ -25,3 +25,9 @@ services:
 
     app_send_email_service:
         class: App\Services\AppSendEmail
+
+    # app_send_notif:
+    #     arguments:
+    #         $notificationService: '@App\Services\NotificationService'
+    #     tags:
+    #         - { name: doctrine.event_listener, event: postPersist }
