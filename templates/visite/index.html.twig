@@ -21,7 +21,6 @@
 						<th>Employé visité</th>
 						<th>Motif</th>
 						<th>Etat</th>
-						<th>Heure de fin</th>
 						{#Age#}
 						<th>Date</th>
 						<th>Actions</th>
@@ -34,7 +33,6 @@
 						<th>Employé visité</th>
 						<th>Motif</th>
 						<th>Etat</th>
-						<th>Heure de fin</th>
 						<th>Date</th>
 						<th>Actions</th>
 					</tr>
@@ -43,7 +41,7 @@
 					{% for visite in visites %}
 						<tr>
 							{# <td>{{visite.typeVisiteur}}
-																																																	</td> #}
+																																																																																																																																																																																			</td> #}
 							<td>
 								{% if visite.typeVisiteur == 'Visiteur externe' %}
 									{{ visite.visiteurExterne }}
@@ -56,56 +54,69 @@
 							<td>{{visite.Motif}}
 							</td>
 							<td>
-								<form action="{{ path('app_accept_visite', {'id': visite.id}) }}" method="post">
-									<select name="accepted">
-										<option value="1" {% if visite.isEtatVisite() %} selected {% endif %}>
-											<button class="btn-success">Accepté</button>
-										</option>
-										<option value="0" {% if not visite.isEtatVisite() %} selected {% endif %}>
-											<button class="btn-warning">Refusé</button>
-										</option>
-									</select>
-									<button type="submit" class="btn btn-info" style="padding: 1px;">Enregistrer</button>
-								</form>
-							</td>
-							<td>
-							<form action="{{path('app_accept_visite',{'id': visite.id}) }}" method="post">
-								<input type="time" id="heure-fin-{{ visite.id }}" name="heure_fin" value="{{ visite.HeureFin|date('H:i') }}">
-							</td></form>
-							
-							<!-- Heure -->
-							{# <td>
-								{% if visite.HeureFin is null%}
-									...
+								{# <form action="{{ path('app_accept_visite', {'id': visite.id}) }}" method="post">
+																																																																																																																																																															<select name="accepted">
+																																																																																																																																																																<option value="1" #}
+								{% if visite.isEtatVisite() %}
+									<button style="border-width:0;color:white;background-color:#00B9E8">
+										<i class="fa-solid fa-check"></i>
+									</button>
 								{% else %}
-									{{visite.HeureFin|date("H:i")}}
-									{%endif%}</td> #}
-							{# </td>
-							<td>
-								<a href="#" data-toggle="modal" data-target="#myModal-{{visite.id}}">Voir la détails</a>
-							</td>
-							<div id="myModal-{{visite.id}}" class="modal fade" role="dialog"> #}
-								<div class="modal-dialog modal-lg">
-									<td>{{visite.DateVisite|date("d/m/Y")}}
+									<button class="btn-danger" style="border-width:0;color:white; margin: 2px;">
+										<i class="fa-solid fa-x"></i>
+									</button>
+								{% endif %}
+
+								{#</td>
+																																																																																						</tr>
+																																																																																						 </option>
+																																																																																										<option value="0" {% if not visite.isEtatVisite() %} selected {% endif %}>
+																																																																																											<button class="btn-warning">Refusé</button>
+																																																																																										</option>
+																																																																																					</tbody>
+																																																																																				</tbody>
+																																																																																			</select>
+																																																																																			<button type="submit" class="btn btn-info" style="padding: 1px;">Enregistrer</button>
+																																																																																		</form>
+																																																																																</td>
+																																																																																<td>
+																																																																																	<form action="{{path('app_accept_visite',{'id': visite.id}) }}" method="post">
+																																																																																		<input type="time" id="heure-fin-{{ visite.id }}" name="heure_fin" value="{{ visite.HeureFin|date('H:i') }}"></td>
+																																																																																</td>
+																																																																															</tr>
+																																																																														</form> #}
+								<!-- Heure -->
+								{# <td>
+																																																																																																	{% if visite.HeureFin is null%}
+																																																																																																		...
+																																																																																																	{% else %}
+																																																																																																		{{visite.HeureFin|date("H:i")}}
+																																																																																																		{%endif%}</td> #}
+								{# </td>
+																																																																																															<td>
+																																																																																																<a href="#" data-toggle="modal" data-target="#myModal-{{visite.id}}">Voir la détails</a>
+																																																																																															</td>
+																																																																																															<div id="myModal-{{visite.id}}" class="modal fade" role="dialog"> #}
+									<div class="modal-dialog modal-lg"> <td>{{visite.DateVisite|date("d/m/Y")}}
 									</td>
 									<td>
-										<a href="{{ path('app_update_employe', {'id': visite.id}) }}">
+										<a href="{{ path('app_update_visite', {'id': visite.id}) }}">
 											<button style="background-color:green;border-width:0;color:white;">
 												<i class="fa-regular fa-pen-to-square"></i>
 											</button>
 										</a>
-										<a href="{{ path('app_hide_employe', {'id': visite.id}) }}" class="delete-button">
-											<button style="background-color:red;border-width:0;color:white">
-												<i class="fa-solid fa-trash"></i>
-											</button>
-										</a>
+										{# <a href="{{ path('app_hide_employe', {'id': visite.id}) }}" class="delete-button">
+																																																													<button style="background-color:red;border-width:0;color:white">
+																																																														<i class="fa-solid fa-trash"></i>
+																																																													</button>
+																																																												</a> #}
 									</td>
 								</tr>
 							{% endfor %}
 						</tr>
-					</tbody>
+					</td>
 				</tbody>
-			</table>
-		</div>
-	</div>
-{% endblock %}
+			</tr>
+		</tbody>
+	</tbody>
+</table></div></div>{% endblock %}

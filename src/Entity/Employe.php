@@ -41,9 +41,7 @@ class Employe extends Personne
         //$this->directeur = new ArrayCollection();
         $this->Visiteeffectuee = new ArrayCollection();
         $this->VisiteRecue = new ArrayCollection();
-        $this->notifications = new ArrayCollection();
-        $this->notificationsCrees = new ArrayCollection();
-    }
+        }
 
     public function getId(): ?int
     {
@@ -117,12 +115,6 @@ class Employe extends Personne
     // }
     #[ORM\Column(type: 'boolean')]
     private $visible = true;
-
-    #[ORM\OneToMany(mappedBy: 'employeNotifie', targetEntity: Notification::class)]
-    private Collection $notifications;
-
-    #[ORM\OneToMany(mappedBy: 'emmeteur', targetEntity: Notification::class)]
-    private Collection $notificationsCrees;
 
     public function isVisible(): bool
     {
@@ -239,63 +231,5 @@ class Employe extends Personne
         return $this->VisiteRecue->count();
     }
 
-    /**
-     * @return Collection<int, Notification>
-     */
-    public function getNotifications(): Collection
-    {
-        return $this->notifications;
-    }
-
-    public function addNotification(Notification $notification): static
-    {
-        if (!$this->notifications->contains($notification)) {
-            $this->notifications->add($notification);
-            $notification->setEmployeNotifie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNotification(Notification $notification): static
-    {
-        if ($this->notifications->removeElement($notification)) {
-            // set the owning side to null (unless already changed)
-            if ($notification->getEmployeNotifie() === $this) {
-                $notification->setEmployeNotifie(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Notification>
-     */
-    public function getNotificationsCrees(): Collection
-    {
-        return $this->notificationsCrees;
-    }
-
-    public function addNotificationsCree(Notification $notificationsCree): static
-    {
-        if (!$this->notificationsCrees->contains($notificationsCree)) {
-            $this->notificationsCrees->add($notificationsCree);
-            $notificationsCree->setEmmeteur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNotificationsCree(Notification $notificationsCree): static
-    {
-        if ($this->notificationsCrees->removeElement($notificationsCree)) {
-            // set the owning side to null (unless already changed)
-            if ($notificationsCree->getEmmeteur() === $this) {
-                $notificationsCree->setEmmeteur(null);
-            }
-        }
-
-        return $this;
-    }
+    
 }

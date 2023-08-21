@@ -13,296 +13,297 @@
 		{% block stylesheets %}
 			{{encore_entry_link_tags('app') }}
 			<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
-			<linkrel="preconnect" href="https://fonts.gstatic.com">
-				{{ ux_controller_link_tags() }}
-				{# <link rel="shortcut icon" href="{{asset('assets/img/icons/icon-48x48.png')}}"/> #}
-				<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-				<link rel="shortcut icon" href="{{asset('assets/img/icons/icon.jpg')}}"/>
-				<link rel="canonical" href="https://demo-basic.adminkit.io/"/>
-				<link href="{{asset('css/app.css')}}" rel="stylesheet">
-				<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-				<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
-				<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-				<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
-				<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-				<link rel="stylesheet" type="text/css" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
-				<style>
-					#counter {
-						background-color: #076dbb;
-						color: #fff;
-						display: block;
-						overflow: hidden;
-						text-align: center;
-						padding: 20px 0;
-					}
-					#counter .count {
-						padding: 20px;
-						background: rgba(255, 255, 255, 0.1);
-						color: #fff;
-						text-align: center;
-					}
-					.count h4 {
-						color: #fff;
-						font-size: 16px;
-						margin-top: 0;
-					}
-					#counter .count .fa {
-						font-size: 40px;
-						display: block;
-						color: #fff;
-					}
-					#counter .number {
-						font-size: 30px;
-						font-weight: 700;
-						margin: 0;
-					}
-					/*  Pricing Section  */
+			<link rel="preconnect" href="https://fonts.gstatic.com">
+			{{ ux_controller_link_tags() }}
+			{# <link rel="shortcut icon" href="{{asset('assets/img/icons/icon-48x48.png')}}"/> #}
+			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+			<link rel="shortcut icon" href="{{asset('assets/img/icons/icon.jpg')}}"/>
+			<link rel="canonical" href="https://demo-basic.adminkit.io/"/>
+			<link href="{{asset('css/app.css')}}" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+			<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+			<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+			<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+			<link rel="stylesheet" type="text/css" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
+			<style>
+				#counter {
+					background-color: #076dbb;
+					color: #fff;
+					display: block;
+					overflow: hidden;
+					text-align: center;
+					padding: 20px 0;
+				}
+				#counter .count {
+					padding: 20px;
+					background: rgba(255, 255, 255, 0.1);
+					color: #fff;
+					text-align: center;
+				}
+				.count h4 {
+					color: #fff;
+					font-size: 16px;
+					margin-top: 0;
+				}
+				#counter .count .fa {
+					font-size: 40px;
+					display: block;
+					color: #fff;
+				}
+				#counter .number {
+					font-size: 30px;
+					font-weight: 700;
+					margin: 0;
+				}
+				/*  Pricing Section  */
 
-					#pricing {
-						background: #f7f7f7;
-					}
+				#pricing {
+					background: #f7f7f7;
+				}
+				.pricing-items {
+					padding-top: 50px;
+				}
+				.pricing-item {
+					background: #fff;
+					position: relative;
+					box-shadow: 0 0 9px 0 rgba(130, 121, 121, 0.2);
+					padding: 50px 0;
+					border-top-right-radius: 2em;
+					border-bottom-left-radius: 2em;
+				}
+				.pricing-item.active {
+					top: -50px;
+				}
+				.price-list li {
+					list-style: none;
+					margin-bottom: 15px;
+				}
+
+				.price-list .price {
+					font-size: 30px;
+					font-weight: bold;
+				}
+				.pricing-item .ribbon {
+					margin: -50px 0 20px;
+					display: block;
+					background-color: #ffb400;
+					padding: 15px 0 2px;
+					opacity: 0.8;
+					border-top-right-radius: 2em;
+				}
+				.pricing-item:hover .ribbon {
+					background-color: #ffb400;
+					opacity: 1;
+				}
+				.pricing-item.active .ribbon {
+					background-color: #ffb400;
+					opacity: 1;
+				}
+				.pricing-item .ribbon p {
+					color: #fff;
+					font-size: 22px;
+					margin: 0 0 10px;
+					font-weight: 600;
+				}
+				.pricing-item.active .price-list li,
+				.pricing-item:hover .price-list li {
+					color: #848181;
+				}
+				ul.price-list {
+					margin-bottom: 30px;
+					padding: 0;
+				}
+				.btn-price {
+					display: inline-block;
+					position: relative;
+					text-align: center;
+					text-transform: uppercase;
+					padding: 14px 40px;
+					-webkit-border-radius: 26px;
+					-moz-border-radius: 26px;
+					-o-border-radius: 26px;
+					border-radius: 26px;
+					border: 1px solid #848181;
+					background-color: transparent;
+					color: #848181;
+				}
+				.pricing-item:hover .btn-price,
+				.active .btn-price {
+					border: 1px solid #ffb400;
+					background-color: #ffb400;
+					color: #fff;
+				}
+				.btn-price:focus {
+					background-color: transparent;
+					text-decoration: none;
+				}
+				@media only screen and(max-width: 767px) {
 					.pricing-items {
-						padding-top: 50px;
-					}
-					.pricing-item {
-						background: #fff;
-						position: relative;
-						box-shadow: 0 0 9px 0 rgba(130, 121, 121, 0.2);
-						padding: 50px 0;
-						border-top-right-radius: 2em;
-						border-bottom-left-radius: 2em;
+						padding-top: 0;
 					}
 					.pricing-item.active {
-						top: -50px;
+						top: 20px;
+						margin-bottom: 40px;
 					}
-					.price-list li {
-						list-style: none;
-						margin-bottom: 15px;
-					}
-
-					.price-list .price {
-						font-size: 30px;
-						font-weight: bold;
-					}
-					.pricing-item .ribbon {
-						margin: -50px 0 20px;
-						display: block;
-						background-color: #ffb400;
-						padding: 15px 0 2px;
-						opacity: 0.8;
-						border-top-right-radius: 2em;
-					}
-					.pricing-item:hover .ribbon {
-						background-color: #ffb400;
-						opacity: 1;
-					}
-					.pricing-item.active .ribbon {
-						background-color: #ffb400;
-						opacity: 1;
-					}
-					.pricing-item .ribbon p {
-						color: #fff;
-						font-size: 22px;
-						margin: 0 0 10px;
-						font-weight: 600;
-					}
-					.pricing-item.active .price-list li,
-					.pricing-item:hover .price-list li {
-						color: #848181;
-					}
-					ul.price-list {
-						margin-bottom: 30px;
-						padding: 0;
-					}
-					.btn-price {
-						display: inline-block;
-						position: relative;
-						text-align: center;
-						text-transform: uppercase;
-						padding: 14px 40px;
-						-webkit-border-radius: 26px;
-						-moz-border-radius: 26px;
-						-o-border-radius: 26px;
-						border-radius: 26px;
-						border: 1px solid #848181;
-						background-color: transparent;
-						color: #848181;
-					}
-					.pricing-item:hover .btn-price,
-					.active .btn-price {
-						border: 1px solid #ffb400;
-						background-color: #ffb400;
-						color: #fff;
-					}
-					.btn-price:focus {
-						background-color: transparent;
-						text-decoration: none;
-					}
-					@media only screen and(max-width: 767px) {
-						.pricing-items {
-							padding-top: 0;
-						}
-						.pricing-item.active {
-							top: 20px;
-							margin-bottom: 40px;
-						}
-					}
-				</style>
+				}
+			</style>
 		{% endblock %}
 	</head>
-		<body>
-			<div class="wrapper">
-				<nav id="sidebar" class="sidebar js-sidebar">
-					<div class="sidebar-content js-simplebar">
-						<a class="sidebar-brand mb-3" href="/" style="font-size:25px;">
-							<span class="align-middle">ORAGUEST</span>
-						</a>
-						<ul class="sidebar-nav">
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{path('app_acceuil')}}">
-									<i class="align-middle" data-feather="sliders"></i>
-									<span class="align-middle">Tableau de bord1</span>
-								</a>
-							</li>
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{path('app_stats_dep')}}">
-									<i class="align-middle" data-feather="sliders"></i>
-									<span class="align-middle">Tableau de bord2</span>
-								</a>
-							</li>
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ path('app_employe_actifs') }}">
-									<i class="align-middle" data-feather="user"></i>
-									<span class="align-middle">Employes</span>
-								</a>
-							</li>
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ path('app_employe') }}">
-									<i class="align-middle" data-feather="user"></i>
-									<span class="align-middle">Tous les employes</span>
-								</a>
-							</li>
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{path('app_visite')}}">
-									<i class="align-middle" data-feather="square"></i>
-									<span class="align-middle">Visites</span>
-								</a>
-							</li>
+	<body>
+		<div class="wrapper">
+			<nav id="sidebar" class="sidebar js-sidebar">
+				<div class="sidebar-content js-simplebar">
+					<a class="sidebar-brand mb-3" href="/" style="font-size:25px;">
+						<span class="align-middle">ORAGUEST</span>
+					</a>
+					<ul class="sidebar-nav">
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{path('app_acceuil')}}">
+								<i class="align-middle" data-feather="sliders"></i>
+								<span class="align-middle">Tableau de bord1</span>
+							</a>
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{path('app_stats_dep')}}">
+								<i class="align-middle" data-feather="sliders"></i>
+								<span class="align-middle">Tableau de bord2</span>
+							</a>
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{ path('app_employe_actifs') }}">
+								<i class="align-middle" data-feather="user"></i>
+								<span class="align-middle">Employes</span>
+							</a>
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{ path('app_employe') }}">
+								<i class="align-middle" data-feather="user"></i>
+								<span class="align-middle">Tous les employes</span>
+							</a>
+						</li>
 
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ path('app_visiteur_externe') }}">
-									<i class="align-middle" data-feather="check-square"></i>
-									<span class="align-middle">Visiteurs</span>
-								</a>
-							</li>
 
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ path('app_direction') }}">
-									<i class="align-middle" data-feather="grid"></i>
-									<span class="align-middle">Directions</span>
-								</a>
-							</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{path('app_visite')}}">
+								<i class="align-middle" data-feather="square"></i>
+								<span class="align-middle">Visites</span>
+							</a>
+						</li>
 
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ path('app_filiale') }}">
-									<i class="align-middle" data-feather="align-left"></i>
-									<span class="align-middle">Filiales</span>
-								</a>
-							</li>
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{path('app_profil')}}">
-									<i class="fa-solid fa-address-card"></i>
-									<span class="align-middle">Profils</span>
-								</a>
-							</li>
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{path('app_compte_utilisateur')}}">
-									<i class="fa-solid fa-users"></i>
-									<span class="align-middle">Utilisateurs</span>
-								</a>
-							</li>
-						</ul>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{ path('app_visiteur_externe') }}">
+								<i class="align-middle" data-feather="check-square"></i>
+								<span class="align-middle">Visiteurs</span>
+							</a>
+						</li>
 
-						<div class="sidebar-cta">
-							<div class="sidebar-cta-content">
-								<strong class="d-inline-block mb-2">Nom d'utilisateur:</strong>
-								<div class="mb-3">
-									{% if app.user != null %}
-										{{ app.user.Username}}
-									{% endif %}
-								</div>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{ path('app_direction') }}">
+								<i class="align-middle" data-feather="grid"></i>
+								<span class="align-middle">Directions</span>
+							</a>
+						</li>
+
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{ path('app_filiale') }}">
+								<i class="align-middle" data-feather="align-left"></i>
+								<span class="align-middle">Filiales</span>
+							</a>
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{path('app_profil')}}">
+								<i class="fa-solid fa-address-card"></i>
+								<span class="align-middle">Profils</span>
+							</a>
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="{{path('app_compte_utilisateur')}}">
+								<i class="fa-solid fa-users"></i>
+								<span class="align-middle">Utilisateurs</span>
+							</a>
+						</li>
+					</ul>
+
+					<div class="sidebar-cta">
+						<div class="sidebar-cta-content">
+							<strong class="d-inline-block mb-2">Nom d'utilisateur:</strong>
+							<div class="mb-3">
+								{% if app.user != null %}
+									{{ app.user.Username}}
+								{% endif %}
 							</div>
 						</div>
 					</div>
-				</nav>
-				<div class="main">
-					<nav class="navbar navbar-expand navbar-light navbar-bg">
-						<a class="sidebar-toggle js-sidebar-toggle" style="margin-left:4px;">
-							<i class="hamburger align-self-center"></i>
-						</a>
-						<div class="navbar-collapse collapse">
-							<ul class="navbar-nav navbar-align">
-								<li class="nav-item dropdown">
-
-									<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
-												<i class="fas fa-user fa-fw"></i>
-											</a>
-											<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-												<li>
-													<a class="dropdown-item" href="#!">
-														{% if app.user != null %}
-															{{ app.user.Username}}
-														{% endif %}
-													</a>
-												</li>
-												<li>
-													<a class="dropdown-item" href="{{path('app_profil_employe')}}">Mon profil</a>
-												</li>
-												<li>
-													<hr class="dropdown-divider"/>
-												</li>
-												<li>
-													<a class="dropdown-item" href="{{ path('app_logout')}}">
-														<i class="fa-solid fa-arrow-right-from-bracket"></i>Me deconnecter</a>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-					</nav>
-					<main class="content"> {% block body %}{% endblock %}
-						</main>
-					</div>
 				</div>
+			</nav>
+			<div class="main">
+				<nav class="navbar navbar-expand navbar-light navbar-bg">
+					<a class="sidebar-toggle js-sidebar-toggle" style="margin-left:4px;">
+						<i class="hamburger align-self-center"></i>
+					</a>
+					<div class="navbar-collapse collapse">
+						<ul class="navbar-nav navbar-align">
+							<li class="nav-item dropdown">
+								<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+									<li class="nav-item dropdown">
+										<a class="nav-link" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
+											<i class="fas fa-user fa-fw"></i>
+										</a>
+										<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+											<li>
+												<a class="dropdown-item" href="#!">
+													{% if app.user != null %}
+														{{ app.user.Username}}
+													{% endif %}
+												</a>
+											</li>
+											<li>
+												<a class="dropdown-item" href="{{path('app_profil_employe')}}">Mon profil</a>
+											</li>
+											<li>
+												<hr class="dropdown-divider"/>
+											</li>
+											<li>
+												<a class="dropdown-item" href="{{ path('app_logout')}}">
+													<i class="fa-solid fa-arrow-right-from-bracket"></i>Me deconnecter</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<main class="content"> {% block body %}{% endblock %}
+					</main>
+				</div>
+			</div>
 
-			</body>
-			{% block scripts %}
-				{{ importmap() }}
-				{{ encore_entry_script_tags('app') }}
-				<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-				<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-				<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-				<script src="{{asset('js/script.js')}}"></script>
-				<script src="{{asset('js/scripts.js')}}"></script>
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-				<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-				<script src="{{asset('js/datatables-simple-demo.js')}}"></script>
-				<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-				<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-				<script src="{{asset('assets/demochart-area-demo.js')}}"></script>
-				<script src="{{asset('assets/demo/chart-bar-demo.js')}}"></script>
-				<script src="{{asset('assets/demo/chart-pie-demo.js')}}"></script>
-				<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-				<script src="bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
-				<script src="{{asset('js/app.js')}}"></script>
-			{% endblock %}
-		</head>
+		</body>
+		{% block scripts %}
+			{{ importmap() }}
+			{{ encore_entry_script_tags('app') }}
+			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+			<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+			<script src="{{asset('js/script.js')}}"></script>
+			<script src="{{asset('js/scripts.js')}}"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+			<script src="{{asset('js/datatables-simple-demo.js')}}"></script>
+			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+			<script src="{{asset('assets/demochart-area-demo.js')}}"></script>
+			<script src="{{asset('assets/demo/chart-bar-demo.js')}}"></script>
+			<script src="{{asset('assets/demo/chart-pie-demo.js')}}"></script>
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+			<script src="bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
+			<script src="{{asset('js/app.js')}}"></script>
+		{% endblock %}
 	</html>
+</head></html>

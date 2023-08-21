@@ -138,51 +138,98 @@ class VisiteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function getMonthlyVisitStatisticsByDirection()
+    // public function findByMonthlyVisitStatisticsByDirection()
+    // {
+    //     $sql = "
+    //         SELECT
+    //             d.nom_direction AS direction,
+    //             MONTH(v.date_visite) AS mois,
+    //             COUNT(v.id) AS nombreVisites
+    //         FROM
+    //             visite v
+    //         JOIN
+    //             employe e ON v.employe_visite_id = e.id
+    //         JOIN
+    //             direction d ON e.direction_id = d.id
+    //         GROUP BY
+    //             direction, mois
+    //         ORDER BY
+    //             direction ASC, mois ASC
+    //     ";
+
+    //     $entityManager = $this->getEntityManager();
+    //     $query = $entityManager->getConnection()->executeQuery($sql);
+
+    //     return $query->fetchAllAssociative();
+    // }
+    // public function getMonthlyVisitStatisticsByDepartment($departmentId)
+    // {
+    //     $sql = "
+    //         SELECT
+    //             MONTH(v.date_visite) AS mois,
+    //             COUNT(v.id) AS nombreVisites
+    //         FROM
+    //             visite v
+    //         JOIN
+    //             employe e ON v.employe_visite_id = e.id
+    //         WHERE
+    //             e.direction_id = :departmentId
+    //         GROUP BY
+    //             mois
+    //         ORDER BY
+    //             mois ASC
+    //     ";
+
+    //     $entityManager = $this->getEntityManager();
+    //     $query = $entityManager->getConnection()->executeQuery($sql, ['departmentId' => $departmentId]);
+
+    //     return $query->fetchAllAssociative();
+    // }
+    public function countTotalVisits()
     {
-        $sql = "
-            SELECT
-                d.nom_direction AS direction,
-                MONTH(v.date_visite) AS mois,
-                COUNT(v.id) AS nombreVisites
-            FROM
-                visite v
-            JOIN
-                employe e ON v.employe_visite_id = e.id
-            JOIN
-                direction d ON e.direction_id = d.id
-            GROUP BY
-                direction, mois
-            ORDER BY
-                direction ASC, mois ASC
-        ";
-
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->getConnection()->executeQuery($sql);
-
-        return $query->fetchAllAssociative();
+        return $this->createQueryBuilder('v')
+            ->select('COUNT(v) as total')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
-    public function getMonthlyVisitStatisticsByDepartment($departmentId)
+    public function findVisitsByDirection($direction)
     {
-        $sql = "
+        return $this->createQueryBuilder('v')
+            ->join('v.EmployeVisite', 'e')
+            ->where('e.direction = :direction')
+            ->setParameter('direction', $direction)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findVisitsStatisticsAndListByDepartment($direction)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery("
             SELECT
-                MONTH(v.date_visite) AS mois,
+                MONTH(v.dateVisite) AS mois,
                 COUNT(v.id) AS nombreVisites
             FROM
-                visite v
-            JOIN
-                employe e ON v.employe_visite_id = e.id
+                App\Entity\Visite v
             WHERE
-                e.direction_id = :departmentId
+                v.EmployeVisite IN (
+                    SELECT e.id FROM App\Entity\Employe e WHERE e.direction = :direction
+                )
             GROUP BY
                 mois
             ORDER BY
                 mois ASC
-        ";
+        ")->setParameter('direction', $direction);
 
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->getConnection()->executeQuery($sql, ['departmentId' => $departmentId]);
+        $statistiques = $query->getResult();
 
-        return $query->fetchAllAssociative();
+        $visites = $this->createQueryBuilder('v')
+            ->join('v.EmployeVisite', 'e')
+            ->where('e.direction = :direction')
+            ->setParameter('direction', $direction)
+            ->getQuery()
+            ->getResult();
+
+        return ['statistiques' => $statistiques, 'visites' => $visites];
     }
 }

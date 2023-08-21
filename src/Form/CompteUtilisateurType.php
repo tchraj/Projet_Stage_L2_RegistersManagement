@@ -15,11 +15,17 @@ class CompteUtilisateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username')
+            ->add('username', null, ['attr' => [
+                'class' => 'input'
+            ]])
             // ->add('password')
             // ->add('passClair')
-            ->add('profil', EntityType::class, ['class' => Profil::class])
-            ->add('Envoyer',SubmitType::class);
+            ->add('profil', EntityType::class, ['class' => Profil::class, 'attr' => [
+                'class' => 'input'
+            ]])
+            ->add('Envoyer', SubmitType::class, ['attr' => [
+                'class' => 'soumettre'
+            ]]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

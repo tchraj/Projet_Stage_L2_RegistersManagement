@@ -20,6 +20,13 @@ class VisiteurExterneRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, VisiteurExterne::class);
     }
+    public function countTotalVisiteurs()
+    {
+        return $this->createQueryBuilder('v')
+            ->select('COUNT(v) as total')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
     /*
     public function findForPagination(){
         $qb = $this->createQueryBuilder('v')

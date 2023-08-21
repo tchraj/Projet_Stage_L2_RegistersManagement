@@ -27,6 +27,7 @@ class LierVisiteType extends AbstractType
                 'attr' => [
                     'min' => '06:00',
                 ],
+                
             ])
             ->add('typePiece')
             ->add('NumPiece')

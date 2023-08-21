@@ -21,7 +21,7 @@ class VisiteType extends AbstractType
     {
         $builder
 
-        
+
             // ->add('DateVisite', null, [
             //     'widget' => 'single_text',
             //     'label_attr' => ['class' => 'label'],
@@ -30,7 +30,7 @@ class VisiteType extends AbstractType
             //         'class' => 'form-group',
             //     ]
             // ])
-            
+
             // ->add('HeureFin', TimeType::class, [
             //     'attr' => ['class' => 'colonne'],
             //     'input'  => 'datetime',
@@ -43,23 +43,31 @@ class VisiteType extends AbstractType
                 'input' => 'datetime',
                 'widget' => 'single_text',
                 'attr' => [
-                    'min' => '06:00',
+                    'class' => 'champ',
                 ],
+                
             ])
             ->add('motif', TextType::class, [
                 'attr' => [
-                    'color' => 'black'
+                    'color' => 'black',
+                    'class' => 'champ',
                 ]
             ])
-            ->add('EmployeVisite', EntityType::class, ['class' => Employe::class])
-            ->add('typePiece')
-            ->add('NumPiece')
+            ->add('EmployeVisite', EntityType::class, ['class' => Employe::class, 'attr' => [
+                'class' => 'champ',
+            ]])
+            ->add('typePiece', null, ['attr' => [
+                'class' => 'champ',
+            ]])
+            ->add('NumPiece', null, ['attr' => [
+                'class' => 'champ',
+            ]])
             ->add(
                 'typeVisiteur',
                 ChoiceType::class,
                 [
                     'label' => 'Type de visiteur',
-                    'attr' => ['class' => 'colonne'],
+                    'attr' => ['class' => 'champ'],
                     'choices' => [
                         'Visiteur externe' => 'Visiteur externe',
                         'Employe visiteur' => 'Employe visiteur',
@@ -68,18 +76,20 @@ class VisiteType extends AbstractType
                 ]
             )
             ->add('visiteurExterne', EntityType::class, [
-                'attr' => ['class' => 'colonne'],
+                'attr' => ['class' => 'champ'],
 
                 'class' => VisiteurExterne::class,
-                'required' => false, 
+                'required' => false,
             ])
             ->add('employeVisiteur', EntityType::class, [
-                'attr' => ['class' => 'colonne'],
+                'attr' => ['class' => 'champ'],
                 'class' => Employe::class,
-                'required' => false, 
+                'required' => false,
             ])
-            ->add("Envoyer", SubmitType::class)
-            ->add("Annuler", ResetType::class);
+            ->add("Envoyer", SubmitType::class, [
+                'attr' => ['class' => 'soumettre']
+            ]);
+           
     }
     public function configureOptions(OptionsResolver $resolver): void
     {

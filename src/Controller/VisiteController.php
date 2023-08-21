@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Form\VisiteType;
 use App\Entity\Visite;
 use App\Services\AppSendEmail;
-use App\Entity\Notification;
 use App\Form\LierVisiteType;
 use App\Entity\VisiteurExterne;
 use App\Repository\VisiteRepository;
@@ -16,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Employe;
+use App\Form\UpdateVisiteType;
 use DateTime;
 
 #[Route('/visite')]
@@ -66,13 +66,16 @@ class VisiteController extends AbstractController
                 $visite->setVisiteurExterne($visiteur);
             }
             $employeVisite->addVisiteRecue($visite);
+            if ($visite->getHeureDeb() < '07:00' || $visite->getHeureFin() > '20:00') {
+                $this->addFlash("Error", "Les heures de travail sont censées etres comprises");
+            }
             $manager->persist($visite);
             $manager->flush();
             $appSendEmail->sendUnique(
                 "amanarodia@gmail.com",
                 $employeVisite->getEmail(),
                 "Nouvelle visite!",
-                "Bonjour Monsieur/Madame" .
+                "Bonjour Monsieur/Madame " .
                     $employeVisite->getNom() . "  " .
                     $employeVisite->getPrenoms() .
                     " Vous avez une nouvelle visite!<br>Monsieur/Madame $visiteur aimerais vous visiter;Veuillez répondre pour ne pas lui garder longtemps",
@@ -90,11 +93,14 @@ class VisiteController extends AbstractController
     public function updateVisite(Visite $visite, ManagerRegistry $managerRegistry, Request $request): Response
     {
         //$visite = $this->repository->findOneById($id);
-        $form = $this->createForm(VisiteType::class, $visite);
+        $form = $this->createForm(UpdateVisiteType::class, $visite);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $manager = $managerRegistry->getManager();
             $visite = $form->getData();
+            if ($visite->getHeureDeb() < '07:00' || $visite->getHeureFin() > '20:00') {
+                $this->addFlash("Error", "Les heures de travail sont censées etres comprises");
+            }
             $manager->persist($visite);
             $manager->flush();
             return $this->redirectToRoute('app_visite');

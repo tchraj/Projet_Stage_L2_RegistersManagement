@@ -6,27 +6,87 @@
 
 {% block body %}
 	<style>
+		.soumettre {
+			background-color: #FFFACD;
+			width: 100%;
+			color: black;
+			font-weight: bold;
+		}
+		.soumettre:hover {
+			background-color: #FFFACD;
+		}
+		.annuler {
+			background-color: red;
+			width: 20%;
+		}
+		.header {
+			width: 100%;
+		}
+		h1 {
+			text-align: center;
+			color: #FFFACD;
+		}
 		.colonne {
 			;
 			// Vos styles ici
 		}
+		.formulaire {
+			margin-left: 15%;
+			width: 70%;
+			background-color: rgb(137, 207, 240);
+			padding: 30px;
+			border-radius: 15px;
+			height: 95%;
+		}
+		.formulaire::before {
+			background-color: #FFFACD;
+		}
+		.champ {
+			height: 40px;
+			margin-bottom: 8px;
+		}
+		label {
+			font-weight: bold;
+			color: black;
+			margin-bottom: 10px;
+		}
 	</style>
-	<div class="container" style="width:50%;">
+	<div class="formulaire">
 		{{ form_start(VisiteForm) }}
-		<h1>Nouvelle visite</h1>
+		<div class="header">
+			<h1>Nouvelle visite</h1>
+		</div>
 
-		{{ form_row(VisiteForm.typeVisiteur) }}
+		<div class="row">
+			<div class="col-md-6">
+				<label>Type de visiteur</label>
+				{{ form_widget(VisiteForm.typeVisiteur) }}
+			</div>
+			<div class="col-md-6">
+				<label>Heure de début</label>
+				{{ form_widget(VisiteForm.HeureDeb) }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 ">
+				<label>Type de piece</label>
+				{{form_widget(VisiteForm.typePiece)}}
+			</div>
+			<div class="col-md-6">
+				<label>Numéro de piece</label>
+				{{ form_widget(VisiteForm.NumPiece) }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label>Motif</label>
+				{{ form_widget(VisiteForm.motif) }}
+			</div>
+			<div class="col-md-6">
+				{{ form_row(VisiteForm.EmployeVisite) }}
+			</div>
 
-		<label>Heure de début</label>
-		{{ form_widget(VisiteForm.HeureDeb) }}
-
-		{{ form_row(VisiteForm.typePiece) }}
-		{{ form_row(VisiteForm.NumPiece) }}
-
-		<label>Motif</label>
-		{{ form_widget(VisiteForm.motif) }}
-
-		{{ form_row(VisiteForm.EmployeVisite) }}
+		</div>
 
 		<div id="champVisiteurExterne">
 			{{ form_row(VisiteForm.visiteurExterne) }}
@@ -38,10 +98,12 @@
 
 		{{ form_end(VisiteForm) }}
 	</div>
-	<a href="{{path('app_visite')}}" ><button class="btn btn-info">Retour</button></a>
-	
+	{# <a href="{{path('app_visite')}}">
+		<button class="btn btn-warning">Retour</button>
+	</a> #}
+
 	<script>
-		const typeVisiteurField = document.querySelector('[name="  {{ VisiteForm.vars.full_name }}[typeVisiteur]"]');
+		const typeVisiteurField = document.querySelector('[name="                 {{ VisiteForm.vars.full_name }}[typeVisiteur]"]');
 const champVisiteurExterne = document.querySelector('#champVisiteurExterne');
 const champEmployeVisiteur = document.querySelector('#champEmployeVisiteur');
 

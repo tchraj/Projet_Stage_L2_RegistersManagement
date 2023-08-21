@@ -30,9 +30,9 @@
 							<p class="text-muted mb-1">{{email}}</p>
 							<p class="text-muted ">{{tel}}</p>
 							{# <div class="d-flex justify-content-center mb-2">
-																																																																																																																																																																																																																																																																										<button type="button" class="btn btn-primary">Follow</button>
-																																																																																																																																																																																																																																																																										<button type="button" class="btn btn-outline-primary ms-1">Message</button>
-																																																																																																																																																																																																																																																																									</div> #}
+																																																																																																																																																																																																																																																																																																																																																<button type="button" class="btn btn-primary">Follow</button>
+																																																																																																																																																																																																																																																																																																																																																<button type="button" class="btn btn-outline-primary ms-1">Message</button>
+																																																																																																																																																																																																																																																																																																																																															</div> #}
 						</div>
 					</div>
 				</div>
@@ -162,21 +162,26 @@
 						<table id="datatablesSimple">
 							<thead>
 								<tr>
+									<th>Type de visiteur</th>
 									<th>Visiteur</th>
 									<th>Motif</th>
 									<th>Date de visite</th>
+									<th>Heure de visite</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
+									<th>Type de visiteur</th>
 									<th>Visiteur</th>
 									<th>Motif</th>
 									<th>Date de visite</th>
+									<th>Heure de visite</th>
 								</tr>
 							</tfoot>
 							<tbody>
 								{% for visite in visitesR %}
 									<tr>
+										<td>{{visite.typeVisiteur}}</td>
 										<td>
 											{% if visite.typeVisiteur == 'Visiteur externe' %}
 												{{ visite.visiteurExterne }}
@@ -188,14 +193,15 @@
 											{{ visite.Motif }}
 										</td>
 										<td>{{visite.DateVisite|date("m/d/Y")}}</td>
+										<td>{{visite.HeureDeb| date('h:i')}}</td>
 									</tr>
 								{% endfor %}
 							</tbody>
 						</tbody>
 					</table>
-					<a href="{{ path('app_employe_actifs') }}">
-						<button class="btn btn-primary">Retour</button>
-					</a>
+					{# <a href="{{ path('app_employe_actifs') }}">
+																																																								<button class="btn btn-primary">Retour</button>
+																																																							</a> #}
 				</div>
 			{% endif %}
 		</section>

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/employe')]
+#[Route('/admin/employe')]
 class EmployeController extends AbstractController
 {
     /*
@@ -44,7 +44,7 @@ class EmployeController extends AbstractController
             'employes' => $employes,
         ]);
     }
-    #[Route('/add', name: 'app_add_employe')]
+    #[Route('/add_employe', name: 'app_add_employe')]
     public function addEmploye(UserPasswordHasherInterface $passwordHasher, ManagerRegistry $managerRegistry, Request $request, AppSendEmail $appSendEmail): Response
     {
         $employe = new Employe();
@@ -95,7 +95,7 @@ class EmployeController extends AbstractController
                 'EmployeForm' => $form->createView()
             ]);
     }
-    #[Route('/update/{id}', name: 'app_update_employe')]
+    #[Route('/update_employe/{id}', name: 'app_update_employe')]
     public function UpdateEmploye(Employe $employe, ManagerRegistry $managerRegistry, Request $request): Response
     {
         $form = $this->createForm(EmployeType::class, $employe);
@@ -111,7 +111,7 @@ class EmployeController extends AbstractController
                 'EmployeForm' =>  $form->createView()
             ]);
     }
-    #[Route('/hide/{id}', name: 'app_hide_employe')]
+    #[Route('/hide_employe/{id}', name: 'app_hide_employe')]
     public function desactiverEmploye($id, ManagerRegistry $managerRegistry)
     {
         $entityManager = $managerRegistry->getManager();

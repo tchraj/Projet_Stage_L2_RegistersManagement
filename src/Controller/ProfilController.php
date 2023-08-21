@@ -66,24 +66,5 @@ class ProfilController extends AbstractController
         $manager->flush();
         return $this->redirectToRoute('app_profil');
     }
-    /* #[Route('/mes_visites', name: 'app_mes_visites')]
-    public function MesVisites()
-    {
-        $user = $this->getUser(); 
-
-        if ($user) {
-            $employe = $user->getEmploye(); // Récupère l'employé associé à l'utilisateur
-
-            if ($employe) {
-                $nom = $employe->getNom();
-                $prenom = $employe->getPrenom();
-            } else {
-                // L'utilisateur n'a pas d'employé associé, gérer le cas si nécessaire
-            }
-        } else {
-            // L'utilisateur n'est pas connecté, gérer le cas si nécessaire
-        }
-
-        // ...
-    } */
+   
 }

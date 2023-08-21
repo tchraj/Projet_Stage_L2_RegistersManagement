@@ -49,9 +49,8 @@ class CompteAuthenticator extends AbstractLoginFormAuthenticator
         // if ($token->getUser()->isAdmin()) {
         //     return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
         // }
-
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_acceuil'));
+        return new RedirectResponse($this->urlGenerator->generate('app_profil_employe'));
         // throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
     }
 

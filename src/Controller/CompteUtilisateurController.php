@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/admin')]
 class CompteUtilisateurController extends AbstractController
 {
     #[Route('/compte_utilisateur', name: 'app_compte_utilisateur')]
@@ -51,7 +52,7 @@ class CompteUtilisateurController extends AbstractController
             $this->addFlash("Succes", "Compte modifié avec succes");
             return $this->redirectToRoute('app_compte_utilisateur');
         } else
-            return $this->render('compte_utilisateur/add.html.twig', [
+            return $this->render('compte_utilisateur/update.html.twig', [
                 'CompteForm' => $form->createView()
             ]);
     }

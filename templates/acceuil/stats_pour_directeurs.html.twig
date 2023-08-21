@@ -9,9 +9,74 @@
 	<div style="width:60%;height:50%">
 		<canvas id="visitsChart"></canvas>
 	</div>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script>
-		const monthNames = {
+
+	<div class="card-body">
+		<h3>
+			Historique des visites liées à la direction
+			{{direction}}
+		</h3>
+
+		<table id="datatablesSimple">
+			<thead>
+				<tr>
+					<th>Type de visiteur</th>
+					<th>Visiteur</th>
+					<th>Employe visité</th>
+					<th>Motif</th>
+					<th>Date de visite</th>
+					<th>Heure de visite</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th>Type de visiteur</th>
+					<th>Visiteur</th>
+					<th>Employe visité</th>
+					<th>Motif</th>
+					<th>Date de visite</th>
+					<th>Heure de visite</th>
+				</tr>
+			</tfoot>
+			<tbody>
+				{% for visite in visitesParDirection %}
+					<tr>
+						<td>{{visite.typeVisiteur}}</td>
+						<td>
+							{% if visite.typeVisiteur == 'Visiteur externe' %}
+								{{ visite.visiteurExterne }}
+							{% elseif visite.typeVisiteur == 'Employe visiteur' %}
+								{{ visite.employeVisiteur}}
+							{% endif %}
+						</td>
+						<td>{{visite.employeVisite}}</td>
+						<td>
+							{{ visite.Motif }}
+						</td>
+						<td>{{visite.DateVisite|date("m/d/Y")}}</td>
+						<td>{{visite.HeureDeb| date('h:i')}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</tbody>
+	</table>
+	{# <a href="{{ path('app_employe_actifs') }}">
+																																																															<button class="btn btn-primary">Retour</button>
+																																																														</a> #}
+</div>
+{# <h3>Liste des visites liées à la direction:
+		{{ direction }}</h3>
+	<ul>
+		{% for visite in visitesParDirection %}
+			<li>{{ visite.dateVisite|date('d/m/Y') }}
+				-
+				{{ visite.etatVisite ? 'Acceptée' : 'Refusée' }}</li>
+		{% endfor %}
+	</ul> #}
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+	const monthNames = {
 1: 'Janvier',
 2: 'Février',
 3: 'Mars',
@@ -32,7 +97,7 @@ datasets: [
 {
 label: 'Nombre de Visites',
 data: [{% for statistique in statistiquesParDepartement %}{{ statistique.nombreVisites }},{% endfor %}],
-backgroundColor: 'rgba(75, 192, 192, 0.9)',
+backgroundColor: '#FBCEB1',
 borderColor: 'rgb(75, 192, 192)',
 borderWidth: 1
 }
@@ -52,21 +117,4 @@ beginAtZero: true
 };
 
 const visitsChart = new Chart(document.getElementById('visitsChart'), config);
-	</script>
-	{# <table>
-					        <thead>
-					            <tr>
-					                <th>Mois</th>
-					                <th>Nombre de Visites</th>
-					            </tr>
-					        </thead>
-					        <tbody>
-					            {% for statistique in statistiquesParDepartement %}
-					                <tr>
-					                    <td>{{ statistique.mois }}</td>
-					                    <td>{{ statistique.nombreVisites }}</td>
-					                </tr>
-					            {% endfor %}
-					        </tbody>
-					    </table>  #}
-{% endblock body %}
+</script>{% endblock body %}

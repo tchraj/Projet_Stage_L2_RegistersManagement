@@ -1,0 +1,53 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Hello Compte
+{% endblock %}
+
+{% block body %}
+	<div class="form-body">
+
+		<h1>Modifier le compte</h1>
+		<style>
+        h1{
+            text-align: center;
+            width:100%;
+            color:black;
+        }
+        *{
+            font-weight:bold;
+        }
+        .input{
+            height: 50px;
+        }
+			.form-body {
+				background-color: #00B7EB;
+				padding: 30px;
+				width: 60%;
+				color: white;
+				height: 80%;
+                border-radius: 10px;
+                align-items:center;
+                justify-content:space-around;
+			}
+            .soumettre{
+                margin-top:25px ;
+                width :100% !important;
+                background-color: yellow;
+                color:black;
+            }
+            .soumettre:hover{
+                background-color:yellow;
+            }
+            label{
+                margin: 10px;
+            }
+		</style>
+
+		{{ form_start(CompteForm) }}
+		<label>Nom d'utilisateur</label>
+		{{ form_widget(CompteForm.username)}}
+		<label>Profil</label>
+		{{ form_widget(CompteForm.profil)}}
+		{{ form_end(CompteForm) }}
+	</div>
+{% endblock %}

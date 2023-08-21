@@ -3,20 +3,33 @@
 namespace App\Controller;
 
 use App\Entity\Visite;
-use App\Entity\Employe;
 use App\Repository\VisiteRepository;
 use App\Entity\CompteUtilisateur;
+use App\Repository\DirectionRepository;
+use App\Repository\VisiteurExterneRepository;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/')]
+#[Route('/admin')]
 class AcceuilController extends AbstractController
 {
+    private $directionRepository;
+    private $visiteRepository;
+    private $security;
+
+    public function __construct(
+        DirectionRepository $directionRepository,
+        VisiteRepository $visiteRepository,
+    ) {
+        $this->directionRepository = $directionRepository;
+        $this->visiteRepository = $visiteRepository;
+    }
+
     #[Route('/acceuil', name: 'app_acceuil')]
-    public function index(ManagerRegistry $managerRegistry, VisiteRepository $visiteRepository,): Response
+    public function index(ManagerRegistry $managerRegistry, VisiteRepository $visiteRepository, VisiteurExterneRepository $visiteurExterneRepository): Response
     {
         $year = new DateTime('today');
         $yearInt = (int)$year->format('Y');
@@ -46,6 +59,22 @@ class AcceuilController extends AbstractController
         $anneeEnCours = date('Y');
         $visites = $visiteRepository->findByYear($anneeEnCours);
 
+        $totalAcceptedVisits = 0;
+
+        // Parcours des visites pour compter les acceptées
+        foreach ($visites as $visite) {
+            if ($visite->isEtatVisite()) {
+                $totalAcceptedVisits++;
+            }
+        }
+        $totalRefusedVisits = 0;
+
+        // Parcours des visites pour compter les acceptées
+        foreach ($visites as $visite) {
+            if (!($visite->isEtatVisite())) {
+                $totalRefusedVisits++;
+            }
+        }
         // Obtenez les visites de l'année en cours depuis la base de données
         // Initialisez un tableau pour stocker les statistiques par mois
         $statistiques = [];
@@ -58,18 +87,8 @@ class AcceuilController extends AbstractController
             }
         }
         $statisticsByDepartment = $visiteRepository->countVisitsByDepartment();
-
-        // Parcourez chaque visite et comptez les visites par mois
-        // foreach ($visites as $visite) {
-        //     $mois = $visite->getDateVisite()->format('Y-m');
-
-        //     if (!isset($statistiques[$mois])) {
-        //         $statistiques[$mois] = 1;
-        //     } else {
-        //         $statistiques[$mois]++;
-        //     }
-        // }
-        //$totalVisites = $visiteRepository->countVisitsPerMonth($year);
+        $totalVisiteurs = $visiteurExterneRepository->countTotalVisiteurs();
+        $totalVisits = $visiteRepository->countTotalVisits();
         return $this->render('acceuil/index.html.twig', [
             'mois' => $month,
             'annee' => $yearInt,
@@ -81,30 +100,25 @@ class AcceuilController extends AbstractController
             'visitCounts' => json_encode($visitCounts),
             'statistiques' => $statistiques,
             'statisticsByDepartment' => $statisticsByDepartment,
+            'totalVisits' => $totalVisits,
+            'totalVisiteurs' => $totalVisiteurs,
+            'totalAcceptedVisits' => $totalAcceptedVisits,
+            'totalRefusedVisits' => $totalRefusedVisits
         ]);
     }
 
-    #[Route('/infos_employes', name: 'app_infos_employe')]
-    public function infosEmployes(Employe $employe, ManagerRegistry $managerRegistry)
-    {
-        $manager = $managerRegistry->getManager();
-        $employes = $manager->getRepository(Employe::class)->findAll();
-        return $this->redirectToRoute('app_acceuil', [
-            'employes' => $employes
-        ]);
-    }
-    #[Route('/stats_direction', name: 'app_stats_dir')]
-    public function directionStatistiques(VisiteRepository $visiteRepository)
-    {
-        $statistiquesParDirection = $visiteRepository->getMonthlyVisitStatisticsByDirection();
-
-        return $this->render('acceuil/stats_direction.html.twig', [
-            'statistiquesParDirection' => $statistiquesParDirection,
-        ]);
-    }
+    // #[Route('/stats_direction', name: 'app_stats_dir')]
+    // public function directionStatistiques(VisiteRepository $visiteRepository)
+    // {
+    //     $statistiquesParDirection = $visiteRepository->getMonthlyVisitStatisticsByDirection();
+    //     return $this->render('acceuil/stats_direction.html.twig', [
+    //         'statistiquesParDirection' => $statistiquesParDirection,
+    //     ]);
+    // }
     #[Route('/stats_departement', name: 'app_stats_dep')]
     public function departmentStatistiques(VisiteRepository $visiteRepository)
     {
+
         $user = $this->getUser();
         if ($user instanceof CompteUtilisateur) {
             // Récupérer l'employé associé au compte
@@ -119,13 +133,21 @@ class AcceuilController extends AbstractController
                     5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août',
                     9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'
                 ];
-                $statistiquesParDepartement = $visiteRepository->getMonthlyVisitStatisticsByDepartment($directionId);
-
-                return $this->render('acceuil/stats_pour_directeurs.html.twig', [
-                    'statistiquesParDepartement' => $statistiquesParDepartement,
+                $data = $this->visiteRepository->findVisitsStatisticsAndListByDepartment($direction);
+                // $statistiquesParDepartement = $visiteRepository->getMonthlyVisitStatisticsByDepartment($directionId);
+                // $visites = $this->visiteRepository->findVisitsByDirection($direction);
+                 return $this->render('acceuil/stats_pour_directeurs.html.twig', [
+                    'statistiquesParDepartement' => $data['statistiques'],
                     'direction' => $direction->getNomDirection(),
-                    'monthNames' => $monthNames
+                    'monthNames' => $monthNames,
+                    'visitesParDirection' => $data['visites'],
                 ]);
+                // return $this->render('acceuil/stats_pour_directeurs.html.twig', [
+                //     'statistiquesParDepartement' => $statistiquesParDepartement,
+                //     'direction' => $direction->getNomDirection(),
+                //     'monthNames' => $monthNames,
+                //     'visitesParDirection' => $visites,
+                // ]);
             }
         }
     }

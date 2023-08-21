@@ -3,16 +3,17 @@ security:
     # Note: Only the *first* access control that matches will be used
     role_hierarchy:
         ROLE_CREATE_VISITE: []
-        ROLE_SHOW_VISITE: [ROLE__CREATE_VISITE]
+        ROLE_SHOW_VISITE: [ROLE_CREATE_VISITE]
         ROLE_SHOW_STAT: [ROLE_SHOW_VISITE]
         ROLE_MANAGE_EMPLOYE: [ROLE_SHOW_STAT]
         ROLE_ADMIN_ORGANIZATION: [ROLE_MANAGE_EMPLOYE]
     access_control:
-        # - { path: ^/admin, roles: ['ROLE_ADMIN_ORGANIZATION'] }
-        # - { path: ^/admin, roles: ROLE_SHOW_STAT }
-        # - { path: ^/visite, roles: ROLE_SHOW_VISITE }
-        # - { path: ^/employe, roles: ROLE_CREATE_VISITE }
-        # - { path: ^/connexion, roles: PUBLIC_ACCESS }
+        # - { path: ^/admin, roles: 'ROLE_ADMIN_ORGANIZATION' }
+        # - { path: ^/admin/stats_departement, roles: ['ROLE_MANAGE_EMPLOYE','ROLE_SHOW_STAT','ROLE_CREATE_VISITE','ROLE_SHOW_VISITE'] }
+        # - { path: ^/admin/direction, roles: 'ROLE_SHOW_STAT' }
+        # - { path: ^/visite, roles: 'ROLE_CREATE_VISITE' }
+        # - { path: ^/admin/employe, roles: ROLE_MANAGE_EMPLOYE }
+        - { path: ^/connexion, roles: PUBLIC_ACCESS }
         - { path: ^/acceuil, roles: IS_AUTHENTICATED_FULLY }       
         - { path: ^/, roles: PUBLIC_ACCESS }  
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords

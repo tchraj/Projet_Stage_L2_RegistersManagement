@@ -1,14 +1,14 @@
 {% extends 'template.html.twig' %}
 
-{% block title %}Hello DirectionController!
+{% block title %}Hello Compte
 {% endblock %}
 
 {% block body %}
-<h1>Nouvelle direction</h1>
+<h1>Nouveau compte</h1>
 	{{ form_start(CompteForm) }}
-	<label>Nom de la direction</label>
+	<label>Nom d'utilisateur</label>
 	{{ form_widget(CompteForm.username)}}
-	<label>Nom de la filiale</label>
+	<label>Profil</label>
 	{{ form_widget(CompteForm.profil)}}
 	{{ form_end(CompteForm) }}
 {% endblock %}
