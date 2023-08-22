@@ -6,7 +6,7 @@
 			<h3>Liste des visites</h3>
 			<a href="{{path('app_add_visite')}}">
 				<button
-					class="btn btn-primary float-end">
+					class="btn btn-success float-end">
 					{# <i class="fa-solid fa-plus"></i> #}
 					Nouvelle visite
 				</button>
@@ -23,6 +23,7 @@
 						<th>Etat</th>
 						{#Age#}
 						<th>Date</th>
+						<th>Heure de fin</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -34,18 +35,17 @@
 						<th>Motif</th>
 						<th>Etat</th>
 						<th>Date</th>
+						<th>Heure de fin</th>
 						<th>Actions</th>
 					</tr>
 				</tfoot>
 				<tbody>
 					{% for visite in visites %}
 						<tr>
-							{# <td>{{visite.typeVisiteur}}
-																																																																																																																																																																																			</td> #}
 							<td>
-								{% if visite.typeVisiteur == 'Visiteur externe' %}
+								{% if visite.visiteurExterne is not null %}
 									{{ visite.visiteurExterne }}
-								{% elseif visite.typeVisiteur == 'Employe visiteur' %}
+								{% elseif visite.employeVisiteur  is not null %}
 									{{ visite.employeVisiteur}}
 								{% endif %}
 							</td>
@@ -54,9 +54,6 @@
 							<td>{{visite.Motif}}
 							</td>
 							<td>
-								{# <form action="{{ path('app_accept_visite', {'id': visite.id}) }}" method="post">
-																																																																																																																																																															<select name="accepted">
-																																																																																																																																																																<option value="1" #}
 								{% if visite.isEtatVisite() %}
 									<button style="border-width:0;color:white;background-color:#00B9E8">
 										<i class="fa-solid fa-check"></i>
@@ -67,37 +64,15 @@
 									</button>
 								{% endif %}
 
-								{#</td>
-																																																																																						</tr>
-																																																																																						 </option>
-																																																																																										<option value="0" {% if not visite.isEtatVisite() %} selected {% endif %}>
-																																																																																											<button class="btn-warning">Refusé</button>
-																																																																																										</option>
-																																																																																					</tbody>
-																																																																																				</tbody>
-																																																																																			</select>
-																																																																																			<button type="submit" class="btn btn-info" style="padding: 1px;">Enregistrer</button>
-																																																																																		</form>
-																																																																																</td>
-																																																																																<td>
-																																																																																	<form action="{{path('app_accept_visite',{'id': visite.id}) }}" method="post">
-																																																																																		<input type="time" id="heure-fin-{{ visite.id }}" name="heure_fin" value="{{ visite.HeureFin|date('H:i') }}"></td>
-																																																																																</td>
-																																																																															</tr>
-																																																																														</form> #}
-								<!-- Heure -->
-								{# <td>
-																																																																																																	{% if visite.HeureFin is null%}
-																																																																																																		...
-																																																																																																	{% else %}
-																																																																																																		{{visite.HeureFin|date("H:i")}}
-																																																																																																		{%endif%}</td> #}
-								{# </td>
-																																																																																															<td>
-																																																																																																<a href="#" data-toggle="modal" data-target="#myModal-{{visite.id}}">Voir la détails</a>
-																																																																																															</td>
-																																																																																															<div id="myModal-{{visite.id}}" class="modal fade" role="dialog"> #}
-									<div class="modal-dialog modal-lg"> <td>{{visite.DateVisite|date("d/m/Y")}}
+								<div class="modal-dialog modal-lg">
+									<td>{{visite.DateVisite|date("d/m/Y")}}
+									</td>
+									<td>
+										{% if visite.heureFin is defined %}
+											{{ visite.heureFin|date('H:i') }}
+										{% else %}
+											En cours
+										{% endif %}
 									</td>
 									<td>
 										<a href="{{ path('app_update_visite', {'id': visite.id}) }}">
@@ -105,11 +80,6 @@
 												<i class="fa-regular fa-pen-to-square"></i>
 											</button>
 										</a>
-										{# <a href="{{ path('app_hide_employe', {'id': visite.id}) }}" class="delete-button">
-																																																													<button style="background-color:red;border-width:0;color:white">
-																																																														<i class="fa-solid fa-trash"></i>
-																																																													</button>
-																																																												</a> #}
 									</td>
 								</tr>
 							{% endfor %}

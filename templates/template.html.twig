@@ -29,6 +29,11 @@
 			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 			<link rel="stylesheet" type="text/css" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
 			<style>
+				.sidebar-brand {
+					font-weight: bold;
+					opacity: 2;
+					text-decoration: none;
+				}
 				#counter {
 					background-color: #076dbb;
 					color: #fff;
@@ -160,26 +165,31 @@
 						<span class="align-middle">ORAGUEST</span>
 					</a>
 					<ul class="sidebar-nav">
+						{% if is_granted('ROLE_ADMIN_ORGANIZATION') %}
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{path('app_acceuil')}}">
+									<i class="align-middle" data-feather="sliders"></i>
+									<span class="align-middle">Tableau de bord1</span>
+								</a>
+							</li>
+						{% endif %}
+
+						{% if is_granted('ROLE_MANAGE_EMPLOYE') %}
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{path('app_stats_dep')}}">
+									<i class="align-middle" data-feather="sliders"></i>
+									<span class="align-middle">Tableau de bord2</span>
+								</a>
+							</li>
+						{% endif %}
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_acceuil')}}">
-								<i class="align-middle" data-feather="sliders"></i>
-								<span class="align-middle">Tableau de bord1</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_stats_dep')}}">
-								<i class="align-middle" data-feather="sliders"></i>
-								<span class="align-middle">Tableau de bord2</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ path('app_employe_actifs') }}">
+							<a class="sidebar-brand" href="{{ path('app_employe_actifs') }}" style="text-decoration:none">
 								<i class="align-middle" data-feather="user"></i>
 								<span class="align-middle">Employes</span>
 							</a>
 						</li>
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ path('app_employe') }}">
+							<a class="sidebar-brand" href="{{ path('app_employe') }}">
 								<i class="align-middle" data-feather="user"></i>
 								<span class="align-middle">Tous les employes</span>
 							</a>
@@ -187,40 +197,40 @@
 
 
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_visite')}}">
+							<a class="sidebar-brand" href="{{path('app_visite')}}">
 								<i class="align-middle" data-feather="square"></i>
 								<span class="align-middle">Visites</span>
 							</a>
 						</li>
 
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ path('app_visiteur_externe') }}">
+							<a class="sidebar-brand" href="{{ path('app_visiteur_externe') }}">
 								<i class="align-middle" data-feather="check-square"></i>
 								<span class="align-middle">Visiteurs</span>
 							</a>
 						</li>
 
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ path('app_direction') }}">
+							<a class="sidebar-brand" href="{{ path('app_direction') }}">
 								<i class="align-middle" data-feather="grid"></i>
 								<span class="align-middle">Directions</span>
 							</a>
 						</li>
 
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ path('app_filiale') }}">
+							<a class="sidebar-brand" href="{{ path('app_filiale') }}">
 								<i class="align-middle" data-feather="align-left"></i>
 								<span class="align-middle">Filiales</span>
 							</a>
 						</li>
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_profil')}}">
+							<a class="sidebar-brand" href="{{path('app_profil')}}">
 								<i class="fa-solid fa-address-card"></i>
 								<span class="align-middle">Profils</span>
 							</a>
 						</li>
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{path('app_compte_utilisateur')}}">
+							<a class="sidebar-brand" href="{{path('app_compte_utilisateur')}}">
 								<i class="fa-solid fa-users"></i>
 								<span class="align-middle">Utilisateurs</span>
 							</a>
@@ -246,6 +256,7 @@
 					</a>
 					<div class="navbar-collapse collapse">
 						<ul class="navbar-nav navbar-align">
+							<li class="nav-link">Notifs</li>
 							<li class="nav-item dropdown">
 								<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 									<li class="nav-item dropdown">

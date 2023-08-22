@@ -11,7 +11,7 @@ security:
         # - { path: ^/admin, roles: 'ROLE_ADMIN_ORGANIZATION' }
         # - { path: ^/admin/stats_departement, roles: ['ROLE_MANAGE_EMPLOYE','ROLE_SHOW_STAT','ROLE_CREATE_VISITE','ROLE_SHOW_VISITE'] }
         # - { path: ^/admin/direction, roles: 'ROLE_SHOW_STAT' }
-        # - { path: ^/visite, roles: 'ROLE_CREATE_VISITE' }
+        - { path: ^/visite, roles: 'ROLE_CREATE_VISITE' }
         # - { path: ^/admin/employe, roles: ROLE_MANAGE_EMPLOYE }
         - { path: ^/connexion, roles: PUBLIC_ACCESS }
         - { path: ^/acceuil, roles: IS_AUTHENTICATED_FULLY }       

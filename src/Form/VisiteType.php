@@ -45,7 +45,7 @@ class VisiteType extends AbstractType
                 'attr' => [
                     'class' => 'champ',
                 ],
-                
+
             ])
             ->add('motif', TextType::class, [
                 'attr' => [
@@ -56,9 +56,16 @@ class VisiteType extends AbstractType
             ->add('EmployeVisite', EntityType::class, ['class' => Employe::class, 'attr' => [
                 'class' => 'champ',
             ]])
-            ->add('typePiece', null, ['attr' => [
-                'class' => 'champ',
-            ]])
+            ->add('typePiece', ChoiceType::class, [
+                'attr' => [
+                    'class' => 'champ',
+                ],
+                'choices' => [
+                    'Carte nationale d\'identité' => 'Carte nationale d\'identité',
+                    'Passport' => 'Passport',
+                    'Badge' => 'Badge'
+                ]
+            ])
             ->add('NumPiece', null, ['attr' => [
                 'class' => 'champ',
             ]])
@@ -72,7 +79,6 @@ class VisiteType extends AbstractType
                         'Visiteur externe' => 'Visiteur externe',
                         'Employe visiteur' => 'Employe visiteur',
                     ],
-                    'mapped' => false,
                 ]
             )
             ->add('visiteurExterne', EntityType::class, [
@@ -89,7 +95,6 @@ class VisiteType extends AbstractType
             ->add("Envoyer", SubmitType::class, [
                 'attr' => ['class' => 'soumettre']
             ]);
-           
     }
     public function configureOptions(OptionsResolver $resolver): void
     {

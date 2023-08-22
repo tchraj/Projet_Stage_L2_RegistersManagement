@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\VisiteType;
 use App\Entity\Visite;
+use App\Services\NotificationService;
 use App\Services\AppSendEmail;
 use App\Form\LierVisiteType;
 use App\Entity\VisiteurExterne;
@@ -28,23 +29,20 @@ class VisiteController extends AbstractController
         $this->repository = $repository;
     }
     #[Route('/', name: 'app_visite')]
-    public function index(ManagerRegistry $managerRegistry): Response
+    public function index(ManagerRegistry $managerRegistry, VisiteRepository $visiteRepository): Response
     {
         $manager = $managerRegistry->getManager();
-        $visite = new Visite();
-        $form = $this->createForm(VisiteType::class, $visite);
-        $visites = $managerRegistry->getRepository(Visite::class)->findAll();
+        // $visites = $visiteRepository->findAll();
+        $visites = $visiteRepository->findBy([], ['DateVisite' => 'DESC']);
         return $this->render('visite/index.html.twig', [
             'visites' => $visites,
-            'VisiteForm' => $form->createView(),
             'employeVisiteur' => $manager->getRepository(Employe::class)->findAll(),
             'employeVisite' => $manager->getRepository(Employe::class)->findAll(),
             'visiteurExterne' => $manager->getRepository(VisiteurExterne::class)->findAll()
-
         ]);
     }
     #[Route('/add', name: 'app_add_visite')]
-    public function addVisite(ManagerRegistry $managerRegistry, Request $request, AppSendEmail $appSendEmail): Response
+    public function addVisite(ManagerRegistry $managerRegistry, Request $request, AppSendEmail $appSendEmail, NotificationService $notificationService): Response
     {
         $manager = $managerRegistry->getManager();
         $visite = new Visite();
@@ -66,21 +64,20 @@ class VisiteController extends AbstractController
                 $visite->setVisiteurExterne($visiteur);
             }
             $employeVisite->addVisiteRecue($visite);
-            if ($visite->getHeureDeb() < '07:00' || $visite->getHeureFin() > '20:00') {
-                $this->addFlash("Error", "Les heures de travail sont censées etres comprises");
-            }
+            $message = "Vous avez une nouvelle visite de $visiteur; veuillez répondre pour ne pas le garder longtemps";
+            $notificationService->addNotification($employeVisite, $message);
             $manager->persist($visite);
             $manager->flush();
-            $appSendEmail->sendUnique(
-                "amanarodia@gmail.com",
-                $employeVisite->getEmail(),
-                "Nouvelle visite!",
-                "Bonjour Monsieur/Madame " .
-                    $employeVisite->getNom() . "  " .
-                    $employeVisite->getPrenoms() .
-                    " Vous avez une nouvelle visite!<br>Monsieur/Madame $visiteur aimerais vous visiter;Veuillez répondre pour ne pas lui garder longtemps",
-                'alert.html.twig'
-            );
+            // $appSendEmail->sendUnique(
+            //     "amanarodia@gmail.com",
+            //     $employeVisite->getEmail(),
+            //     "Nouvelle visite!",
+            //     "Bonjour Monsieur/Madame " .
+            //         $employeVisite->getNom() . "  " .
+            //         $employeVisite->getPrenoms() .
+            //         " Vous avez une nouvelle visite!<br>Monsieur/Madame $visiteur aimerais vous visiter;Veuillez répondre pour ne pas lui garder longtemps",
+            //     'alert.html.twig'
+            // );
             $this->addFlash("Succes", "Visite ajoutée avec succes!");
             return $this->redirectToRoute('app_visite');
         } else

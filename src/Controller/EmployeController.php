@@ -217,6 +217,15 @@ class EmployeController extends AbstractController
                 $visitesRecues = $employe->getVisiteRecue();
                 $nbVisitesE = $employe->nombreVisitesEffectuées();
                 $nbVisitesR = $employe->nombreVisitesRecues();
+                $nbVisitesExterne = 0;
+                $nbEmployeVisiteur = 0;
+                foreach ($visitesRecues as $visite) {
+                    if ($visite->getTypeVisiteur() == "Visiteur externe") {
+                        $nbVisitesExterne++;
+                    } else {
+                        $nbEmployeVisiteur++;
+                    }
+                }
                 return $this->render('employe/detail.html.twig', [
                     'nom' => $nom,
                     'prenoms' => $prenoms,
@@ -227,7 +236,10 @@ class EmployeController extends AbstractController
                     'visitesE' => $visitesEffectuees,
                     'visitesR' => $visitesRecues,
                     'nombreVisE' => $nbVisitesE,
-                    'nombreVisR' => $nbVisitesR
+                    'nombreVisR' => $nbVisitesR,
+                    'visExt' => $nbVisitesExterne,
+                    'empVis' => $nbEmployeVisiteur
+
                 ]);
             }
         }

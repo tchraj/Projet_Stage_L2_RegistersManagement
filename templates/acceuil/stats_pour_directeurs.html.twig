@@ -3,20 +3,66 @@
 {% block title %}Statistiques pour  directions
 {% endblock title %}
 {% block body %}
-	<h3>Statistiques du nombre de visites par mois pour la direction:
-		{{direction}}
-	</h3>
-	<div style="width:60%;height:50%">
-		<canvas id="visitsChart"></canvas>
+	<h3>{{direction}}</h3>
+	<div style="display:flex">
+		<div style="width:50%;height:50%">
+			<canvas id="visitsChart"></canvas>
+			<strong style="margin-top:30px">Nombre de visites par mois</strong>
+		</div>
+
+		<div style="width:35%;margin-left:70px;">
+			<canvas id="employeeStatsPieChart"></canvas>
+			<strong style="margin-top:30px">Employes les plus visités</strong>
+		</div>
 	</div>
 
-	<div class="card-body">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<script>
+		const mostVisitedEmployeesInDirection = {{ mostVisitedEmployeesInDirection | json_encode | raw }};
+const labels = mostVisitedEmployeesInDirection.map(employee => `${
+employee.nom
+} ${
+employee.prenoms
+}`);
+const counts = mostVisitedEmployeesInDirection.map(employee => employee.count);
+
+const ctx = document.getElementById('employeeStatsPieChart');
+
+new Chart(ctx, {
+type: 'pie',
+data: {
+labels: labels,
+datasets: [
+{
+data: counts,
+backgroundColor: [
+'rgba(255, 99, 132, 0.6)',
+'rgba(54, 162, 235, 0.6)',
+'rgba(255, 206, 86, 0.6)',
+'rgba(0, 48, 143, 0.6)',
+'rgb(145,92,131,0.6)'
+// ... plus de couleurs si nécessaire
+]
+}
+]
+},
+options: {
+title: {
+display: true,
+text: 'Employés les plus visités'
+}
+}
+});
+	</script>
+	<div class="card-body" style="margin-top:50px">
 		<h3>
 			Historique des visites liées à la direction
 			{{direction}}
 		</h3>
 
 		<table id="datatablesSimple">
+			<button onclick="window.print()" class=" btn-danger">Imprimer</button>
 			<thead>
 				<tr>
 					<th>Type de visiteur</th>
@@ -42,9 +88,9 @@
 					<tr>
 						<td>{{visite.typeVisiteur}}</td>
 						<td>
-							{% if visite.typeVisiteur == 'Visiteur externe' %}
+							{% if visite.visiteurExterne is not null %}
 								{{ visite.visiteurExterne }}
-							{% elseif visite.typeVisiteur == 'Employe visiteur' %}
+							{% elseif visite.employeVisiteur  is not null %}
 								{{ visite.employeVisiteur}}
 							{% endif %}
 						</td>
@@ -60,8 +106,8 @@
 		</tbody>
 	</table>
 	{# <a href="{{ path('app_employe_actifs') }}">
-																																																															<button class="btn btn-primary">Retour</button>
-																																																														</a> #}
+																																																																						<button class="btn btn-primary">Retour</button>
+																																																																					</a> #}
 </div>
 {# <h3>Liste des visites liées à la direction:
 		{{ direction }}</h3>

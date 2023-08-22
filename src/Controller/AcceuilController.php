@@ -48,7 +48,6 @@ class AcceuilController extends AbstractController
             $visitMonth = (int)$month;
             $visitsPerMonth[$visitMonth]++;
         }
-
         $mostVisitedEmployees = $visiteRepository->countVisitsByEmployee();
         $employeeNames = [];
         $visitCounts = [];
@@ -86,6 +85,7 @@ class AcceuilController extends AbstractController
                 $statistiques[$mois]++;
             }
         }
+
         $statisticsByDepartment = $visiteRepository->countVisitsByDepartment();
         $totalVisiteurs = $visiteurExterneRepository->countTotalVisiteurs();
         $totalVisits = $visiteRepository->countTotalVisits();
@@ -133,21 +133,15 @@ class AcceuilController extends AbstractController
                     5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août',
                     9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'
                 ];
+
                 $data = $this->visiteRepository->findVisitsStatisticsAndListByDepartment($direction);
-                // $statistiquesParDepartement = $visiteRepository->getMonthlyVisitStatisticsByDepartment($directionId);
-                // $visites = $this->visiteRepository->findVisitsByDirection($direction);
-                 return $this->render('acceuil/stats_pour_directeurs.html.twig', [
+                return $this->render('acceuil/stats_pour_directeurs.html.twig', [
                     'statistiquesParDepartement' => $data['statistiques'],
                     'direction' => $direction->getNomDirection(),
                     'monthNames' => $monthNames,
                     'visitesParDirection' => $data['visites'],
+
                 ]);
-                // return $this->render('acceuil/stats_pour_directeurs.html.twig', [
-                //     'statistiquesParDepartement' => $statistiquesParDepartement,
-                //     'direction' => $direction->getNomDirection(),
-                //     'monthNames' => $monthNames,
-                //     'visitesParDirection' => $visites,
-                // ]);
             }
         }
     }

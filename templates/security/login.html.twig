@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Coonexion</title>
+		<title>Connexion</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
 		<script src="https://kit.fontawesome.com/a81368914c.js"></script>
@@ -274,6 +274,7 @@
 					</div>
 					<a href="#">Forgot Password?</a>
 					<input type="submit" class="btn" value="Se connecter">
+					<a href="{{path('app_home_1')}}">Retour</a>
 				</form>
 			</div>
 		</div>
@@ -281,81 +282,22 @@
 			const inputs = document.querySelectorAll(".input");
 
 
-			function addcl() {
-			let parent = this.parentNode.parentNode;
-			parent.classList.add("focus");
-			}
-			function remcl() {
-			let parent = this.parentNode.parentNode;
-			if (this.value == "") {
-			parent.classList.remove("focus");
-			}
-			}
+function addcl() {
+let parent = this.parentNode.parentNode;
+parent.classList.add("focus");
+}
+function remcl() {
+let parent = this.parentNode.parentNode;
+if (this.value == "") {
+parent.classList.remove("focus");
+}
+}
 
 
-			inputs.forEach(input => {
-			input.addEventListener("focus", addcl);
-			input.addEventListener("blur", remcl);
-			});
+inputs.forEach(input => {
+input.addEventListener("focus", addcl);
+input.addEventListener("blur", remcl);
+});
 		</script>
 	</body>
 </html>
-
-{#
-<div
-	class="container">
-	<img src="{{ asset('assets/img/logo.jpg') }}" alt="" class="image" style="width:150px;position:center">
-	<form method="post" class="login-form">
-		<div class="form-body">
-			{% if error %}
-				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
-			{% if app.user %}
-				<div class="mb-3">
-					You are logged in as
-					{{ app.user.userIdentifier }},
-					<a href="{{ path('app_logout') }}">Logout</a>
-				</div>
-			{% endif %}
-			<h1 class="titre">Connexion</h1>
-			<label for="inputUsername">Nom d'utilisateur</label>
-			<input type="text" value="{{ last_username }}" name="username" id="inputUsername" autocomplete="username" required autofocus>
-			<label for="inputPassword">Mot de passe</label>
-			<input type="password" name="password" id="inputPassword" autocomplete="current-password" required>
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-				<button class="btn" type="submit">
-					Se connecter
-				</button>
-			<label>
-				<input type="checkbox" name="_remember_me" checked/>
-				Me garder connecté(e)
-			</label>
-		</div>
-	</form>
-</div>
-
-{# <form method="post">
-		{% if error %}
-			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-		{% endif %}
-
-		{% if app.user %}
-			<div class="mb-3">
-				You are logged in as
-				{{ app.user.userIdentifier }},
-				<a href="{{ path('app_logout') }}">Logout</a>
-			</div>
-		{% endif %}
-
-		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-		<label for="inputUsername">Username</label>
-		<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-		<label for="inputPassword">Password</label>
-		<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-		<button class="btn btn-lg btn-primary" type="submit">
-			Sign in
-		</button>
-	</form> #}

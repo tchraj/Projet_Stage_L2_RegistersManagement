@@ -138,53 +138,6 @@ class VisiteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    // public function findByMonthlyVisitStatisticsByDirection()
-    // {
-    //     $sql = "
-    //         SELECT
-    //             d.nom_direction AS direction,
-    //             MONTH(v.date_visite) AS mois,
-    //             COUNT(v.id) AS nombreVisites
-    //         FROM
-    //             visite v
-    //         JOIN
-    //             employe e ON v.employe_visite_id = e.id
-    //         JOIN
-    //             direction d ON e.direction_id = d.id
-    //         GROUP BY
-    //             direction, mois
-    //         ORDER BY
-    //             direction ASC, mois ASC
-    //     ";
-
-    //     $entityManager = $this->getEntityManager();
-    //     $query = $entityManager->getConnection()->executeQuery($sql);
-
-    //     return $query->fetchAllAssociative();
-    // }
-    // public function getMonthlyVisitStatisticsByDepartment($departmentId)
-    // {
-    //     $sql = "
-    //         SELECT
-    //             MONTH(v.date_visite) AS mois,
-    //             COUNT(v.id) AS nombreVisites
-    //         FROM
-    //             visite v
-    //         JOIN
-    //             employe e ON v.employe_visite_id = e.id
-    //         WHERE
-    //             e.direction_id = :departmentId
-    //         GROUP BY
-    //             mois
-    //         ORDER BY
-    //             mois ASC
-    //     ";
-
-    //     $entityManager = $this->getEntityManager();
-    //     $query = $entityManager->getConnection()->executeQuery($sql, ['departmentId' => $departmentId]);
-
-    //     return $query->fetchAllAssociative();
-    // }
     public function countTotalVisits()
     {
         return $this->createQueryBuilder('v')
@@ -232,4 +185,25 @@ class VisiteRepository extends ServiceEntityRepository
 
         return ['statistiques' => $statistiques, 'visites' => $visites];
     }
+    public function findAllSortedByCreationDateDesc()
+    {
+        return $this->createQueryBuilder('v')
+            ->orderBy('v.DateVisite', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findByMostVisitedEmployeesInDirection($direction, $limit)
+{
+    return $this->createQueryBuilder('v')
+        ->select('e.nom', 'e.prenoms', 'COUNT(v) as count')
+        ->join('v.EmployeVisite', 'e')
+        ->where('e.direction = :direction')
+        ->setParameter('direction', $direction)
+        ->groupBy('e.nom', 'e.prenoms')
+        ->orderBy('count', 'DESC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+}
+
 }

@@ -29,7 +29,13 @@ class LierVisiteType extends AbstractType
                 ],
                 
             ])
-            ->add('typePiece')
+            ->add('typePiece',ChoiceType::class,[
+                'choices' =>[
+                    'Carte nationale d\'identité' => 'Carte nationale d\'identité',
+                    'Passport' => 'Passport',
+                    'Badge' => 'Badge'
+                ]
+            ])
             ->add('NumPiece')
             // ->add('VisiteurExterne', HiddenType::class, [
             //     'data' => $defaultVisiteur,

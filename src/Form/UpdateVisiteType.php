@@ -33,7 +33,6 @@ class UpdateVisiteType extends AbstractType
                 'attr' => [
                     'class' => 'champ',
                 ],
-                
             ])
             ->add('HeureFin', TimeType::class, [
                 'input' => 'datetime',

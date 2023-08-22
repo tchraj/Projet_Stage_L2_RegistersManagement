@@ -99,7 +99,7 @@ class AdminController extends AbstractController
         ]);
     }
     #[Route('/stats_departement', name: 'app_stats_dep')]
-    public function departmentStatistiques(VisiteRepository $visiteRepository)
+    public function departmentStatistiques(VisiteRepository $visiteRepository, DirectionRepository $directionRepository)
     {
         $user = $this->getUser();
         if ($user instanceof CompteUtilisateur) {
@@ -130,15 +130,18 @@ class AdminController extends AbstractController
                         ];
                     }
                 }
-                //$statistiquesParDepartement = $visiteRepository->findByMonthlyVisitStatisticsByDirection($directionId);
-                //$data = $this->visiteRepository->findVisitsStatisticsAndListByDepartment($direction);
-                // $statistiquesParDepartement = $visiteRepository->getMonthlyVisitStatisticsByDepartment($directionId);
-                // $visites = $this->visiteRepository->findVisitsByDirection($direction);
+                $limit = 3; // Limite le nombre d'employés affichés
+                //$mostVisitedEmployees = $visiteRepository->findMostVisitedEmployeesWithCounts($limit);
+                $direction = $directionRepository->find($directionId);
+                $mostVisitedEmployeesInDirection = $visiteRepository->findByMostVisitedEmployeesInDirection($direction, $limit);
+
                 return $this->render('acceuil/stats_pour_directeurs.html.twig', [
                     'statistiquesParDepartement' => $statistiquesParMois,
                     'direction' => $direction->getNomDirection(),
                     'monthNames' => $monthNames,
                     'visitesParDirection' => $visitesParDirection,
+                    //'mostVisitedEmployees' => $mostVisitedEmployees,
+                    'mostVisitedEmployeesInDirection' => $mostVisitedEmployeesInDirection
                 ]);
             }
         }
