@@ -4,13 +4,6 @@
 		<div class="card-header" style="justify-content:center">
 			<i class="fas fa-table me-1"></i>
 			<h3>Liste des visites</h3>
-			<a href="{{path('app_add_visite')}}">
-				<button
-					class="btn btn-success float-end">
-					{# <i class="fa-solid fa-plus"></i> #}
-					Nouvelle visite
-				</button>
-			</a>
 		</div>
 		<div class="card-body">
 			<table id="datatablesSimple">
@@ -24,7 +17,6 @@
 						{#Age#}
 						<th>Date</th>
 						<th>Heure de fin</th>
-						<th>Actions</th>
 					</tr>
 				</thead>
 				<tfoot>
@@ -36,7 +28,6 @@
 						{# <th>Etat</th> #}
 						<th>Date</th>
 						<th>Heure de fin</th>
-						<th>Actions</th>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -74,13 +65,7 @@
 										En cours
 									{% endif %}
 								</td>
-								<td>
-									<a href="{{ path('app_update_visite', {'id': visite.id}) }}">
-										<button style="background-color:green;border-width:0;color:white;">
-											<i class="fa-regular fa-pen-to-square"></i>
-										</button>
-									</a>
-								</td>
+
 							</tr>
 						{% endfor %}
 					</tr>

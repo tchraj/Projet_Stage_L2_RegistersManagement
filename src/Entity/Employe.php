@@ -41,6 +41,7 @@ class Employe extends Personne
         //$this->directeur = new ArrayCollection();
         $this->Visiteeffectuee = new ArrayCollection();
         $this->VisiteRecue = new ArrayCollection();
+        $this->rendezVouses = new ArrayCollection();
         }
 
     public function getId(): ?int
@@ -115,6 +116,9 @@ class Employe extends Personne
     // }
     #[ORM\Column(type: 'boolean')]
     private $visible = true;
+
+    #[ORM\OneToMany(mappedBy: 'employe', targetEntity: RendezVous::class)]
+    private Collection $rendezVouses;
 
     public function isVisible(): bool
     {
@@ -229,6 +233,36 @@ class Employe extends Personne
     public function nombreVisitesRecues(): int
     {
         return $this->VisiteRecue->count();
+    }
+
+    /**
+     * @return Collection<int, RendezVous>
+     */
+    public function getRendezVouses(): Collection
+    {
+        return $this->rendezVouses;
+    }
+
+    public function addRendezVouse(RendezVous $rendezVouse): static
+    {
+        if (!$this->rendezVouses->contains($rendezVouse)) {
+            $this->rendezVouses->add($rendezVouse);
+            $rendezVouse->setEmploye($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezVouse(RendezVous $rendezVouse): static
+    {
+        if ($this->rendezVouses->removeElement($rendezVouse)) {
+            // set the owning side to null (unless already changed)
+            if ($rendezVouse->getEmploye() === $this) {
+                $rendezVouse->setEmploye(null);
+            }
+        }
+
+        return $this;
     }
 
     

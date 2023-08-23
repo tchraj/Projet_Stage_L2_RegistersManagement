@@ -1,0 +1,15 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Nouveau RendezVous{% endblock %}
+
+{% block body %}
+    <h1>Creez un nouveau rendez-vous</h1>
+
+    {{ include('rendez_vous/_form.html.twig') }}
+
+    <button class="btn">
+		<a href="{{ path('app_rendez_vous_index') }}">
+			<i class="fa-solid fa-backward"></i>
+		</a>
+	</button>
+    {% endblock %}

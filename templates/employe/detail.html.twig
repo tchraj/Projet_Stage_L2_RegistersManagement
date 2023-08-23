@@ -30,9 +30,9 @@
 							<p class="text-muted mb-1">{{email}}</p>
 							<p class="text-muted ">{{tel}}</p>
 							{# <div class="d-flex justify-content-center mb-2">
-																																																																																																																																																																																																																																																																																																																																																														<button type="button" class="btn btn-primary">Follow</button>
-																																																																																																																																																																																																																																																																																																																																																														<button type="button" class="btn btn-outline-primary ms-1">Message</button>
-																																																																																																																																																																																																																																																																																																																																																													</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																								<button type="button" class="btn btn-primary">Follow</button>
+																																																																																																																																																																																																																																																																																																																																																																																																								<button type="button" class="btn btn-outline-primary ms-1">Message</button>
+																																																																																																																																																																																																																																																																																																																																																																																																							</div> #}
 						</div>
 					</div>
 				</div>
@@ -127,8 +127,10 @@
 				<ul>
 					{% for visite in visitesE %}
 						<li>{{ visite.DateVisite | date('d/m/Y') }}
-							-
+							pour
 							{{ visite.Motif }}</li>
+						chez
+						{{visite.employeVisite}}
 					{% endfor %}
 				</ul>
 			{% endif %}
@@ -181,13 +183,9 @@
 									</tr>
 								{% endfor %}
 							</tbody>
-						</tbody>
-					</table>
-					{# <a href="{{ path('app_employe_actifs') }}">
-																																																																		<button class="btn btn-primary">Retour</button>
-																																																																	</a> #}
+						</table>
+					</div>
 				</div>
 			{% endif %}
 		</section>
-	</div>
-{% endblock %}
+	{% endblock %}

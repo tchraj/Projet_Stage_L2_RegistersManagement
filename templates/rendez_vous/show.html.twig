@@ -1,0 +1,44 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}RendezVous
+{% endblock %}
+
+{% block body %}
+	<h1>RendezVous</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Numéro</th>
+				<td>{{ rendez_vou.id }}</td>
+			</tr>
+			<tr>
+				<th>Date</th>
+				<td>{{ rendez_vou.createdAt ? rendez_vou.createdAt|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Heure</th>
+				<td>{{ rendez_vou.heure ? rendez_vou.heure|date('H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Employé visité</th>
+				<td>{{ rendez_vou.heure ? rendez_vou.employe}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<button class="btn">
+		<a href="{{ path('app_rendez_vous_index') }}">
+			<i class="fa-solid fa-backward"></i>
+		</a>
+	</button>
+
+	<button class="btn">
+		<a href="{{ path('app_rendez_vous_edit', {'id': rendez_vou.id}) }}">
+			<i class="fa-solid fa-pen-to-square"></i>
+		</a>
+	</button>
+	<div class="row">
+		<button onclick="window.print()" class="btn btn-info">Imprimer</button>
+	</div>
+
+{% endblock %}

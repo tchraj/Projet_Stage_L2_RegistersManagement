@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Employe;
 use App\Entity\VisiteurExterne;
 use App\Form\VisiteurExterneType;
 use App\Entity\Visite;
@@ -10,10 +11,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\VisiteurExterneRepository;
 
 #[Route('/visiteur_externe')]
 class VisiteurExterneController extends AbstractController
 {
+    #[Route('/', name: 'app_visiteur_liste')]
+    public function index1(ManagerRegistry $managerRegistry, VisiteurExterneRepository $visiteurRepository): Response
+    {
+        $manager = $managerRegistry->getManager();
+        $visiteurs = $manager->getRepository(VisiteurExterne::class)->findAll();
+
+        return $this->render('visiteur_externe/historique.html.twig', [
+            'visiteurs' => $visiteurs
+        ]);
+    }
     #[Route('/', name: 'app_visiteur_externe')]
     public function index(ManagerRegistry $managerRegistry): Response
     {

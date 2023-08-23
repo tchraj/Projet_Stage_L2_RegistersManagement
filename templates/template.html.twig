@@ -182,57 +182,92 @@
 								</a>
 							</li>
 						{% endif %}
-						<li class="sidebar-item">
-							<a class="sidebar-brand" href="{{ path('app_employe_actifs') }}" style="text-decoration:none">
-								<i class="align-middle" data-feather="user"></i>
-								<span class="align-middle">Employes</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-brand" href="{{ path('app_employe') }}">
-								<i class="align-middle" data-feather="user"></i>
-								<span class="align-middle">Tous les employes</span>
-							</a>
-						</li>
+						{% if is_granted('ROLE_ADMIN_ORGANIZATION') %}
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{ path('app_employe_actifs') }}" style="text-decoration:none">
+									<i class="align-middle" data-feather="user"></i>
+									<span class="align-middle">Employes actifs</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{ path('app_employe') }}">
+									<i class="align-middle" data-feather="user"></i>
+									<span class="align-middle">Tous les employes</span>
+								</a>
+							</li>
 
+						{% endif %}
+						{% if is_granted('ROLE_CREATE_VISITE') %}
 
-						<li class="sidebar-item">
-							<a class="sidebar-brand" href="{{path('app_visite')}}">
-								<i class="align-middle" data-feather="square"></i>
-								<span class="align-middle">Visites</span>
-							</a>
-						</li>
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{path('app_visite')}}">
+									<i class="align-middle" data-feather="square"></i>
+									<span class="align-middle">Visites</span>
+								</a>
+							</li>
+						{% endif %}
 
-						<li class="sidebar-item">
-							<a class="sidebar-brand" href="{{ path('app_visiteur_externe') }}">
-								<i class="align-middle" data-feather="check-square"></i>
-								<span class="align-middle">Visiteurs</span>
-							</a>
-						</li>
+						{% if is_granted('ROLE_ADMIN_ORGANIZATION') %}
 
-						<li class="sidebar-item">
-							<a class="sidebar-brand" href="{{ path('app_direction') }}">
-								<i class="align-middle" data-feather="grid"></i>
-								<span class="align-middle">Directions</span>
-							</a>
-						</li>
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{path('app_visite_liste')}}">
+									<i class="align-middle" data-feather="square"></i>
+									<span class="align-middle">Historique des visites</span>
+								</a>
+							</li>
+						{% endif %}
+						{% if is_granted('ROLE_CREATE_VISITE') %}
 
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{ path('app_visiteur_externe') }}">
+									<i class="align-middle" data-feather="check-square"></i>
+									<span class="align-middle">Visiteurs</span>
+								</a>
+							</li>
+						{% endif %}
+						{% if is_granted('ROLE_ADMIN_ORGANIZATION') %}
+
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{ path('app_visiteur_liste') }}">
+									<i class="align-middle" data-feather="check-square"></i>
+									<span class="align-middle">Historique des visiteurs</span>
+								</a>
+							</li>
+						{% endif %}
+						{% if is_granted('ROLE_ADMIN_ORGANIZATION') %}
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{ path('app_direction') }}">
+									<i class="align-middle" data-feather="grid"></i>
+									<span class="align-middle">Directions</span>
+								</a>
+							</li>
+
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{ path('app_filiale') }}">
+									<i class="align-middle" data-feather="align-left"></i>
+									<span class="align-middle">Filiales</span>
+								</a>
+							</li>
+
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{path('app_profil')}}">
+									<i class="fa-solid fa-address-card"></i>
+									<span class="align-middle">Profils</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-brand" href="{{path('app_compte_utilisateur')}}">
+									<i class="fa-solid fa-users"></i>
+									<span class="align-middle">Utilisateurs</span>
+								</a>
+							</li>
+
+						{% endif %}
 						<li class="sidebar-item">
-							<a class="sidebar-brand" href="{{ path('app_filiale') }}">
-								<i class="align-middle" data-feather="align-left"></i>
-								<span class="align-middle">Filiales</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-brand" href="{{path('app_profil')}}">
-								<i class="fa-solid fa-address-card"></i>
-								<span class="align-middle">Profils</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-brand" href="{{path('app_compte_utilisateur')}}">
-								<i class="fa-solid fa-users"></i>
-								<span class="align-middle">Utilisateurs</span>
+							<a class="sidebar-brand" href="{{path('received')}}">
+								<i class="fa-solid fa-message"></i>
+								<span class="align-middle">Messages</span>
+								<li class="nav-link"></li>
 							</a>
 						</li>
 					</ul>
@@ -256,7 +291,6 @@
 					</a>
 					<div class="navbar-collapse collapse">
 						<ul class="navbar-nav navbar-align">
-							<li class="nav-link">Notifs</li>
 							<li class="nav-item dropdown">
 								<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
 									<li class="nav-item dropdown">
@@ -317,4 +351,4 @@
 			<script src="{{asset('js/app.js')}}"></script>
 		{% endblock %}
 	</html>
-</head></html>
+</body></html></head></html>

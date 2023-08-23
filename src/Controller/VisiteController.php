@@ -16,8 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Employe;
+use App\Entity\Notification;
 use App\Form\UpdateVisiteType;
 use DateTime;
+use DateTimeImmutable;
 
 #[Route('/visite')]
 
@@ -27,6 +29,19 @@ class VisiteController extends AbstractController
     public function __construct(VisiteRepository $repository)
     {
         $this->repository = $repository;
+    }
+    #[Route('/', name: 'app_visite_liste')]
+    public function index1(ManagerRegistry $managerRegistry, VisiteRepository $visiteRepository): Response
+    {
+        $manager = $managerRegistry->getManager();
+        $visites = $visiteRepository->findAll();
+        //$visites = $visiteRepository->findBy([], ['DateVisite' => 'DESC']);
+        return $this->render('visite/historique.html.twig', [
+            'visites' => $visites,
+            'employeVisiteur' => $manager->getRepository(Employe::class)->findAll(),
+            'employeVisite' => $manager->getRepository(Employe::class)->findAll(),
+            'visiteurExterne' => $manager->getRepository(VisiteurExterne::class)->findAll()
+        ]);
     }
     #[Route('/', name: 'app_visite')]
     public function index(ManagerRegistry $managerRegistry, VisiteRepository $visiteRepository): Response
@@ -42,7 +57,7 @@ class VisiteController extends AbstractController
         ]);
     }
     #[Route('/add', name: 'app_add_visite')]
-    public function addVisite(ManagerRegistry $managerRegistry, Request $request, AppSendEmail $appSendEmail, NotificationService $notificationService): Response
+    public function addVisite(ManagerRegistry $managerRegistry, Request $request, AppSendEmail $appSendEmail): Response
     {
         $manager = $managerRegistry->getManager();
         $visite = new Visite();
@@ -64,20 +79,23 @@ class VisiteController extends AbstractController
                 $visite->setVisiteurExterne($visiteur);
             }
             $employeVisite->addVisiteRecue($visite);
-            $message = "Vous avez une nouvelle visite de $visiteur; veuillez répondre pour ne pas le garder longtemps";
-            $notificationService->addNotification($employeVisite, $message);
             $manager->persist($visite);
             $manager->flush();
-            // $appSendEmail->sendUnique(
-            //     "amanarodia@gmail.com",
-            //     $employeVisite->getEmail(),
-            //     "Nouvelle visite!",
-            //     "Bonjour Monsieur/Madame " .
-            //         $employeVisite->getNom() . "  " .
-            //         $employeVisite->getPrenoms() .
-            //         " Vous avez une nouvelle visite!<br>Monsieur/Madame $visiteur aimerais vous visiter;Veuillez répondre pour ne pas lui garder longtemps",
-            //     'alert.html.twig'
-            // );
+            $notif = new Notification();
+            $sender = $this->getUser();
+            $notif->setCreatedAt(new DateTimeImmutable('today'));
+            $nomVisite = $employeVisite->getNomComplet();
+            $nomVisiteur = $visiteur->getNom() . " " . $visiteur->getPrenoms();
+            $message = "Bonjour Monsieur/Madame $nomVisite \n
+            Vous avez une nouvelle visite de $nomVisiteur \n
+            Veuillez répondre pour ne pas le garder pendant longtemps !";
+            $notif->setMessage($message);
+            $recipient = $employeVisite->getCompteUtilisateur();
+            $notif->setRecipient($recipient);
+            $notif->setSender($sender);
+            $notif->setTitre("Vous avez un invité !");
+            $manager->persist($notif);
+            $manager->flush();
             $this->addFlash("Succes", "Visite ajoutée avec succes!");
             return $this->redirectToRoute('app_visite');
         } else

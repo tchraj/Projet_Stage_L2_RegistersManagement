@@ -6,7 +6,7 @@ security:
         ROLE_SHOW_VISITE: [ROLE_CREATE_VISITE]
         ROLE_SHOW_STAT: [ROLE_SHOW_VISITE]
         ROLE_MANAGE_EMPLOYE: [ROLE_SHOW_STAT]
-        ROLE_ADMIN_ORGANIZATION: [ROLE_MANAGE_EMPLOYE]
+        ROLE_ADMIN_ORGANIZATION: [ROLE_SHOW_VISITE]
     access_control:
         # - { path: ^/admin, roles: 'ROLE_ADMIN_ORGANIZATION' }
         # - { path: ^/admin/stats_departement, roles: ['ROLE_MANAGE_EMPLOYE','ROLE_SHOW_STAT','ROLE_CREATE_VISITE','ROLE_SHOW_VISITE'] }

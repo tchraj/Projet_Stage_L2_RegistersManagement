@@ -2,15 +2,11 @@
 
 {% block title %}Visiteurs externes
 {% endblock title %}
-
 {% block body %}
 	<div class="card mb-4">
-		<div class="card-header" style="display:flex;justify-content:space-around">
-			<i class="fas fa-table me-1"></i>
+		<div class="card-header" style="text-align:center;">
 			<h3>Liste des visiteurs externes</h3>
-			<a href="{{path('app_add_visiteur')}}">
-				<input type="button" value="Nouveau visiteur" class="btn btn-success">
-			</a>
+			
 		</div>
 		<div class="card-body">
 			<table id="datatablesSimple">
@@ -20,8 +16,6 @@
 						<th>Prenoms</th>
 						<th>Email</th>
 						<th>Télephone</th>
-						{#Age#}
-						<th>Actions</th>
 					</tr>
 				</thead>
 				<tfoot>
@@ -30,8 +24,6 @@
 						<th>Prenoms</th>
 						<th>Email</th>
 						<th>Télephone</th>
-						{#Age#}
-						<th>Actions</th>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -43,18 +35,7 @@
 							<td>{{visiteur.prenoms}}</td>
 							<td>{{visiteur.email}}</td>
 							<td>{{visiteur.tel}}</td>
-							<td>
-							<a href="{{path('app_update_visiteur',{'id':visiteur.id})}}" class="delete-button">
-									<button style="background-color:blue;border-width:0;color:white">
-										<i class="fa-regular fa-pen-to-square"></i>
-									</button>
-								</a>
-								{# <a href="{{path('app_lier_visiteur',{'id':visiteur.id})}}">
-									<button class="btn btn-warning">Lier une visite</button>
-								</a>
-								 #}
-							</td>
-							
+
 						</tr>
 					{% endfor %}
 				</tbody>
